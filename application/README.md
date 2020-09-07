@@ -7,3 +7,41 @@ You are free to organize the contents of the folder as you see fit. But remember
 
 ## Please use the rest of the README.md to store important information for your team's application.
 
+## SET UP
+### Create an environment 
+Windows
+```
+$ py -3 -m venv venv
+```
+Mac
+```
+python3 -m venv venv
+```
+### Activate the environment 
+Windows
+```
+> venv\Scripts\activate
+```
+Mac
+```
+$ . venv/bin/activate
+```
+### Activate the environment 
+```
+$ pip install Flask
+```
+## Install and run the application
+In order to run this application, set the environment variable to this project
+```
+$ export FLASK_APP=application
+```
+
+# Install the dependencies
+```
+$ pip install -e .
+```
+# Run the Flask application 
+```
+$ flask run
+```
+
