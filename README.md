@@ -23,3 +23,6 @@
 | Dang Anh Tu Nguyen | margonnguyen@gmail.com     | margonguyen             |
 
 ## NO code needs to be stored in the root of your repository. You may rename the application folder if you like to your team's application name. But all source code related to your team's application should be stored inside the application folder.
+
+## Group Weekly Zoom Meeting Link:
+https://zoom.us/j/93961691421?pwd=cWo4YnBTaW83MHVrNDRLZDAyQmlNUT09
