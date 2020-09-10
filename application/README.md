@@ -33,7 +33,7 @@ pip3 install -r requirement.txt
 ```
 # Run the Flask application 
 ```
-$ flask run
+$ gunicorn app:app
 ```
 
 
@@ -42,7 +42,7 @@ $ flask run
 Only run this on cloud, non local 
 # Run Flask on aws server
 ```
-gunicorn3 app:app
+gunicorn app:app
 ```
 
 

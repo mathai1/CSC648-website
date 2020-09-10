@@ -1,17 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Our Team!</title>
-</head>
-<body>
-
-<h1>Team 5</h1>
-<li><a href = "about.html/dang">Dang</a></li>
-<li><a href = "about.html/Max">Max</a></li>
-<li><a href = "about.html/Jason">Jason</a></li>
-<li><a href = "about.html/Cool">Cool</a></li>
-<li><a href = "about.html/Rachel">Rachel</a></li>
-
-</body>
-</html>
+{% extends "base.html" %}
+{% block title%} About Page {% endblock %}
+{% block content %}
+<h1>about page</h1>
+<div class="list-group">
+    <a href="#" class="list-group-item list-group-item-action">Naweeda</a>
+    <a href="about/dang" class="list-group-item list-group-item-action">Dang</a>
+    <a href="about/austin" class="list-group-item list-group-item-action">Austin</a>
+    <a href="#" class="list-group-item list-group-item-action">Josh</a>
+    <a href="#" class="list-group-item list-group-item-action">Marvin</a>
+    <a href="#" class="list-group-item list-group-item-action">Manuel</a>
+</div>
+{% endblock %}

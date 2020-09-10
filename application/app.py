@@ -17,10 +17,10 @@ print(item)
 conn.close()
 
 @app.route('/', methods=['GET'])
-
 def about():
     return render_template("about.html")
-@app.route('/about.html/<name>')
+
+@app.route('/about/<name>')
 def getPerson(name):
     item = f"{name}.html"
     return render_template(item)
