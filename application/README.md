@@ -26,23 +26,23 @@ Mac
 ```
 $ . venv/bin/activate
 ```
-### Activate the environment 
-```
-$ pip install Flask
-```
-## Install and run the application
-In order to run this application, set the environment variable to this project
-```
-$ export FLASK_APP=application
-```
 
 # Install the dependencies
 ```
-$ pip install -e .
+pip3 install -r requirement.txt
 ```
 # Run the Flask application 
 ```
 $ flask run
+```
+
+
+
+-----
+Only run this on cloud, non local 
+# Run Flask on aws server
+```
+gunicorn3 app:app
 ```
 
 
