@@ -23,4 +23,4 @@ def about():
 @app.route('/about/<name>')
 def getPerson(name):
     item = f"{name}.html"
-    return render_template(item)
+    return render_template(item, name = name)
