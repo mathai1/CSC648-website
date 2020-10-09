@@ -17,6 +17,14 @@ print(item)
 conn.close()
 
 @app.route('/', methods=['GET'])
+def home():
+    return render_template("home.html")
+
+@app.route('/search')
+def search():
+    return render_template("search.html")
+    
+@app.route('/about')
 def about():
     return render_template("about.html")
 
