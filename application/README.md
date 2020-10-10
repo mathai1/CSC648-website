@@ -29,7 +29,7 @@ $ . venv/bin/activate
 
 # Install the dependencies
 ```
-pip3 install -r requirement.txt
+pip3 install -r requirements.txt
 ```
 # Run the Flask application 
 ```
