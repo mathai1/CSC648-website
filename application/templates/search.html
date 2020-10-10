@@ -1,15 +1,14 @@
 
 {% extends "base.html" %}
 {% block title%}test search{% endblock %}
-{% block content %}
+{% block content %}  
   <div>
     {%if data %}
-    This is all users in database :
     {% for d in data %}
       <ul> 
         {{d["email"]}}  {{d["fname"]}}  {{d["lname"]}}
       </ul>  
-      {% endfor %}
-      {% endif %}
+    {% endfor %}
+    {% endif %}
   </div>
 {% endblock %}

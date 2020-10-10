@@ -7,6 +7,41 @@
         <title>{% block title %}{% endblock %}</title>
     </head>
     <body>
+    <p class="h1">Software Engineering class SFSU, Fall 2020, Team 05</p>
+    <!-- This is nav bar -->
+    <nav class="navbar navbar-expand-lg navbar-info bg-light">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="about">About Us</a>
+        </li>
+
+      </ul>
+      <form class="form-inline my-2 my-lg-0" action ="/search" method ="POST">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Catergory
+          </a>
+            <select class="dropdown-menu" aria-labelledby="navbarDropdown" name="filter" >
+              <option class="dropdown-item" value ="All" >All</option>
+              <option class="dropdown-item" value ="email" >email</option>
+              <option class="dropdown-item" value ="fname">first Name</option>
+              <option class="dropdown-item" value = "lname">last name</option>
+
+            </select>
+        </li>
+
+        <input class="form-control mr-sm-2" type="search" name="searchedData" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </div>
+  </nav>
+  <!-- End nav bar -->
+
         {%block content %}
         {% endblock %}
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

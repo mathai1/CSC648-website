@@ -1,31 +1,42 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import pymysql
+from db import SFSU_DB
 app = Flask(__name__)
 
-host = "csc648.cszroavxh2pu.us-west-2.rds.amazonaws.com"
-port = 3306
-dbname = "mydb"
-user = "root"
-password = "mypass123"
-
-conn = pymysql.connect(host =host, user=user, port=port,passwd=password, db=dbname) 
-pycursor = conn.cursor()
-searchQuery = "SELECT * from users"
-data = pycursor.execute(searchQuery)
-item = pycursor.fetchone()
-print(item)
-conn.close()
+db = SFSU_DB()
 
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 def home():
-    return render_template("home.html")
+    users = db.getAllUsers()
+    lst = getOrganizedData(users)
+    return render_template("home.html", data = lst)
 
-@app.route('/about', methods=['GET'])
+@app.route('/search', methods= ['GET' , 'POST'])
+def search():
+    if request.method == 'POST':
+        category =request.form['filter']
+        searchedData =request.form['searchedData']
+        users = db.getAUser(category,searchedData)
+        lst = getOrganizedData(users)
+        return render_template("search.html", data = lst)
+    return render_template("search.html")
+    
+@app.route('/about')
 def about():
     return render_template("about.html")
 
 @app.route('/about/<name>')
 def getPerson(name):
-    item = f"{name}.html"
+    item = f"about/{name}.html"
     return render_template(item, name = name)
+
+
+def getOrganizedData(users) :
+    lst = []
+    dUsers = {}
+    for row in users:
+        dUsers = {"email": row[0], "password":row[1], "fname":row[2], "lname":row[3]}
+        lst.append(dUsers)
+    return lst
+
