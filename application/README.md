@@ -62,15 +62,15 @@ def something(): //
 then we return back the html file by using  return render_template("something.html")
 
 ======> Just replace something with the route you want to route, remember to have the html file 
-## Database
-# Connection to the database
+# Database
+## Connection to the database
 We have all the database code in db.py. We will need to import pymysql. This module handle as a middleware to connect our flask application to mysql
 ```
     def connect_db(self) :
         return pymysql.connect(host =self.host, user=self.user, port=self.port,passwd=self.password, db=self.dbname) 
 ```
 
-# Using the database
+## Using the database
 We have a this of code block as connect, retrive the information/data and then close the the db connection and return the item
 
 ```
@@ -83,24 +83,24 @@ We have a this of code block as connect, retrive the information/data and then c
         conn.close() // We need to close the connection to reset the cursor pointer back to the top of the db
         return item
 ```
-# Database tables
+## Database tables
 This is inside the mysql workbench. You can add/ remove data or table using the  mysql workbench
 In our case. I created a table Users  . 
 These are the sample data 
-----------------------------------------
+-- --------------------------------------
 email          | password | firstName | lastName
-----------------------------------------
-dnguyen49@mail |  123     |            |
-----------------------------------------
-banana@mail     |   123    |            |
-----------------------------------------
-apple@mail      | 123       |
+--- -------------------------------------
+dnguyen49@mail |  123     | -----     |
+---- ------------------------------------
+banana@mail     |   123    |   ------  |
+----- -----------------------------------
+apple@mail      | 123      | -------   |
 
 
 With this codeblock you can do anything with the database followed the code above, The only change is the query in search query
 
-## Searching architecture
-# Frontend ( html file)
+# Searching architecture
+## Frontend ( html file)
 This is a code block for the search box in the html 
 ```
       <form class="form-inline my-2 my-lg-0" action ="/search" method ="POST">
@@ -132,7 +132,7 @@ In each option that we have a value = " nameofValue " . The nameofValue will mat
 <option class="dropdown-item" value = "lastName">last name</option>
 ```
 
-# Connect front end and backend
+## Connect front end and backend
 In app.py 
 ```
 from db import SFSU_DB
