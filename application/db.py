@@ -14,10 +14,11 @@ class SFSU_DB():
         conn = self.connect_db()
         pycursor = conn.cursor()
         searchQuery = "SELECT * from User"
-        data = pycursor.execute(searchQuery)
+        pycursor.execute(searchQuery)
         item = pycursor.fetchall()
         conn.close()
         return item
+        
     def getAUser(self, catergory, searchedData):
         conn = self.connect_db()
         pycursor = conn.cursor()
