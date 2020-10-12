@@ -83,6 +83,8 @@ We have a this of code block as connect, retrive the information/data and then c
         conn.close() // We need to close the connection to reset the cursor pointer back to the top of the db
         return item
 ```
+With this codeblock you can do anything with the database followed the code above, The only change is the query in search query
+
 ## Database tables
 This is inside the mysql workbench. You can add/ remove data or table using the  mysql workbench
 In our case. I created a table Users  . 
@@ -96,8 +98,6 @@ banana@mail     |   123    |   ------  |
 ----- -----------------------------------
 apple@mail      | 123      | -------   |
 
-
-With this codeblock you can do anything with the database followed the code above, The only change is the query in search query
 
 # Searching architecture
 ## Frontend ( html file)
