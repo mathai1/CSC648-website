@@ -36,7 +36,7 @@ def getOrganizedData(users) :
     lst = []
     dUsers = {}
     for row in users:
-        dUsers = {"email": row[0], "password":row[1], "fname":row[2], "lname":row[3]}
+        dUsers = {"email": row[0], "password":row[1], "fname":row[2], "lname":row[3], "image" : row[4]}
         lst.append(dUsers)
     return lst
 
