@@ -6,9 +6,11 @@
     {%if data %}
     {% for d in data %}
       <ul> 
-        <p> Emails : {{d["email"]}}  </p>  
-        <p> Name : {{d["fname"]}}  {{d["lname"]}} </p>
-        <img  src={{url_for('static', filename=d["image"] ) }}   height="30px" width="35px"  class="cart-position" alt="" />
+        <p> Title : {{d["title"]}}  </p>  
+        <p> author : {{d["email"]}}  </p>  
+        <p> Price : {{d["price"]}}  </p>  
+        <p> description : {{d["description"]}} </p>
+        <img  src={{url_for('static', filename=d["image"] ) }}   height="100px" width="100px"  />
       </ul>  
     {% endfor %}
     {% endif %}

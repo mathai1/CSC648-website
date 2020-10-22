@@ -1,6 +1,6 @@
 import pymysql
 
-class SFSU_DB():
+class SearchingDB():
     def __init__(self):
         self.host = "csc648.cszroavxh2pu.us-west-2.rds.amazonaws.com"
         self.port = 3306
@@ -26,6 +26,28 @@ class SFSU_DB():
             searchQuery = f"SELECT * from User WHERE email LIKE '%{searchedData}%' OR firstName LIKE '%{searchedData}%' OR lastName LIKE '%{searchedData}%'"
         else :
             searchQuery = f"SELECT * from User WHERE {catergory} LIKE '%{searchedData}%'"
+        data = pycursor.execute(searchQuery)
+        item = pycursor.fetchall()
+        conn.close()
+        return item
+
+    
+    def getAllPostings(self):
+        conn = self.connect_db()
+        pycursor = conn.cursor()
+        searchQuery = "SELECT * from Posting"
+        pycursor.execute(searchQuery)
+        item = pycursor.fetchall()
+        conn.close()
+        return item
+
+    def searchAPosting(self, catergory, searchedData):
+        conn = self.connect_db()
+        pycursor = conn.cursor()
+        if catergory == "All" :
+            searchQuery = f"SELECT * from Posting WHERE title LIKE '%{searchedData}%' "
+        else :
+            searchQuery = f"SELECT * from Posting WHERE category LIKE '{catergory}' AND title LIKE '%{searchedData}%'"
         data = pycursor.execute(searchQuery)
         item = pycursor.fetchall()
         conn.close()
