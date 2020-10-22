@@ -16,45 +16,40 @@
           <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
         </li>
 
-        <li class="nav-item">
-          <a class="nav-link" href="about">About Us</a>
-        </li>
-
       </ul>
-      <!-- <form class="form-inline my-2 my-lg-0" action ="/search" method ="POST">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Catergory
-            <select class="dropdown-menu" aria-labelledby="navbarDropdown" name="filter" >
-              <option class="dropdown-item" value ="All" >All</option>
-              <option class="dropdown-item" value ="book" >book</option>
-              <option class="dropdown-item" value ="electronic">electronic</option>
-              <option class="dropdown-item" value = "misc"></option>
-
-            </select>
-          </a>
-
-        <input class="form-control mr-sm-2" type="search" name="searchedData" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </form> -->
 
       <form class="form-inline my-3 my-lg-1 mx-auto" method="POST" action="/search">
         <div class="input-group" >
             
-              <input type="text" class="form-control  mr-sm-2"  aria-label="Text input with segmented button dropdown" style=" width: 600px; height: 40px" placeholder="Search Here" name = "searchedData">
-              <div class="input-group-btn" >
-                  <select name = "filter" style = " width: 150px; height: 40px; font-size:12px; background-color:white;color: black">
+              <div class="input-group-append" >
+                  <select name = "filter" style = " width: 100px; height: 40px; font-size:12px; background-color:white;color: black">
                     <option class="dropdown-item" value ="All" >All</option>
                     <option class="dropdown-item" value ="book" >book</option>
                     <option class="dropdown-item" value ="electronic">electronic</option>
                     <option class="dropdown-item" value = "misc"></option>
                   </select>
-                  
+                   </div>
+                  <input type="text" class="form-control  mr-sm-2"  style=" width: 400px; height: 40px" placeholder="Search Here" name = "searchedData">
 
                   <button type="submit"   class="btn btn-primary" >Search</button>
 
               </div>
         </div>
 </form>
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="about">About</a>
+      </li>
+
+      <li class="nav-item active">
+        <a class="nav-link" href="">Login <span class="sr-only">(current)</span></a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="Sign up ">Sign up</a>
+      </li>
+
+    </ul>
     </div>
   </nav>
   <!-- End nav bar -->
