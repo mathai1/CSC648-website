@@ -7,6 +7,53 @@
         <title>{% block title %}{% endblock %}</title>
     </head>
     <body>
+    <p class="h1">Software Engineering class SFSU, Fall 2020, Team 05</p>
+    <!-- This is nav bar -->
+    <nav class="navbar navbar-expand-lg navbar-info bg-light">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+        </li>
+
+      </ul>
+
+      <form class="form-inline my-3 my-lg-1 mx-auto" method="POST" action="/search">
+        <div class="input-group" >
+            
+              <div class="input-group-append" >
+                  <select name = "filter" style = " width: 100px; height: 40px; font-size:12px; background-color:white;color: black">
+                    <option class="dropdown-item" value ="All" >All</option>
+                    <option class="dropdown-item" value ="book" >book</option>
+                    <option class="dropdown-item" value ="electronic">electronic</option>
+                    <option class="dropdown-item" value = "misc"></option>
+                  </select>
+                   </div>
+                  <input type="text" class="form-control  mr-sm-2"  style=" width: 400px; height: 40px" placeholder="Search Here" name = "searchedData">
+
+                  <button type="submit"   class="btn btn-primary" >Search</button>
+
+              </div>
+        </div>
+</form>
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="about">About</a>
+      </li>
+
+      <li class="nav-item active">
+        <a class="nav-link" href="">Login <span class="sr-only">(current)</span></a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="Sign up ">Sign up</a>
+      </li>
+
+    </ul>
+    </div>
+  </nav>
+  <!-- End nav bar -->
+
         {%block content %}
         {% endblock %}
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
