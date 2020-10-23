@@ -7,7 +7,8 @@
 
 # Below is a list of items required. Missing items will causes points to be deducted from multiple milestone submissions.
 
-1. Server URL or IP : ec2-54-212-132-195.us-west-2.compute.amazonaws.com	
+1. Server URL or IP : http://18.237.204.83	
+SSH url : ec2-18-237-204-83.us-west-2.compute.amazonaws.com
 2. SSH username : ubuntu
 3. SSH password or key.
     <br> If a ssh key is used please upload the key to the credentials folder.
@@ -31,7 +32,7 @@ chmod 400 margonguyen.pem
 ssh to the server by using the command below
 
 ```
-ssh -i "margonguyen.pem" ubuntu@ec2-54-212-132-195.us-west-2.compute.amazonaws.com 
+ssh -i "margonguyen.pem" ubuntu@ec2-18-237-204-83.us-west-2.compute.amazonaws.com
 ```
 
 
