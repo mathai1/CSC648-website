@@ -2,3 +2,6 @@
 .DS_Store
 ## Ignore venv
 venv/
+## Ignore local cache files
+__pycache__/
+*.py[cod]
