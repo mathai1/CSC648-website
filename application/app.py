@@ -31,6 +31,10 @@ def getPerson(name):
     item = f"about/{name}.html"
     return render_template(item, name = name)
 
+@app.route('/login', methods=['GET','POST'])
+def login():
+    return render_template("login.html")
+
 
 def getUserOrganizedData(users) :
     lst = []
