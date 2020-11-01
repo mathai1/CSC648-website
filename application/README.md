@@ -1,3 +1,43 @@
+# File structure
+Using blue print to structure the file for this project
+Blueprint is the collection of views , static file and template
+In this application, the structure is divided  by its function
+The blueprint in views folder collections of views
+The same static files will be used for the views in most of the blueprints
+# Most of the templates will extend a master template
+```
+application/
+    README.md
+    app.py
+    db.py
+    templates/
+        base.html
+        dashboard/
+            message.html
+            postings.html
+        home/
+            about.html
+            home.html
+            login.html
+            signup.html
+            about/
+        posting/
+            posting.html
+        profile/
+        search/
+            search.html
+    static/
+        css/
+        images/
+    tests/
+    views/
+        dashboard.py
+        home.py
+        posting.py
+        profile.py
+        search.py
+```
+
 # Application Folder
 
 ## Purpose
