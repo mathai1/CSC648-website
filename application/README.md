@@ -4,7 +4,7 @@ Blueprint is the collection of views , static file and template
 In this application, the structure is divided  by its function
 The blueprint in views folder collections of views
 The same static files will be used for the views in most of the blueprints
-# Most of the templates will extend a master template
+Most of the templates will extend a master template
 ```
 application/
     README.md
