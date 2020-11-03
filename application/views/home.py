@@ -3,6 +3,7 @@ from flask import Blueprint, render_template,request,redirect,url_for,session
 from db import SearchingDB
 db = SearchingDB()
 
+
 # create a blue print
 home = Blueprint('home', __name__)
 
@@ -11,6 +12,7 @@ def homepage():
     postings = db.getAllPostings()
     lst = db.getPostingOrganizedData(postings)
     return render_template('home/home.html', data = lst)
+    
 @home.route('/about')
 def about():
     return render_template("home/about.html")
@@ -22,18 +24,29 @@ def getPerson(name):
 
 @home.route('/login',methods =['GET','POST'])
 def login():
-    alertmsg = ''
-
-    if request.method == 'Submit' and 'username' in request.form and 'password' in request.form and 'email' in request.form:
-        #Initing variables 
-        username = request.form['username']
-        password = request.form['password']
-        email = request.form["email"]
-    elif request.method == 'Submit':
-        alertmsg = 'Please fill out the form!'
-    return render_template("home/login.html", alertmsg=alertmsg)
+    msg = ''
+    if request.method == 'POST' and 'email' in request.form and 'pwd' in request.form:
+        email=request.form['email']
+        password=request.form['pwd']
+        user=db.getAUser("email",email)
+        if user:
+            if email==user[0] and password==user[1]:
+                return render_template("home/home.html")
+        else:
+            msg='Invalid Email/Password'
+        
+    return render_template("home/login.html", msg=msg)
 
 @home.route('/signup')
 def signup(name):
     return render_template("home/signup.html")
+
+@home.route('/logout')
+def logout():
+    session.pop('loggedin',None)
+    session.pop('email',None)
+    return render_template("home.html")
+
+
+
 

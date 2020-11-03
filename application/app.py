@@ -15,6 +15,7 @@ from views.profile import profile
 # Register blueprint into app
 # All the blue print is inside the views application
 app = Flask(__name__)
+app.secret_key="SFSU"
 app.register_blueprint(home)
 app.register_blueprint(search)
 app.register_blueprint(posting)

@@ -19,15 +19,15 @@ class SearchingDB():
         conn.close()
         return item
         
-    def getAUser(self, catergory, searchedData):
+    def getAUser(self, category, searchedData):
         conn = self.connect_db()
         pycursor = conn.cursor()
-        if catergory == "All" :
-            searchQuery = f"SELECT * from User WHERE email LIKE '%{searchedData}%' OR firstName LIKE '%{searchedData}%' OR lastName LIKE '%{searchedData}%'"
+        if category == "All" :
+            searchQuery = f"SELECT * FROM User WHERE email LIKE '%{searchedData}%' "
         else :
-            searchQuery = f"SELECT * from User WHERE {catergory} LIKE '%{searchedData}%'"
-        data = pycursor.execute(searchQuery)
-        item = pycursor.fetchall()
+            searchQuery = f"SELECT * FROM User WHERE {category} LIKE '%{searchedData}%'"
+        pycursor.execute(searchQuery)
+        item = pycursor.fetchone()
         conn.close()
         return item
 
@@ -70,7 +70,7 @@ class SearchingDB():
             dPosting = {"email" : email , "title": row[2], "description":row[3], "date" : row[4], "price" : row[5], "image":row[7]}
             lst.append(dPosting)
         return lst
-    
+"""
     def getUserLoginInfo(self, user):
         conn = self.connect_db()
         pycursor = conn.cursor()
@@ -90,5 +90,5 @@ class SearchingDB():
             alertmsg = 'Incorrect username or password!'
         conn.close()
         return account
-
+    """
 
