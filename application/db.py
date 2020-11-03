@@ -70,8 +70,25 @@ class SearchingDB():
             dPosting = {"email" : email , "title": row[2], "description":row[3], "date" : row[4], "price" : row[5], "image":row[7]}
             lst.append(dPosting)
         return lst
+    
+    def getUserLoginInfo(self, user):
+        conn = self.connect_db()
+        pycursor = conn.cursor()
+        searchQuery = "SELECT * FROM accounts WHERE '{username}' AND '{password}', (username, password,)"
+        data = pycursor.execute(searchQuery)
+        account = pycursor.fetchall()
+        
+        alertmsg = ''
+        if account:
+            session['loggedin'] = True
+            session['id'] = account['id']
+            session['username'] = account['username']
 
-
-
+            return 'Logged in successfully!'
+        
+        else:
+            alertmsg = 'Incorrect username or password!'
+        conn.close()
+        return account
 
 
