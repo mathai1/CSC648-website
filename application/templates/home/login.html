@@ -2,7 +2,7 @@
 {% block title%}Login{% endblock %}
 {% block content %}  
   <div class="container">
-    <form action="/action_page.php">
+    <form action="/login" method="post">
         <!-- Email -->
         <div class="col-xs-4">
           <label for="email">Email address:</label>
@@ -13,6 +13,7 @@
           <label for="pwd">Password:</label>
           <input type="password" class="form-control" placeholder="Enter password" id="pwd">
         </div>
+        <div class ="msg">{{ msg }}</div>
         <!-- Forgot Password -->
         <div class="col text-center">
             <button type="button" class="btn btn-link">Forgot Password</button>

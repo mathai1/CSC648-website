@@ -1,5 +1,5 @@
 # THIS IS HOME BLUEPRINT for home, about, login and signup
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template,request,redirect,url_for
 from db import SearchingDB
 db = SearchingDB()
 
@@ -20,9 +20,12 @@ def getPerson(name):
     item = f"home/about/{name}.html"
     return render_template(item, name = name)
 
-@home.route('/login')
+@home.route('/login',methods =['GET','POST'])
 def login():
-    return render_template("home/login.html")
+    msg=''
+    if request.method=='POST':
+        msg='Logged in'
+    return render_template("home/login.html",msg=msg)
 
 @home.route('/signup')
 def signup(name):
