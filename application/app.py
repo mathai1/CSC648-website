@@ -1,58 +1,28 @@
-from flask import Flask, render_template, request
-import pymysql
-from search import SearchingDB
+#Using blue print to structure the file
+#Blueprint is the collection of views , static file and template
+#In this application, the structure is divided  by its function
+#The blueprint in views folder collections of views
+#The same static files will be used for the views in most of the blueprints
+# Most of the templates will extend a master template
+
+from flask import Flask
+from views.search import search
+from views.home import home
+from views.posting import posting
+from views.dashboard import dashboard
+from views.profile import profile
+
+# Register blueprint into app
+# All the blue print is inside the views application
 app = Flask(__name__)
-
-db = SearchingDB()
-
-
-@app.route('/', methods=['GET'])
-def home():
-    postings = db.getAllPostings()
-    lst = getPostingOrganizedData(postings)
-    return render_template("home.html", data = lst)
-
-@app.route('/search', methods= ['GET' , 'POST'])
-def search():
-    if request.method == 'POST':
-        category =request.form['filter']
-        searchedData =request.form['searchedData']
-        postings = db.searchAPosting(category,searchedData)
-        lst = getPostingOrganizedData(postings)
-        return render_template("search.html", data = lst)
-    return render_template("search.html")
-    
-@app.route('/about')
-def about():
-    return render_template("about.html")
-
-@app.route('/about/<name>')
-def getPerson(name):
-    item = f"about/{name}.html"
-    return render_template(item, name = name)
-
-@app.route('/login', methods=['GET','POST'])
-def login():
-    return render_template("login.html")
-
-
-def getUserOrganizedData(users) :
-    lst = []
-    dUsers = {}
-    for row in users:
-        dUsers = {"email": row[0], "password":row[1], "fname":row[2], "lname":row[3], "image" : row[4]}
-        lst.append(dUsers)
-    return lst
-
-def getPostingOrganizedData(postings) :
-    lst = []
-    dPosting = {}
-    for row in postings:
-        email = row[1].replace("@sfsu.edu", "")
-        dPosting = {"email" : email , "title": row[2], "description":row[3], "date" : row[4], "price" : row[5], "image":row[7]}
-        lst.append(dPosting)
-    return lst
+app.register_blueprint(home)
+app.register_blueprint(search)
+app.register_blueprint(posting)
+app.register_blueprint(dashboard)
+app.register_blueprint(profile)
 
 
 
 
+if __name__ == "__main__":
+    app.run()

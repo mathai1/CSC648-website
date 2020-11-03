@@ -1,0 +1,113 @@
+
+{% extends "base.html" %}
+{% block title%}test search{% endblock %}
+{% block content %}
+<div class="home-description">
+  <h1>SFSU Exchange</h1>
+  <h2>A marketplace for all SFSU students and staff.</h2>
+</div>
+
+
+<section class="pt-5 pb-5">
+  <div class="container">
+    <!-- Row for top category -->
+    <div class="row">
+      <div class="col-6">
+        <h3 class="mb-3">Featured Products</h3>
+      </div>
+      <div class="col-6 text-right">
+        <a class="btn btn-primary mb-3 mr-1" href="#carouselExampleIndicators2" role="button" data-slide="prev">
+            <i class="fa fa-arrow-left">&lt;</i>
+        </a>
+        <a class="btn btn-primary mb-3 " href="#carouselExampleIndicators2" role="button" data-slide="next">
+            <i class="fa fa-arrow-right">&gt;</i>
+        </a>
+      </div>
+      <div class="col-12">
+        <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <div class="row">
+                <!-- 3 card sliders code -->
+                {%if data %}
+                  {% for d in data[:3] %}
+                    <div class="col-md-4 mb-3">
+                      <div class="card">
+                          <img class="img-fluid" alt="100%x280" src={{url_for('static', filename=d["image"] ) }}>
+                          <div class="card-body">
+                              <h4 class="card-title">{{d["title"]}}</h4>
+                              <p class="card-text">{{d["price"]}}</p>
+                              <p class="card-text">{{d["description"]}}</p>
+                          </div>
+                      </div>
+                    </div>
+                  {% endfor %}
+                {% endif %}
+              </div>
+            </div>
+            <!-- next 3 carousel items -->
+            <div class="carousel-item">
+              <div class="row">
+                <!-- 3 card sliders code -->
+                {%if data %}
+                  {% for d in data[3:5] %}
+                    <div class="col-md-4 mb-3">
+                      <div class="card">
+                          <img class="img-fluid" alt="100%x280" src={{url_for('static', filename=d["image"] ) }}>
+                          <div class="card-body">
+                              <h4 class="card-title">{{d["title"]}}</h4>
+                              <p class="card-text">{{d["price"]}}</p>
+                              <p class="card-text">{{d["description"]}}</p>
+                          </div>
+                      </div>
+                    </div>
+                  {% endfor %}
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+     </div>
+   </div>
+
+  <!-- Next Category -->
+  <div class="row">
+    <div class="col-6">
+      <h3 class="mb-3">Books </h3>
+    </div>
+    <div class="col-6 text-right">
+      <a class="btn btn-primary mb-3 mr-1" href="#carouselExampleIndicators3" role="button" data-slide="prev">
+          <i class="fa fa-arrow-left">&lt;</i>
+      </a>
+      <a class="btn btn-primary mb-3 " href="#carouselExampleIndicators3" role="button" data-slide="next">
+          <i class="fa fa-arrow-right">&gt;</i>
+      </a>
+    </div>
+    <div class="col-12">
+      <div id="carouselExampleIndicators3" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="row">
+              {%if data %}
+                {% for d in data[0:3:2] %}
+                  <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <img class="img-fluid" alt="100%x280" src={{url_for('static', filename=d["image"] ) }}>
+                        <div class="card-body">
+                            <h4 class="card-title">{{d["title"]}}</h4>
+                            <p class="card-text">{{d["price"]}}</p>
+                            <p class="card-text">{{d["description"]}}</p>
+                        </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+   </div>
+  </div>
+  <!-- end Category -->
+</section>
+{% endblock %}

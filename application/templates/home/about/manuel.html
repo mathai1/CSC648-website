@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title%} Manuel Hernandez {% endblock %}
+{% block content %}
+<body class="w3-content" style="max-width:1300px">
+
+    <!-- First Grid: Logo & About -->
+    <div class="w3-row">
+      <div class="w3-half w3-black w3-container w3-center" style="height:700px">
+        <div class="w3-padding-64">
+          <img src="{{url_for('static', filename='images/about/sfsu.jpg')}}" class="w3-margin w3-circle", style="width:50%">
+        </div>
+        <div class="w3-padding-64">
+          <a href="/" class="w3-button w3-black w3-block w3-hover-blue-grey w3-padding-16">About Us</a>
+        </div>
+      </div>
+      <div class="w3-half w3-blue-grey w3-container" style="height:700px">
+        <div class="w3-padding-64 w3-center">
+          <h1>About Me</h1>
+          <img src="{{url_for('static', filename='images/about/manuel.jpg')}}" class="w3-margin w3-circle" alt="Person" style="width:50%">
+          <div class="w3-left-align w3-padding-large">
+            <p>I am a Senior CS student at SFSU with an expected graduation in Spring of 2021. The languages I'm most familiar with are
+                C++ and Java. The topics that interest me the most are computer networks and artificial intelligence.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    </body>
+{% endblock %}
