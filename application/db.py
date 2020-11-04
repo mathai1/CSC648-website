@@ -19,15 +19,15 @@ class SearchingDB():
         conn.close()
         return item
         
-    def getAUser(self, category, searchedData):
+    def getAUser(self, catergory, searchedData):
         conn = self.connect_db()
         pycursor = conn.cursor()
-        if category == "All" :
-            searchQuery = f"SELECT * FROM User WHERE email LIKE '%{searchedData}%' "
+        if catergory == "All" :
+            searchQuery = f"SELECT * from User WHERE email LIKE '%{searchedData}%' OR firstName LIKE '%{searchedData}%' OR lastName LIKE '%{searchedData}%'"
         else :
-            searchQuery = f"SELECT * FROM User WHERE {category} LIKE '%{searchedData}%'"
-        pycursor.execute(searchQuery)
-        item = pycursor.fetchone()
+            searchQuery = f"SELECT * from User WHERE {catergory} LIKE '%{searchedData}%'"
+        data = pycursor.execute(searchQuery)
+        item = pycursor.fetchall()
         conn.close()
         return item
 
@@ -67,8 +67,11 @@ class SearchingDB():
         dPosting = {}
         for row in postings:
             email = row[1].replace("@sfsu.edu", "")
-            dPosting = {"email" : email , "title": row[2], "description":row[3], "date" : row[4], "price" : row[5], "image":row[7]}
+            dPosting = {"postid" : row[0],"email" : email , "title": row[2], "description":row[3], "date" : row[4], "price" : row[5], "category": row[6], "image":row[7]}
             lst.append(dPosting)
         return lst
+
+
+
 
 
