@@ -67,7 +67,7 @@ class SearchingDB():
         dPosting = {}
         for row in postings:
             email = row[1].replace("@sfsu.edu", "")
-            dPosting = {"email" : email , "title": row[2], "description":row[3], "date" : row[4], "price" : row[5], "image":row[7]}
+            dPosting = {"postid" : row[0],"email" : email , "title": row[2], "description":row[3], "date" : row[4], "price" : row[5], "category": row[6], "image":row[7]}
             lst.append(dPosting)
         return lst
 
