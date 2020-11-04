@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title%}posting{% endblock %}
+{% block content %}
+<div class="container-fluid">
+    <div class="mx-auto" style="width: 200px;">
+        <img src='{{url_for('static', filename='images/postings/empty.png')}}' class="img-fluid">
+        <!-- <img src={{url_for('static', filename=posting["image"] ) }} class="img-fluid" alt="Responsive image"> -->
+        <button type="button" class="btn btn-primary btn-lg btn-block">Message seller</button>        
+        <div class="card text-center" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">{{posting['title']}}</h5>
+              <p class="card-text">{{posting['description']}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
