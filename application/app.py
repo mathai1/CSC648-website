@@ -11,11 +11,13 @@ from views.home import home
 from views.posting import posting
 from views.dashboard import dashboard
 from views.profile import profile
+from datetime import timedelta
 
 # Register blueprint into app
 # All the blue print is inside the views application
 app = Flask(__name__)
-app.secret_key="SFSU"
+app.permanent_session_lifetime=timedelta(days=1)
+app.secret_key="GATOR"
 app.register_blueprint(home)
 app.register_blueprint(search)
 app.register_blueprint(posting)

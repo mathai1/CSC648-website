@@ -1,5 +1,5 @@
 # THIS IS search BLUEPRINT for search result page
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request,session
 from db import SearchingDB
 db = SearchingDB()
 
@@ -12,6 +12,8 @@ def searchpage():
         searchedData =request.form['searchedData']
         postings = db.searchAPosting(category,searchedData)
         lst = db.getPostingOrganizedData(postings)
+        if 'loggedin' in session:
+            return render_template("search/search.html", data = lst,user=session['firstname'])
         return render_template("search/search.html", data = lst)
     return render_template("search/search.html")
 
