@@ -23,9 +23,9 @@ class SearchingDB():
         conn = self.connect_db()
         pycursor = conn.cursor()
         if category == "All" :
-            searchQuery = f"SELECT * FROM User WHERE email LIKE '%{searchedData}%' "
+            searchQuery = f"SELECT * FROM User WHERE email LIKE '{searchedData}' "
         else :
-            searchQuery = f"SELECT * FROM User WHERE {category} LIKE '%{searchedData}%'"
+            searchQuery = f"SELECT * FROM User WHERE {category} LIKE '{searchedData}'"
         pycursor.execute(searchQuery)
         item = pycursor.fetchone()
         conn.close()
