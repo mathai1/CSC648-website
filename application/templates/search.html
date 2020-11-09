@@ -2,7 +2,7 @@
 {% extends "base.html" %}
 {% block title%}test search{% endblock %}
 {% block content %}  
-  <div>
+  <!-- <div>
     {%if data %}
     {% for d in data %}
       <ul> 
@@ -14,5 +14,70 @@
       </ul>  
     {% endfor %}
     {% endif %}
-  </div>
+  </div> -->
+
+ 
+
+  <div class="container-fluid">
+    <div class="row">
+        <div class="col-1 px-2 bg-warning position-fixed" id="sticky-sidebar">
+            <div class="nav flex-column flex-nowrap vh-100 overflow-auto text-white p-2">
+              <label>Min</label>
+              <input type="number" class="form-control" id="inputEmail4" placeholder="$0">
+              <label>Max</label>
+              <input type="number" class="form-control" placeholder="$100">
+              <label>Date posted</label>
+			        <input type="number" class="form-control" placeholder="mm/dd/yy">
+
+            </div>
+        </div>
+        
+
+
+        <div class="card-deck">
+        {%if data %}
+        {% for d in data %}
+        <!-- <div class="col-lg-3 col-md-4 col-sm-12 offset-1">
+          <div class="card product_item">
+              <div class="body">
+                  <div class="cp_img">
+                      <img src={{url_for('static', filename=d["image"] ) }} alt="no img" class="img-fluid">                    
+                  </div>
+                  <div class="product_details">
+                      <h5><a href="#">{{d["title"]}}</a></h5>
+                      <ul class="product_price list-unstyled">
+                          <li class="new_price">${{d["price"]}}</li>
+                      </ul>
+                      <p>
+                        <a href="#" class="btn btn-primary" role="button">Contact</a>
+                      </p>
+                  </div>
+              </div>
+          </div>
+      </div> -->
+
+      <div class="col-lg-3 col-md-4 col-sm-12 offset-1">
+        <div class="card bg-light text-center" style="width: 20rem;">
+          <img class="card-img-top" src={{url_for('static', filename=d["image"] ) }} alt="Card image cap">
+          <div class="card-header">{{d["title"]}}</div>
+          <div class="card-body">
+            <h5 class="card-title text-success">${{d["price"]}}</h5>
+            <a href="#" class="btn btn-primary">Contact</a>
+            <p class="card-text"><small class="text-muted">Date Posted:</small></p>
+          </div>
+        </div>
+        </div>
+
+
+
+      {% endfor %}
+      {% endif %}
+
+      </div>
+
+    </div>
+</div>
+
+
+
 {% endblock %}
