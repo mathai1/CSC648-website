@@ -1,56 +1,16 @@
 {% extends "base.html" %}
 {% block title%}posting{% endblock %}
 {% block content %}
-<!-- <section class="mb-5">
-
-    <div class="row">
-      <div class="col-md-6 mb-4 mb-md-0">
-  
-        <div id="mdb-lightbox-ui"></div>
-  
-        <div class="mdb-lightbox">
-  
-          <div class="row product-gallery mx-1">
-  
-            <div class="col-12 mb-0">
-              <figure class="view overlay rounded z-depth-1 main-img">
-                <a href="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/15a.jpg" data-size="710x823">
-                    <img src={{url_for('static', filename=posting["image"] ) }} class="img-fluid z-depth-1" alt="Responsive image">
-                </a>
-              </figure>
-            </div>
-            
-          </div>
-  
-        </div>
-  
-      </div>
-      <div class="col-md-6">
-  
-        <h5>{{posting['title']}}</h5>
-        <p class="mb-2 text-muted text-uppercase small">Shirts</p>
-        
-        <p><span class="mr-1"><strong>${{posting['price']}}</strong></span></p>
-        <p class="pt-1">{{posting['description']}}</p>
-        
-        <hr>
-        
-        <button type="button" class="btn btn-primary btn-md mr-1 mb-2">Contact Seller</button>
-      </div>
-    </div>
-  
-  </section> -->
-
  <div class="container-fluid">
     <div class="row">
         <div class="col-lg">
             <img src={{url_for('static', filename=posting["image"] ) }} class="img-fluid card-img-top" alt="Responsive image">
         </div>
         <div class="col">
-            <h2 class="h2" style="margin-top: 2rem; margin-bottom: 2rem;">{{posting['title']}}</h2>
+            <h2 class="h2" style="margin-top: 2rem; margin-bottom: 1rem;">{{posting['title']}}</h2>
             <h4 class="h4">${{posting['price']}}</h4>
             <h4 class="h4" style="margin-bottom: 2rem;">{{posting['category']}}</h4>
-            <h3 class="h3">Details</h3>
+            <h3 class="h3" style="text-decoration: underline;">Details</h3>
             <h4 class="h4">User Description:</h4>
             <p>{{posting['description']}}</p>
             <h5 class="h5">Date Posted:</h5>
@@ -60,118 +20,4 @@
         </div>
     </div>
  </div> 
-
-
-<!-- <div class="container-fluid">
-    <div class="row justify-content-md-center">
-        <h2 class="h2">{{posting['title']}}</h2>
-    </div>
-    <div class="row">
-        <div class="col"></div>
-        <div class="col-lg">
-            <img src={{url_for('static', filename=posting["image"] ) }} class="img-fluid card-img-top" alt="Responsive image">
-        </div>
-        <div class="col"></div>
-    </div>
-    <div class="row justify-content-md-center">
-        <a href="#" class="btn btn-primary">Contact Seller</a>
-    </div>
-    <div class="row">
-        <div class="col"></div>
-        <div class="col-lg">
-            <h3 class="h3">${{posting['price']}}</h3>
-            <p>{{posting['description']}}</p>
-        </div>
-        <div class="col"></div>
-    </div>
-</div> -->
-<!-- <div class="container-fluid">
-
-    <div class="row justify-content-md-center">
-        <div class="col"></div>
-        <div class="col-md">
-            <div class="card mt-4 text-center">
-                <img src={{url_for('static', filename=posting["image"] ) }} class="img-fluid card-img-top" alt="Responsive image">
-                <div class="card-body">
-                    <h3 class="card-title">{{posting['title']}}</h3>
-                    <h4>{{posting['price']}}</h4>
-                    <p class="card-text">{{posting['description']}}</p>
-                    <a href="#" class="btn btn-primary">Contact Seller</a>
-                </div>
-                end of card body
-            </div>
-            end of card
-        </div>
-        end of col-md
-        <div class="col"></div>
-    </div>
-    end of row
-
-</div> -->
-
-
-<!-- /.container -->
-
-<!-- <div class="container-fluid"> -->
-    
-    <!-- <div class="d-flex justify-content-center">
-        <h2 class="h2">{{posting['title']}}</h2>
-        <div class="card">
-            <img src={{url_for('static', filename=posting["image"] ) }} class="img-fluid" alt="Responsive image">
-            <h1>Tailored Jeans</h1>
-            <p class="price">$19.99</p>
-            <p>Some text about the jeans..</p>
-            <p><button>Add to Cart</button></p>
-        </div>
-    </div> -->
-    <!-- <div class="d-flex justify-content-center">
-        <span class="border">
-            <img src={{url_for('static', filename=posting["image"] ) }} class="img-fluid" alt="Responsive image">
-        </span>
-    </div> -->
-    <!-- <div class="d-flex justify-content-center">
-        <img class="card-img-top" src={{url_for('static', filename=posting["image"] ) }} alt="Card image cap">
-
-        <div class="card text-center">
-            <div class="card-header">
-                {{posting['price']}}
-            </div>
-            <div class="card-body">
-              <p class="card-text">{{posting['description']}}</p>
-              <a href="#" class="btn btn-primary">Contact Seller</a>
-            </div>
-        </div> -->
-        <!-- <button type="button" class="btn btn-primary btn-lg btn-block">Message seller</button>         -->
-    <!-- </div> -->
-    <!-- <div class="d-flex justify-content-center">
-        <p class="card-text">{{posting['description']}}</p>
-    </div> -->
-<!-- </div> -->
-
-    <!-- <div class="row">
-        <div class="col-6 mx-auto">
-            <h1>{{posting['title']}}</h1>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-6 mx-auto">
-            <img src={{url_for('static', filename=posting["image"] ) }} class="img-fluid" alt="Responsive image">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-6 mx-auto">
-            <p class="card-text">{{posting['description']}}</p>
-        </div>
-    </div> -->
-    <!-- <div class="mx-auto" style="width: 200px;">
-        <img src='{{url_for('static', filename='images/postings/empty.png')}}' class="img-fluid">
-        <img src={{url_for('static', filename=posting["image"] ) }} class="img-fluid" alt="Responsive image">
-        <button type="button" class="btn btn-primary btn-lg btn-block">Message seller</button>        
-        <div class="card text-center" style="width: 18rem;">
-            <div class="card-body">
-              <h5 class="card-title">{{posting['title']}}</h5>
-              <p class="card-text">{{posting['description']}}</p>
-            </div>
-        </div>
-    </div> -->
 {% endblock %}
