@@ -3,10 +3,9 @@
 {% block title%}test search{% endblock %}
 {% block content %}
 <div class="home-description">
-  <h3 class="text-center">GatorExchange</h3>
-  <h3 class="text-center">A marketplace for all SFSU students and staff.</h3>
+  <h1>SFSU Exchange</h1>
+  <h2>A marketplace for all SFSU students and staff.</h2>
 </div>
-
 
 
 <section class="pt-5 pb-5">
@@ -36,12 +35,11 @@
                       <div class="card">
                           <a href="/posting/{{d["title"]}}">
                           <img class="img-fluid" alt="100%x280" src={{url_for('static', filename=d["image"] ) }}>
+                          </a>
                           <div class="card-body">
                               <h4 class="card-title">{{d["title"]}}</h4>
                               <p class="card-text">{{d["price"]}}</p>
-                              <p class="card-text">{{d["description"]}}</p>
                           </div>
-                          </a>
                       </div>
                     </div>
                   {% endfor %}
@@ -49,25 +47,25 @@
               </div>
             </div>
             <!-- next 3 carousel items -->
+            {% for i in range(1,((data|length - 3) // 3) + 1) %}
             <div class="carousel-item">
               <div class="row">
-                <!-- 3 card sliders code -->
-                {%if data %}
-                  {% for d in data[3:5] %}
-                    <div class="col-md-4 mb-3">
-                      <div class="card">
-                          <img class="img-fluid" alt="100%x280" src={{url_for('static', filename=d["image"] ) }}>
-                          <div class="card-body">
-                              <h4 class="card-title">{{d["title"]}}</h4>
-                              <p class="card-text">{{d["price"]}}</p>
-                              <p class="card-text">{{d["description"]}}</p>
-                          </div>
-                      </div>
+                {% for j in range(1,4) %}
+                <div class="col-md-4 mb-3">
+                  <div class="card">
+                    <a href="/posting/{{data[i*3+j]["title"]}}">
+                    <img class="img-fluid" alt="100%x280" src={{url_for('static', filename=data[i*3+j]["image"] ) }}>
+                    </a>
+                    <div class="card-body">
+                        <h4 class="card-title">{{data[i*3 + j]["title"]}}</h4>
+                        <p class="card-text">{{data[i*3 + j]["price"]}}</p>
                     </div>
-                  {% endfor %}
-                {% endif %}
+                  </div>
+                </div>
+                {% endfor %}
               </div>
             </div>
+            {% endfor %}
           </div>
         </div>
      </div>
@@ -96,11 +94,12 @@
                 {% if d["category"] == "Bible Study" %}
                   <div class="col-md-4 mb-3">
                     <div class="card">
+                        <a href="/posting/{{d["title"]}}">
                         <img class="img-fluid" alt="100%x280" src={{url_for('static', filename=d["image"] ) }}>
+                        </a>
                         <div class="card-body">
                             <h4 class="card-title">{{d["title"]}}</h4>
                             <p class="card-text">{{d["price"]}}</p>
-                            <p class="card-text">{{d["description"]}}</p>
                         </div>
                     </div>
                   </div>
