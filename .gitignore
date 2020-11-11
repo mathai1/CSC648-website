@@ -2,4 +2,5 @@
 .DS_Store
 ## Ignore venv
 venv/
+## Pycache directory
 */__pycache__/*
