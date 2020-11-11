@@ -32,19 +32,26 @@ def getPerson(name):
 
 @home.route('/login/',methods =['GET','POST'])
 def login():
+    #initializing variable for Error Message
     msg = ''
+    #If items are inputted by user
     if request.method == 'POST' and 'email' in request.form and 'pwd' in request.form:
+        #retrieves inputs from users
         email=request.form['email']
         password=request.form['pwd']
+        #find user data from database 
         user=db.getAUser("email",email)
+        #if user found in database
         if user:
             if email==user[0] and password==user[1]:
                 session['loggedin']=True
                 session['email']=user[0]
                 session['firstname']=user[3]
                 return redirect(url_for("home.homepage"))
+        #else return error message
         else:
             msg='Invalid Email/Password'
+    #if no input then bring up an empty login page
     return render_template("home/login.html", msg=msg)
 
 
