@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title%}posting{% endblock %}
+{% block content %}
+ <div class="container-fluid">
+    <div class="row">
+        <div class="col-lg">
+            <img src={{url_for('static', filename=posting["image"] ) }} class="img-fluid card-img-top" alt="Responsive image">
+        </div>
+        <div class="col">
+            <h2 class="h2" style="margin-top: 2rem; margin-bottom: 1rem;">{{posting['title']}}</h2>
+            <h4 class="h4">${{posting['price']}}</h4>
+            <h4 class="h4" style="margin-bottom: 2rem;">{{posting['category']}}</h4>
+            <h3 class="h3" style="text-decoration: underline;">Details</h3>
+            <h4 class="h4">User Description:</h4>
+            <p>{{posting['description']}}</p>
+            <h5 class="h5">Date Posted:</h5>
+            <p>{{posting['date']}}</p>
+            <hr>
+            <a href="#" class="btn btn-primary">Contact Seller</a>
+        </div>
+    </div>
+ </div> 
+{% endblock %}
