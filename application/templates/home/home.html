@@ -33,12 +33,14 @@
                   {% for d in data[:3] %}
                     <div class="col-md-4 mb-3">
                       <div class="card">
+                          <a href="/posting/{{d["title"]}}">
                           <img class="img-fluid" alt="100%x280" src={{url_for('static', filename=d["image"] ) }}>
                           <div class="card-body">
                               <h4 class="card-title">{{d["title"]}}</h4>
                               <p class="card-text">{{d["price"]}}</p>
                               <p class="card-text">{{d["description"]}}</p>
                           </div>
+                          </a>
                       </div>
                     </div>
                   {% endfor %}
@@ -89,7 +91,8 @@
           <div class="carousel-item active">
             <div class="row">
               {%if data %}
-                {% for d in data[0:3:2] %}
+                {% for d in data %}
+                {% if d["category"] == "Bible Study" %}
                   <div class="col-md-4 mb-3">
                     <div class="card">
                         <img class="img-fluid" alt="100%x280" src={{url_for('static', filename=d["image"] ) }}>
@@ -100,6 +103,7 @@
                         </div>
                     </div>
                   </div>
+                {% endif %}
                 {% endfor %}
               {% endif %}
             </div>
