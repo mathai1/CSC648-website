@@ -35,7 +35,9 @@
           {%if data %}
           {% for d in data %}
           
-          <div class="col-xs-12 col-sm-6 col-md-4">
+          <div class="col-xs-12 col-sm-8 col-md-6 col-lg-4">
+            <!-- space between cards -->
+            <div class="p-3 boder">
             <!-- individual card start-->
             <div class="card bg-light text-center" style="width: 20rem;">
               <img class="card-img-top" src={{url_for('static', filename=d["image"] ) }} alt="Card image cap">
@@ -47,6 +49,8 @@
               </div>
             </div> 
             <!-- individual card end-->
+            </div>
+            <!-- card space end-->
           </div> 
                   
           
