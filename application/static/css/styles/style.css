@@ -10,11 +10,8 @@
     border: 1px solid #ced4da;
     border-radius: .25rem;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-
 }
 
-.home-description{
-    font-family: 'Lobster', cursive;
-    font-weight: 500;
-    line-height: 1.1;
+.home-description {
+    text-align: center;
 }
