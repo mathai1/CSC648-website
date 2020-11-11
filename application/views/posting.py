@@ -7,6 +7,12 @@ db = SearchingDB()
 
 posting = Blueprint('posting', __name__)
 
+
+@posting.route('/posting')
+def post():
+    return render_template("posting/posting.html")
+
+
 @posting.route('/posting/<title>')
 def getPost(title):
     page = "posting/posting.html"
