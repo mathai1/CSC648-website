@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 {% block title%}Login{% endblock %}
 {% block content %}  
-  <div class="container">
-    <form action="/login" method="post">
+  <div class="loginbox">
+      {{message}}
+    <form action="/login" method="POST">
         <!-- Email -->
         <div class="col-xs-4">
           <label for="email">Email address:</label>
@@ -11,9 +12,8 @@
         <!-- Password -->
         <div class="col-xs-4">
           <label for="pwd">Password:</label>
-          <input type="password" class="form-control" placeholder="Enter password" id="pwd" name="pwd">
+          <input type="password" class="form-control" placeholder="Enter password" id="password" name="password">
         </div>
-        <div class ="msg">{{ msg }}</div>
         <!-- Forgot Password -->
         <div class="col text-center">
             <button type="button" class="btn btn-link">Forgot Password</button>
