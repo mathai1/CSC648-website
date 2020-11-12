@@ -19,7 +19,7 @@
       <section class="home-slick-slider" >
         {% for d in data %}
         <div>
-          <a  href="/posting/{{d['id']}}">
+          <a  href="/posting/{{d['postid']}}">
           <div class="card">
               <img class="img-fluid" alt="100%x280" src={{url_for('static', filename=d["image"] ) }}>
               <div class="card-body">

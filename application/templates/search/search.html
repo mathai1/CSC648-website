@@ -2,7 +2,7 @@
 {% extends "base.html" %}
 {% block title%}test search{% endblock %}
 {% block content %}  
-  <div>
+  <!-- <div>
     {%if data %}
     {% for d in data %}
       <ul> 
@@ -14,5 +14,56 @@
       </ul>  
     {% endfor %}
     {% endif %}
-  </div>
+  </div> -->
+ 
+  <div class="container-fluid">
+    <div class="row">
+        <div class="col-2 px-1 bg-dark position-fixed" id="sticky-sidebar">
+            <div class="nav flex-column flex-nowrap vh-100 overflow-auto text-white p-2">
+              <label>Min</label>
+              <input type="number" class="form-control" id="inputEmail4" placeholder="$0">
+              <label>Max</label>
+              <input type="number" class="form-control" placeholder="$100">
+              <label>Date posted</label>
+              <input type="number" class="form-control" placeholder="mm/dd/yy">         
+            </div>
+        </div>
+        <div class="col-9 offset-2" id="main">
+
+          <!-- card-deck start -->
+          <div class="card-deck">
+          {%if data %}
+          {% for d in data %}
+          
+          <div class="col-xs-12 col-sm-8 col-md-6 col-lg-4">
+            <!-- space between cards -->
+            <div class="p-3 boder">
+            <!-- individual card start-->
+            <a  href="/posting/{{d['postid']}}">
+            <div class="card bg-light text-center" style="width: 20rem;">
+              <img class="card-img-top" src={{url_for('static', filename=d["image"] ) }} alt="Card image cap">
+              <div class="card-header">{{d["title"]}}</div>
+              <div class="card-body">
+                <h5 class="card-title text-success">${{d["price"]}}</h5>
+                <a href="#" class="btn btn-primary">Contact</a>                
+                <p class="card-text"><small class="text-muted">Date Posted:</small></p>
+              </div>
+            </div> 
+            </a>
+            <!-- individual card end-->
+            </div>
+            <!-- card space end-->
+          </div> 
+                  
+          
+          {% endfor %}
+          {% endif %}
+
+        </div><!--card-deck end -->
+
+        </div><!--main area end-->
+    </div>
+</div>
+
+
 {% endblock %}

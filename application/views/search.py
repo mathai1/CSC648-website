@@ -12,8 +12,9 @@ def searchpage():
         searchedData =request.form['searchedData']
         postings = db.searchAPosting(category,searchedData)
         lst = db.getPostingOrganizedData(postings)
-        if 'loggedin' in session:
-            return render_template("search/search.html", data = lst,user=session['firstname'])
+        print(lst)
+        # if 'loggedin' in session:
+        #     return render_template("search/search.html", data = lst,user=session['firstname'])
         return render_template("search/search.html", data = lst)
     return render_template("search/search.html")
 
