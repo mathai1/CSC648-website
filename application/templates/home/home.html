@@ -5,109 +5,82 @@
 <div class="home-description">
   <h1>SFSU Exchange</h1>
   <h2>A marketplace for all SFSU students and staff.</h2>
+  {% if user %}
+  <h3>Welcome {{user[0].fname}} </h3>
+  {% endif %}
 </div>
 
 
-<section class="pt-5 pb-5">
   <div class="container">
     <!-- Row for top category -->
-    <div class="row">
-      <div class="col-6">
-        <h3 class="mb-3">Featured Products</h3>
-      </div>
-      <div class="col-6 text-right">
-        <a class="btn btn-primary mb-3 mr-1" href="#carouselExampleIndicators2" role="button" data-slide="prev">
-            <i class="fa fa-arrow-left">&lt;</i>
-        </a>
-        <a class="btn btn-primary mb-3 " href="#carouselExampleIndicators2" role="button" data-slide="next">
-            <i class="fa fa-arrow-right">&gt;</i>
-        </a>
-      </div>
-      <div class="col-12">
-        <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              <div class="row">
-                <!-- 3 card sliders code -->
-                {%if data %}
-                  {% for d in data[:3] %}
-                    <div class="col-md-4 mb-3">
-                      <div class="card">
-                          <img class="img-fluid" alt="100%x280" src={{url_for('static', filename=d["image"] ) }}>
-                          <div class="card-body">
-                              <h4 class="card-title">{{d["title"]}}</h4>
-                              <p class="card-text">{{d["price"]}}</p>
-                              <p class="card-text">{{d["description"]}}</p>
-                          </div>
-                      </div>
-                    </div>
-                  {% endfor %}
-                {% endif %}
-              </div>
-            </div>
-            <!-- next 3 carousel items -->
-            <div class="carousel-item">
-              <div class="row">
-                <!-- 3 card sliders code -->
-                {%if data %}
-                  {% for d in data[3:5] %}
-                    <div class="col-md-4 mb-3">
-                      <div class="card">
-                          <img class="img-fluid" alt="100%x280" src={{url_for('static', filename=d["image"] ) }}>
-                          <div class="card-body">
-                              <h4 class="card-title">{{d["title"]}}</h4>
-                              <p class="card-text">{{d["price"]}}</p>
-                              <p class="card-text">{{d["description"]}}</p>
-                          </div>
-                      </div>
-                    </div>
-                  {% endfor %}
-                {% endif %}
-              </div>
-            </div>
-          </div>
-        </div>
-     </div>
-   </div>
 
-  <!-- Next Category -->
-  <div class="row">
-    <div class="col-6">
-      <h3 class="mb-3">Books </h3>
-    </div>
-    <div class="col-6 text-right">
-      <a class="btn btn-primary mb-3 mr-1" href="#carouselExampleIndicators3" role="button" data-slide="prev">
-          <i class="fa fa-arrow-left">&lt;</i>
-      </a>
-      <a class="btn btn-primary mb-3 " href="#carouselExampleIndicators3" role="button" data-slide="next">
-          <i class="fa fa-arrow-right">&gt;</i>
-      </a>
-    </div>
-    <div class="col-12">
-      <div id="carouselExampleIndicators3" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <div class="row">
-              {%if data %}
-                {% for d in data[0:3:2] %}
-                  <div class="col-md-4 mb-3">
-                    <div class="card">
-                        <img class="img-fluid" alt="100%x280" src={{url_for('static', filename=d["image"] ) }}>
-                        <div class="card-body">
-                            <h4 class="card-title">{{d["title"]}}</h4>
-                            <p class="card-text">{{d["price"]}}</p>
-                            <p class="card-text">{{d["description"]}}</p>
-                        </div>
-                    </div>
-                  </div>
-                {% endfor %}
-              {% endif %}
-            </div>
+    <div class="slide-box">
+      <h3> Feature products </h3>
+      <section class="home-slick-slider" >
+        {% for d in data %}
+        <div>
+          <a  href="/posting/{{d['id']}}">
+          <div class="card">
+              <img class="img-fluid" alt="100%x280" src={{url_for('static', filename=d["image"] ) }}>
+              <div class="card-body">
+                  <h4 class="card-title">{{d["title"]}}</h4>
+                  <p class="card-text">{{d["price"]}}</p>
+                  <p class="card-text">{{d["description"]}}</p>
+              </div>
           </div>
+        </a>
         </div>
-      </div>
-   </div>
-  </div>
-  <!-- end Category -->
+        {% endfor %}
+      </section>
+    </div>
+
+    <div class="slide-box">
+      <h3> Favorite products </h3>
+      <section class="home-slick-slider" >
+        {% for d in data %}
+        <div>
+          <a  href="/posting/{{d['id']}}">
+          <div class="card">
+              <img class="img-fluid" alt="100%x280" src={{url_for('static', filename=d["image"] ) }}>
+              <div class="card-body">
+                  <h4 class="card-title">{{d["title"]}}</h4>
+                  <p class="card-text">{{d["price"]}}</p>
+                  <p class="card-text">{{d["description"]}}</p>
+              </div>
+          </div>
+        </a>
+        </div>
+        {% endfor %}
+      </section>
+    </div>
+
+
+<script src="static/slick/slick.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+
+  $(document).ready(function() {
+  $('.home-slick-slider').slick({
+
+    infinite: false,
+    speed: 300,
+    slidesToShow: 3,
+    slidesToScroll: 2,
+    cssEase: 'linear',
+    arrows: true,
+    dots: false
+  });
+});
+
+</script>
+
+<!-- SCript for each item box -->
+<script>
+      $(document).ready(function() {
+          $('img.thumbnail').click(function() {
+              window.location.href = "itemPage.html?poid=" + this.id + '.html';
+          });
+      });
+  </script>
+
 </section>
 {% endblock %}
