@@ -16,7 +16,9 @@ dashboard = Blueprint('dashboard', __name__)
 #     ]
 #     return render_template('dashboard.html', user=user, posts=posts)
 
-
+@dashboard.route('/dashboard')
+def dashboardPage():
+    return render_template('dashboard/dashboard.html')
 
 @dashboard.route('/messages')
 def messages():
