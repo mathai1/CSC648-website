@@ -1,5 +1,5 @@
 # THIS IS HOME BLUEPRINT for home, about, login and signup
-from flask import Blueprint, render_template,request,redirect,url_for,session
+from flask import Blueprint, render_template, request, session
 from db import SearchingDB
 
 db = SearchingDB()
@@ -48,10 +48,19 @@ def login():
     return render_template("home/login.html", msg=msg)
 
 
-@home.route('/signup')
-def signup(name):
+@home.route('/signup', methods=['GET', 'POST'])
+def signup():
+    if request.method == 'POST':
+        user = {}
+        user['email'] = request.form['email']
+        user['password'] = request.form['password']
+        user['fname'] = request.form['fname']
+        user['lname'] = request.form['lname']
+        db.insertAUser(user)
+        return render_template("home/login.html" , message = "Account is created")
     return render_template("home/signup.html")
 
+<<<<<<< HEAD
 @home.route('/logout')
 def logout():
     session.pop('loggedin',None)
@@ -61,4 +70,6 @@ def logout():
 
 
 
+=======
+>>>>>>> dangbranch
 

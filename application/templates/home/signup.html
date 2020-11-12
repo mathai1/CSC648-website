@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %} 
+<span class="border border-light">
+
+<div class="signup-main">
+  <center>
+    <h1> Sign up </h1>
+  </center>
+  <br>
+  <div class="signup-container">
+    <div class ="card">
+      <div class =" card-body">
+    <form action="/signup" method="POST">
+        <div class="col-xs-4">
+          <label for="email">Email address:</label>
+          <input type="email" class="form-control" placeholder="Enter email" id="email" name="email">
+        </div>
+        <div class="col-xs-4">
+          <label for="pwd">Password:</label>
+          <input type="password" class="form-control" placeholder="Enter password" id="password" name="password">
+        </div>
+
+        <div class="col-xs-4">
+            <label for="firstName">First name:</label>
+            <input type="firstname" class="form-control" placeholder="Enter first name" id="fname" name="fname">
+          </div>
+
+          <div class="col-xs-4">
+            <label for="lastName">Last name:</label>
+            <input type="firstname" class="form-control" placeholder="Enter last name" id="lname" name="lname">
+          </div>
+          <br>
+        <div class="col text-center">
+            <button type="submit" class="btn btn-primary ">Submit</button>
+        </div>
+      </form>
+  </div>
+  </div>
+</div>
+</div>
+
+{% endblock %}

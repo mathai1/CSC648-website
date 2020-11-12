@@ -1,0 +1,14 @@
+.signup-main {
+	font-size: 14px;
+    line-height: 1.8;
+    color: $black-color;
+    font-weight: 400;
+    background-position: center center;
+    padding: 115px 0;
+}
+
+.signup-container {
+    width: 660px;
+    position: relative;
+    margin: 0 auto;
+}
