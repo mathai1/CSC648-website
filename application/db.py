@@ -221,15 +221,15 @@ class SearchingDB():
     def getPostingbyPrice(self, min, max, searchedData, category):
         conn = self.connect_db()
         pycursor = conn.cursor()
-        if catergory == "All" :
+        if category == "All" :
             searchQuery = f"SELECT * from Posting WHERE title LIKE '%{searchedData}%' AND price > {min} AND price < {max} "
         else :
-            searchQuery = f"SELECT * from Posting WHERE category LIKE '{catergory}' AND title LIKE '%{searchedData}%' AND price > {min} AND price < {max}"
+            searchQuery = f"SELECT * from Posting WHERE category LIKE '{category}' AND title LIKE '%{searchedData}%' AND price > {min} AND price < {max}"
         data = pycursor.execute(searchQuery)
         item = pycursor.fetchall()
         conn.close()
+        item = self.getPostingOrganizedData(item)
         return item
-
 
 ############# Favorites feature #################
 # Method : This function adding a post into a favorite table

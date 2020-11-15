@@ -15,19 +15,39 @@
     {% endfor %}
     {% endif %}
   </div> -->
- 
+  <script>
+    $(function() {
+        $('.search-filter').keyup(function(){
+            var min = $('#min').val();
+            var max = $('#max').val();
+
+            console.log("working")
+        $.ajax({
+            type: 'POST',
+                url: 'filter?searchedData={{searchedData}}&category={{category}}&min='+min+'&max=' +max,
+                dataType: 'json',
+           });
+        });
+    });
+    </script>
+
   <div class="container-fluid">
     <div class="row">
         <div class="col-2 px-1 bg-dark position-fixed" id="sticky-sidebar">
-            <div class="nav flex-column flex-nowrap vh-100 overflow-auto text-white p-2">
-              <label>Min</label>
-              <input type="number" class="form-control" id="inputEmail4" placeholder="$0">
-              <label>Max</label>
-              <input type="number" class="form-control" placeholder="$100">
-              <label>Date posted</label>
-              <input type="number" class="form-control" placeholder="mm/dd/yy">         
+            <div class="nav flex-column flex-nowrap vh-100 overflow-auto text-white p-2" >
+              <div class="search-filter">
+                <form>
+                <label>Min</label>
+                <input type="number" class="form-control" name="min" id="min" placeholder="$0">
+                <label>Max</label>
+                <input type="number" class="form-control" name="max"  id="max"placeholder="$100">
+                <label>Date posted</label>
+                <input type="number" class="form-control" placeholder="mm/dd/yy">   
+              </form>
+              </div>
             </div>
         </div>
+      </div>
         <div class="col-9 offset-2" id="main">
 
           <!-- card-deck start -->
