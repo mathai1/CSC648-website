@@ -20,7 +20,6 @@
         $('.search-filter').keyup(function(){
             var min = $('#min').val();
             var max = $('#max').val();
-
             console.log("working")
         $.ajax({
             type: 'POST',
@@ -29,14 +28,14 @@
            });
         });
     });
-    </script>
+  </script>
 
   <div class="container-fluid">
     <div class="row">
         <div class="col-2 px-1 bg-dark position-fixed" id="sticky-sidebar">
             <div class="nav flex-column flex-nowrap vh-100 overflow-auto text-white p-2" >
               <div class="search-filter">
-                <form>
+                <form action="/filter" method="POST">
                 <label>Min</label>
                 <input type="number" class="form-control" name="min" id="min" placeholder="$0">
                 <label>Max</label>

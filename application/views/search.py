@@ -28,6 +28,7 @@ def filterpage():
             min = request.args['min']
             max = request.args['max']
             postings = db.getPostingbyPrice(min, max, category,searchedData)
+            print(postings)
             return render_template("search/search.html", data = postings, searchedData = searchedData, category = category)
         # lst = db.getPostingOrganizedData(postings)
         # if 'loggedin' in session:
