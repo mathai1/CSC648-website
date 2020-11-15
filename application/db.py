@@ -206,6 +206,31 @@ class SearchingDB():
             lst.append(dPosting)
         return lst
 
+    def getPostingbyDate(self,searchData,category) :
+        conn = self.connect_db()
+        pycursor = conn.cursor()
+        if catergory == "All" :
+            searchQuery = f"SELECT * from Posting WHERE title LIKE '%{searchedData}%' ORDER BY date ASC "
+        else :
+            searchQuery = f"SELECT * from Posting WHERE category LIKE '{catergory}' AND title LIKE '%{searchedData}%' ORDER BY date ASC"
+        data = pycursor.execute(searchQuery)
+        item = pycursor.fetchall()
+        conn.close()
+        return item
+
+    def getPostingbyPrice(self, min, max, searchedData, category):
+        conn = self.connect_db()
+        pycursor = conn.cursor()
+        if catergory == "All" :
+            searchQuery = f"SELECT * from Posting WHERE title LIKE '%{searchedData}%' AND price > {min} AND price < {max} "
+        else :
+            searchQuery = f"SELECT * from Posting WHERE category LIKE '{catergory}' AND title LIKE '%{searchedData}%' AND price > {min} AND price < {max}"
+        data = pycursor.execute(searchQuery)
+        item = pycursor.fetchall()
+        conn.close()
+        return item
+
+
 ############# Favorites feature #################
 # Method : This function adding a post into a favorite table
 # Parameter : postid and useremail
