@@ -1,5 +1,6 @@
 import pymysql
 import datetime
+from PIL import Image
 
 class SearchingDB():
     def __init__(self):
@@ -10,6 +11,13 @@ class SearchingDB():
         self.password = "mypass123"
     def connect_db(self) :
         return pymysql.connect(host =self.host, user=self.user, port=self.port,passwd=self.password, db=self.dbname) 
+
+    def createThumbnail(self, filepath,destination, width = 240, height = 240):
+        image = Image.open(filepath)
+        MAX_SIZE = (width, height)
+        image.thumbnail(MAX_SIZE)
+        image.save(destination)
+    
 
 ###### retriving user info #############
 
@@ -266,7 +274,7 @@ class SearchingDB():
     def getCategories(self):
         conn = self.connect_db()
         pycursor = conn.cursor()
-        searchQuery = "SELECT * from Categories"
+        searchQuery = "SELECT * from Category"
         pycursor.execute(searchQuery)
         item = pycursor.fetchall()
         conn.close()

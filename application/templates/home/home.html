@@ -15,17 +15,17 @@
     <!-- Row for top category -->
 
     <div class="slide-box">
-      <h3> Feature products </h3>
+      <h3> Featured products </h3>
       <section class="home-slick-slider" >
         {% for d in data %}
         <div>
           <a  href="/posting/{{d['postid']}}">
           <div class="card">
-              <img class="img-fluid" alt="100%x280" src={{url_for('static', filename=d["image"] ) }}>
+              <img class="img-fluid"  alt="100%x280" src={{url_for('static', filename=d["image"] )}} >
               <div class="card-body">
                   <h4 class="card-title">{{d["title"]}}</h4>
                   <p class="card-text">{{d["price"]}}</p>
-                  <p class="card-text">{{d["description"]}}</p>
+                  
               </div>
           </div>
         </a>
@@ -39,13 +39,13 @@
       <section class="home-slick-slider" >
         {% for d in data %}
         <div>
-          <a  href="/posting/{{d['id']}}">
+          <a  href="/posting/{{d['postid']}}">
           <div class="card">
               <img class="img-fluid" alt="100%x280" src={{url_for('static', filename=d["image"] ) }}>
               <div class="card-body">
                   <h4 class="card-title">{{d["title"]}}</h4>
                   <p class="card-text">{{d["price"]}}</p>
-                  <p class="card-text">{{d["description"]}}</p>
+                  
               </div>
           </div>
         </a>

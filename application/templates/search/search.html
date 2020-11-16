@@ -23,7 +23,7 @@
             console.log("working")
         $.ajax({
             type: 'POST',
-                url: 'search?searchedData={{searchedData}}&filter={{category}}&min='+min+'&max=' +max,
+                url: 'filter?searchedData={{searchedData}}&filter={{category}}&min='+min+'&max=' +max,
                 success: function(response) {   
                   $("html").html(response);
             }   
@@ -41,7 +41,7 @@
                 <label>Min</label>
                 <input type="number" class="form-control" name="min" id="min" value= {%if min %} {{min}} {% else %} 0 {% endif %}>
                 <label>Max</label>
-                <input type="number" class="form-control" name="max"  id="max" value={%if max %} {{max}} {% else %} 100 {% endif %}>
+                <input type="number" class="form-control" name="max"  id="max" value={%if max %} {{max}} {% else %} {{high}} {% endif %}>
                 <label>Date posted</label>
                 <input type="number" class="form-control" placeholder="mm/dd/yy">   
               </form>

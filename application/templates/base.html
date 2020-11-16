@@ -24,7 +24,7 @@
       <title>{% block title %}{% endblock %}</title>
    </head>
    <body>
-      <p class="h1">Software Engineering class SFSU, Fall 2020, Team 05</p>
+      <p class="h1">Software Engineering class SFSU, Fall 2020, Team 05 </p>
       <!--************************************** NAV BAR *********************************************-->
       <nav class="navbar navbar-expand-lg navbar-light bg-light " >
          <a class="navbar-brand" href="/">
@@ -52,12 +52,15 @@
                   <select class="nav-link dropdown-toggle" name="filter" href="#" id="navbarDropdown" data-toggle="dropdown">
                      Dropdown
                      <option class="dropdown-item" value ="All" {%if category == "All"%}selected{%endif%}>All</option>
-                     <option class="dropdown-item" value ="book" {%if category == "book"%}selected{%endif%} >book</option>
-                     <option class="dropdown-item" value ="electronic">electronic</option>
-                     <option class="dropdown-item" value = "misc">misc</option>
+                     {%if navlst%}
+                     {% for n in navlst %}
+                     <option class="dropdown-item" value ="{{n[0]}}" {%if category == n[0] %}selected{%endif%} >{{n[0]}} </option>
+   
+                     {% endfor %}
+                     {% endif %}
                   </select>
                </div>
-               <input class="form-control mr-sm-2" type="search" style="width: 500px;"name="searchedData" placeholder="{{searchedData}}" aria-label="Search">
+               <input class="form-control mr-sm-2" type="search" style="width: 400px;"name="searchedData" value="{{searchedData}}" aria-label="Search">
                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
          </div>

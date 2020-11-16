@@ -6,23 +6,57 @@
 # Most of the templates will extend a master template
 
 from flask import Flask
-from views.search import search
-from views.home import home
-from views.posting import posting
-from views.dashboard import dashboard
+from flask_thumbnails import Thumbnail
+from views.search import initSearch
+from views.home import initHome
+from views.posting import initPost
+from views.dashboard import initDashBoard
 from views.profile import profile
-from datetime import timedelta
+from views.message import initChat
 
-# Register blueprint into app
-# All the blue print is inside the views application
+from datetime import timedelta
+from db import SearchingDB
+from flask import send_from_directory
+
+
+
+#Initialize flask app
 app = Flask(__name__)
+
+
+# Setting app session
 app.permanent_session_lifetime=timedelta(days=1)
+
+#Initialize db
+db = SearchingDB()
+
+
+#db.createThumbnail("static/images/postings/empty.png" , "static/media/empty.png", 240 , 240)
+# Setting jinga global
+@app.context_processor
+def init():
+    cat = db.getCategories() # Getting categories from database and make it glbal for navbar
+    return dict(navlst = cat)
+
+# Setting key for session
 app.secret_key="GATOR"
+
+# Passing db to all the blueprints
+home = initHome(db)
+search = initSearch(db)
+posting = initPost(db)
+dashboard = initDashBoard(db)
+message =initChat(db)
+
+
+########## All the blue print is inside the views application #######
+# Register blueprint
 app.register_blueprint(home)
 app.register_blueprint(search)
 app.register_blueprint(posting)
 app.register_blueprint(dashboard)
 app.register_blueprint(profile)
+app.register_blueprint(message)
 
 
 
