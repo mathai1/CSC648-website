@@ -226,13 +226,19 @@ class SearchingDB():
         conn.close()
         return item
 
-    def getPostingbyPrice(self, min, max, searchedData, category):
+    def getPostingbyPrice(self, min, max, order, searchedData, category):
         conn = self.connect_db()
         pycursor = conn.cursor()
         if category == "All" :
-            searchQuery = f"SELECT * from Posting WHERE title LIKE '%{searchedData}%' AND price > {min} AND price < {max} "
+            if order == "oldest" :
+                searchQuery = f"SELECT * from Posting WHERE title LIKE '%{searchedData}%' AND price > {min} AND price < {max} order by DATE(date) DESC"
+            else :
+                searchQuery = f"SELECT * from Posting WHERE title LIKE '%{searchedData}%' AND price > {min} AND price < {max} order by DATE(date) ASC"
         else :
-            searchQuery = f"SELECT * from Posting WHERE category LIKE '{category}' AND title LIKE '%{searchedData}%' AND price > {min} AND price < {max}"
+            if order == "oldest" :
+                searchQuery = f"SELECT * from Posting WHERE category LIKE '{category}' AND title LIKE '%{searchedData}%' AND price > {min} AND price < {max} order by DATE(date) DESC"
+            else:
+                searchQuery = f"SELECT * from Posting WHERE category LIKE '{category}' AND title LIKE '%{searchedData}%' AND price > {min} AND price < {max} order by DATE(date) ASC"
         data = pycursor.execute(searchQuery)
         item = pycursor.fetchall()
         conn.close()

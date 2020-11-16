@@ -20,10 +20,11 @@
         $('.search-filter').keyup(function(){
             var min = $('#min').val();
             var max = $('#max').val();
+            var order = $('#order').val();
             console.log("working")
         $.ajax({
             type: 'POST',
-                url: 'filter?searchedData={{searchedData}}&filter={{category}}&min='+min+'&max=' +max,
+                url: 'filter?searchedData={{searchedData}}&filter={{category}}&min='+min+'&max=' +max+'&order=' +order,
                 success: function(response) {   
                   $("html").html(response);
             }   
@@ -41,9 +42,15 @@
                 <label>Min</label>
                 <input type="number" class="form-control" name="min" id="min" value= {%if min %} {{min}} {% else %} 0 {% endif %}>
                 <label>Max</label>
-                <input type="number" class="form-control" name="max"  id="max" value={%if max %} {{max}} {% else %} {{high}} {% endif %}>
-                <label>Date posted</label>
-                <input type="number" class="form-control" placeholder="mm/dd/yy">   
+                <input type="number" class="form-control" name="max"  id="max" value={%if max %} {{max}} {% else %} {{high}} {% endif %}> 
+                
+                <label>Sort by</label>
+                <select class="custom-select" name="order" id="order">
+                  <option>-- select --</option>
+                  <option value="newest">Newest</option>
+                  <option value="oldest">Oldest</option>
+                </select>
+
               </form>
               </div>
             </div>
@@ -67,7 +74,7 @@
               <div class="card-body">
                 <h5 class="card-title text-success">${{d["price"]}}</h5>
                 <a href="#" class="btn btn-primary">Contact</a>                
-                <p class="card-text"><small class="text-muted">Date Posted:</small></p>
+                <p class="card-text"><small class="text-muted">Date Posted: {{d["date"]}}</small></p>
               </div>
             </div> 
             </a>
