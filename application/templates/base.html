@@ -1,78 +1,95 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-        <link rel="stylesheet" type= "text/css" href="{{url_for('static', filename='css/styles/style.css')}}">
-        <title>{% block title %}{% endblock %}</title>
-    </head>
-    <body>
-    <p class="h1">Software Engineering class SFSU, Fall 2020, Team 05</p>
-    <!-- This is nav bar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="navbar-collapse collapse justify-content-start order-2" id="collapsibleNavbar">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="/">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Post</a>
-            </li>
-        </ul>
-      </div>
-
-    <div class="navbar-collapse collapse justify-content-center order-2" id="collapsibleNavbar">
-    <form class="form-inline my-2 my-lg-0" action ="/search" method ="POST">
-      <div class="dropdown" id="searchNav">
-        <select class="nav-link dropdown-toggle" name="filter" href="#" id="navbarDropdown" data-toggle="dropdown">
-          Dropdown
-          <option class="dropdown-item" value ="All" >All</option>
-          <option class="dropdown-item" value ="book" >book</option>
-          <option class="dropdown-item" value ="electronic">electronic</option>
-          <option class="dropdown-item" value = "misc">misc</option>
-        </select>
-      </div>
-      <input class="form-control mr-sm-2" type="search" name="searchedData" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
-    </div>
-      
-      <div class="navbar-collapse collapse justify-content-end order-2" id="collapsibleNavbar">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="/about">About</a>
-            </li>
-            <!-- If Logged In -->
-            {% if user %}
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Welcome {{user}}</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="/logout">Logout</a>
-             </li>
-            {% endif %}
-            <!-- If not Logged in -->
-            {% if not user%}
-            <li class="nav-item active">
-                <a class="nav-link" href="/login">Login</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Sign Up</a>
-            </li>
-            {% endif %}
-        </ul>
-    </div>
-  </nav>
-  <!-- End nav bar -->
-
-        {%block content %}
-        {% endblock %}
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-    </body>
+   <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <!--************************************** IMPORTING STATIC SOURCES *********************************************-->
+      <!-- Boostrap -->
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+      <!-- Local CSS file -->
+      <link rel="stylesheet" type= "text/css" href="{{url_for('static', filename='css/styles/style.css')}}">
+      <link rel="stylesheet" type= "text/css" href="{{url_for('static', filename='css/styles/navbar.css')}}">
+      <link rel="stylesheet" type= "text/css" href="{{url_for('static', filename='css/styles/carousel.css')}}">
+      <link rel="stylesheet" type= "text/css" href="{{url_for('static', filename='css/styles/signup.css')}}">
+      <link rel="stylesheet" type="text/css" href=" {{url_for('static', filename='slick/slick.css')}}">
+      <link rel="stylesheet" type="text/css" href=" {{url_for('static', filename='slick/slick-theme.css')}}">
+      <!-- Jquery and socket js -->
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+      <script src="//code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+      <!--************************************** ENDING IMPORTING STATIC SOURCES *********************************************-->
+      <!-- TITLE PAGE  -->
+      <title>{% block title %}{% endblock %}</title>
+   </head>
+   <body>
+      <p class="h1">Software Engineering class SFSU, Fall 2020, Team 05 </p>
+      <!--************************************** NAV BAR *********************************************-->
+      <nav class="navbar navbar-expand-lg navbar-light bg-light " >
+         <a class="navbar-brand" href="/">
+            SFSU TRADE
+         </a>
+         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+         <span class="navbar-toggler-icon"></span>
+         </button>
+         <div class="navbar-collapse  justify-content-start " >
+            <ul class="navbar-nav mr-auto">
+               <li class="nav-item active">
+                  <a class="nav-link" href="/">Home</a>
+               </li>
+               {%if session['name'] %}
+               <li class="nav-item active">
+                  <a class="nav-link" href="/posting">Post</a>
+               </li>
+               {% endif %}
+            </ul>
+         </div>
+         <!-- THIS IS SEARCHBAR FORM -->
+         <div class="navbar-collapse  justify-content-left order-2"   >
+            <form class="form-inline my-2 my-lg-0" action ="/search" method ="POST">
+               <div class="dropdown" id="searchNav">
+                  <select class="nav-link dropdown-toggle" name="filter" href="#" id="navbarDropdown" data-toggle="dropdown">
+                     Dropdown
+                     <option class="dropdown-item" value ="All" {%if category == "All"%}selected{%endif%}>All</option>
+                     {%if navlst%}
+                     {% for n in navlst %}
+                     <option class="dropdown-item" value ="{{n[0]}}" {%if category == n[0] %}selected{%endif%} >{{n[0]}} </option>
+   
+                     {% endfor %}
+                     {% endif %}
+                  </select>
+               </div>
+               <input class="form-control mr-sm-2" type="search" style="width: 400px;"name="searchedData" value="{{searchedData}}" aria-label="Search">
+               <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+         </div>
+         <!-- END SEARCHBAR FORM --> 
+         <div class="navbar-collapse collapse justify-content-end order-3" id="collapsibleNavbar">
+            <ul class="navbar-nav mr">
+               <li class="nav-item active">
+                  <a class="nav-link" href="/about">About</a>
+               </li>
+               {%if session['name'] %}
+               <li class="nav-item active">
+                  <a class="nav-link" href="/dashboard">{{session['name']}}</a>
+               </li>
+               <li class="nav-item active">
+                  <a class="nav-link" href="/logout">Logout</a>
+               </li>
+               {% else %}
+               <li class="nav-item active">
+                  <a class="nav-link" href="/login">Login</a>
+               </li>
+               <li class="nav-item active">
+                  <a class="nav-link" href="/signup">Sign Up</a>
+               </li>
+               {% endif %}
+            </ul>
+         </div>
+      </nav>
+      <!--************************************** ENDING NAV BAR *********************************************-->
+      {%block content %}
+      {% endblock %}
+   </body>
 </html>

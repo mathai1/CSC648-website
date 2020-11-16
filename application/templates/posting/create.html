@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block title%}Creating A Post{% endblock %}
+{% block content %}
+
+
+<h2 class="form-group row justify-content-center">Creating A Post</h2>
+<form action="/posting" method="POST" enctype=multipart/form-data>
+
+<div class="form-group row justify-content-center">
+        <div class="col-md-12 productList-dropdown text-center">
+            <div class="dropdown btn-group">
+                <span><label style ="font-size: 18px; margin-top: 5px; margin-right: 180px;">Choose a category</label></span>
+                <select class="nav-link dropdown-toggle" name="filter"   data-toggle="dropdown">
+                    {%if navlst%}
+                    {% for n in navlst %}
+                    <option class="dropdown-item" value ="{{n[0]}}" {%if category == n[0] %}selected{%endif%} >{{n[0]}} </option>
+  
+                    {% endfor %}
+                    {% endif %}
+                 </select>
+         
+            </div>
+        </div>
+        
+</div>
+
+            <div class="container">
+                <div class="form-group row justify-content-center">
+                 <label for="name" class="col-sm-2 col-form-label">Names</label>
+                    <div class="col-sm-4">
+                        <div class="form-check">
+                            <input type="text" class="form-control" id="name" name="name">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+       
+     
+            <div class="container">
+                <div class="form-group row justify-content-center">
+                    <label for="discription" class="col-sm-2 col-form-label">Discription</label>
+                    <div class="col-sm-4 mx auto">
+                        <div class="form-check">
+                            <textarea class = "form-control mb-2"class="form-control" id="discription" name="discription" ></textarea>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+     
+
+
+     
+            <div class="container">
+                <div class="form-group row justify-content-center">
+                 <label for="price" class="col-sm-2 col-form-label">Price</label>
+                    <div class="col-sm-4 mx auto">
+                        <div class="form-check">
+                            <input type="text" class="form-control" id="price" name="price">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        
+            <!-- <div class="container">
+                <div class="form-group row justify-content-center">
+                <lable for="courseId" class="col-sm-2 col-form-label">Course ID</lable>
+                    <div class="col-sm-4">
+                        <div class="form-check">
+                            <input type="text" class="form-control" id="courseId" ID="courseId">
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+                <div class="row justify-content-center">
+                    <div class = form-group>
+                        
+                            <label for="img">Select image:</label>
+                            <input type="file" id="img" name="img" accept="image/*">
+                          
+                    </div>
+                </div>
+           
+
+            <div class="row justify-content-center">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn btn-warning">Cancel</button>
+
+                </div>
+            </div>
+</form>
+    
+
+
+                   
+{% endblock %}
