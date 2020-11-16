@@ -129,6 +129,22 @@ class SearchingDB():
 
         return item
 
+# Method : Get Postings ordered by data
+# Parameter : optional ascending or descending order
+# Return : A list of tuple of tuple of posting
+
+    def getPostingbyOrderedDate(self, ascending=False):
+        conn = self.connect_db()
+        pycursor = conn.cursor()
+        if ascending:
+            searchQuery = "SELECT * from Posting order by date ASC"
+        searchQuery = "SELECT * from Posting order by date DESC"
+        pycursor.execute(searchQuery)
+        item = pycursor.fetchall()
+        conn.close()
+
+        return item
+
 # Method : Get A Posting with an exact match based on either "email" , "title", "description" , "date" , "price", "category"
 # Parameter : - First Parameter : ACtual String of either "email" , "title", "description" , "date" , "price", "category"
 #             - Second Parameter : A string that you want to search on post based on either "email" , "title", "description" , "date" , "price", "category"
@@ -260,10 +276,11 @@ class SearchingDB():
     def getfavoritePostings(self,user):
         conn = self.connect_db()
         pycursor = conn.cursor()
-        searchQuery = f"SELECT Posting.* FROM favorites Join Posting on favorites.postID=Posting.postID WHERE favorites.email = {user}"
+        searchQuery = f"SELECT Posting.* FROM favorites Join Posting on favorites.postID=Posting.postID WHERE favorites.email = '{user}'"
         pycursor.execute(searchQuery)
         item = pycursor.fetchall()
         conn.close()
+        return item
 
 ############# Categories feature ###############
 
