@@ -226,6 +226,11 @@ class SearchingDB():
         conn.close()
         return item
 
+
+# Method : Sorts by pricing AND date, defaults to newest to oldest
+# Parameter : parameters from search page filter: min price, max price, order selection, search bar text, search bar category
+# Return : A dict of postings
+
     def getPostingbyPrice(self, min, max, order, searchedData, category):
         conn = self.connect_db()
         pycursor = conn.cursor()
