@@ -1,126 +1,80 @@
 {% extends "base.html" %}
 {% block title%}posting{% endblock %}
 {% block content %}
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-.chatbody {
-  margin: 0 auto;
-  max-width: 90%;
-  padding: 0 20px;
-  border: solid 2px;
-  border-color: #ddd;
-  border-radius: 20px;
-}
 
-.cont {
-  border: 2px solid #dedede;
-  background-color: #00c6ff;
-  border-radius: 15px;
-  padding: 10px;
-  margin: 10px 0;
-  max-width: 100%;
-} 
+<script src="//code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+        namespace = '/test';
 
+        var socket = io(namespace);
+        socket.emit('join', {room: "{{data}}"});
 
-
-.darker {
-  border-color: #ccc;
-  background-color: #ddd;
-}
-
-.cont::after {
-  content: "";
-  clear: both;
-  display: table;
-}
-
-.cont img {
-  float: left;
-  max-width: 60px;
-  width: 100%;
-  margin-right: 20px;
-  border-radius: 50%;
-}
-
-/* .bubble{
-    border: 2px solid #dedede;
-    background-color: #f1f1f1;
-    border-radius: 15px;
-    display: inline-block;
+        socket.on('my_response', function(msg, cb) {
     
-} */
 
-.cont img.right {
-  float: right;
-  margin-left: 20px;
-  margin-right:0;
-}
+          if (msg.user !== "{{session['name']}}" ) {
+            $('#log').append('<p>' + msg.user + ' </p> <div class = "cont"> <p>'  + + msg.data + ' </p> <span class="time-right">11:00</span> </div>');
+          }else {
+            $('#log').append('<p class="right">' + msg.user + ' </p> <div class = "cont darker"> <p>'   + msg.data + ' </p> <span class="time-left">11:00</span></div>');
+          }
+            if (cb)
+                cb();
+        });
 
-.time-right {
-  float: right;
-  color: #aaa;
-}
+        $('form#send_room').submit(function(event) {
+            socket.emit('my_room_event', {room: "{{data}}", data: $('#room_data').val(), 'user': '{{user}}'   });
+            return false;
 
-.time-left {
-  float: left;
-  color: #999;
-}
+        });
 
-textarea {
-    height: 28px;
-    width: 89.5%;
-    margin-bottom: -8px;
-    margin-left: 1px;
-}
+    });
+</script>
 
-</style>
-</head>
-<body>
-<div class = "chatbody">
-    <h2>Chat With Tu!</h2>
-    <div class="cont">
-<!-- <div class = "bubble"> -->
-  <img src="/w3images/bandmember.jpg" alt="Avatar" style="width:100%;">
-  <p>Hello. How are you today?</p>
-  <span class="time-right">11:00</span>
-<!-- </div> -->
+<div class = "chatbody" id="log">
+    <h2> Messenger</h2>
+    <div class = "message" id="log">
+    <!-- <div class="cont"  > -->
+  <!-- <img src="#" alt="Avatar" style="width:100%;"> -->
+    <!-- <div id="log"></div> -->
+  <!-- <span class="time-right">11:00</span> -->
+  </div>
 </div>
-
-<div class="cont darker">
-  <img src="/w3images/avatar_g2.jpg" alt="Avatar" class="right" style="width:100%;">
+<!-- <div class="cont darker">
+  <img src="#" alt="Avatar" class="right" style="width:100%;">
   <p>Hey! I'm fine. Thanks for asking!</p>
   <span class="time-left">11:01</span>
+</div> -->
+
+<form id="send_room" method="POST" action='#'  >
+  <input type="text" name="room_data" id="room_data" placeholder="Message" style="width:90%" >
+  <input type="submit" value="Send ">
+</form>
+<!-- <input type = text placeholder = "Message Here" style="width:70%;"></input> -->
 </div>
 
-<div ><textarea></textarea><button type = button style="margin-bottom: 3%; width:10%;";>Send</button></div>
-<!-- <input type = text placeholder = "Message Here" style="width:70%;"></input> -->
 <script>
-    var span = $('<span>').css('display','inline-block')
+  var span = $('<span>').css('display','inline-block')
 .css('word-break','break-all').appendTo('body').css('visibility','hidden');
 function initSpan(textarea){
-  span.text(textarea.text())
-      .width(textarea.width())      
-      .css('font',textarea.css('font'));
+span.text(textarea.text())
+    .width(textarea.width())      
+    .css('font',textarea.css('font'));
 }
 $('textarea').on({
-    input: function(){
-      var text = $(this).val();      
-      span.text(text);      
-      $(this).height(text ? span.height() : '1.1em');
-    },
-    focus: function(){
-     initSpan($(this));
-    },
-    keypress: function(e){
-        if(e.which == 13) e.preventDefault();
-    }
+  input: function(){
+    var text = $(this).val();      
+    span.text(text);      
+    $(this).height(text ? span.height() : '1.1em');
+  },
+  focus: function(){
+   initSpan($(this));
+  },
+  keypress: function(e){
+      if(e.which == 13) e.preventDefault();
+  }
 });
 </script>
-</div>
 
-</body>
-</html>
 {% endblock %}

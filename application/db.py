@@ -1,7 +1,7 @@
 import pymysql
 import datetime
 from PIL import Image
-
+from flask import session
 class SearchingDB():
     def __init__(self):
         self.host = "csc648.cszroavxh2pu.us-west-2.rds.amazonaws.com"
@@ -174,7 +174,8 @@ class SearchingDB():
         description = posting['description']
         price = posting['price']
         category = posting['category']
-        image = "/images/postings/empty.png"
+        image = posting['image']
+        # image = "/images/postings/empty.png"
 
         searchQuery = f"INSERT INTO Posting (email ,title , description, price , category , image, date ) VALUES ('{email}' ,'{title}' , '{description}' , {price} ,  '{category}' ,  '{image}' , NOW() )"
         
@@ -247,7 +248,7 @@ class SearchingDB():
     def addFavorite(self, postID, user):
         conn = self.connect_db()
         pycursor = conn.cursor()
-        searchQuery = f"INSERT INTO favorites (postID , email) VALUES ({postID} , {email})"
+        searchQuery = f"INSERT INTO favorites (postID , email) VALUES ({postID} , '{email}')"
         data = pycursor.execute(searchQuery)
         conn.commit()
         conn.close()
@@ -260,7 +261,7 @@ class SearchingDB():
     def getfavoritePostings(self,user):
         conn = self.connect_db()
         pycursor = conn.cursor()
-        searchQuery = f"SELECT Posting.* FROM favorites Join Posting on favorites.postID=Posting.postID WHERE favorites.email = {user}"
+        searchQuery = f"SELECT Posting.* FROM favorites Join Posting on favorites.postID=Posting.postID WHERE favorites.email = '{user}'"
         pycursor.execute(searchQuery)
         item = pycursor.fetchall()
         conn.close()

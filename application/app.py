@@ -18,7 +18,10 @@ from datetime import timedelta
 from db import SearchingDB
 from flask import send_from_directory
 
+from flask_socketio import SocketIO
 
+
+socket_io = SocketIO()
 
 #Initialize flask app
 app = Flask(__name__)
@@ -46,7 +49,7 @@ home = initHome(db)
 search = initSearch(db)
 posting = initPost(db)
 dashboard = initDashBoard(db)
-message =initChat(db)
+message =initChat(db, socket_io)
 
 
 ########## All the blue print is inside the views application #######
@@ -58,8 +61,9 @@ app.register_blueprint(dashboard)
 app.register_blueprint(profile)
 app.register_blueprint(message)
 
+socket_io.init_app(app)
 
 
 
 if __name__ == "__main__":
-    app.run()
+    socket_io.run(app, debug=True)

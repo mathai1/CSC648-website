@@ -1,22 +1,21 @@
 # THIS IS HOME BLUEPRINT for home, about, login and signup
 from flask import Blueprint, render_template, request, session, redirect, url_for
-# from db import SearchingDB
 
-# db = SearchingDB()
 
 def initHome(db):
-# create a blue print
+    # create a blue print
     home = Blueprint('home', __name__)
 
     @home.route('/', methods=['GET'])
     def homepage():
+        # Getting posting info from the database
         postings = db.getAllPostings()
         lst = db.getPostingOrganizedData(postings)
+
+        # Getting thumbnails for home page
         for l in lst:
             s = l['image'].split("/")[-1]
             l['image'] = "media/" + s 
-        # if 'loggedin' in session:
-        #     return render_template('home/home.html', data = lst, user=session['firstname'])
         return render_template('home/home.html', data = lst)
         
     @home.route('/about')
@@ -39,7 +38,6 @@ def initHome(db):
             password =request.form['password']
             account = db.checkAUser(email,password)
             if account :
-                # session['loggedin'] = True
                 session['email'] = request.form['email']
                 user = db.getUserOrganizedData(account)
                 session['name'] = user[0]['fname']
