@@ -4,28 +4,26 @@
 
 
 <h2 class="form-group row justify-content-center">Creating A Post</h2>
+<form action="/posting" method="POST" enctype=multipart/form-data>
 
 <div class="form-group row justify-content-center">
         <div class="col-md-12 productList-dropdown text-center">
             <div class="dropdown btn-group">
-               
-                <button class="dropdown-toggle" type="button" data-toggle="dropdown">Choose a product
-                    <span class="caret"></span>
-                </button>
-
-                <ul class="dropdown-menu">
-                    <li><a href="#">Item1</a></li>
-                    <li><a href="#">Item2</a></li>
-                    <li><a href="#">Item3</a></li>
-                    <li><a href="#">Item4</a></li>
-                </ul>
+                <span><label style ="font-size: 18px; margin-top: 5px; margin-right: 180px;">Choose a category</label></span>
+                <select class="nav-link dropdown-toggle" name="filter"   data-toggle="dropdown">
+                    {%if navlst%}
+                    {% for n in navlst %}
+                    <option class="dropdown-item" value ="{{n[0]}}" {%if category == n[0] %}selected{%endif%} >{{n[0]}} </option>
+  
+                    {% endfor %}
+                    {% endif %}
+                 </select>
          
             </div>
         </div>
         
 </div>
 
- <form>
             <div class="container">
                 <div class="form-group row justify-content-center">
                  <label for="name" class="col-sm-2 col-form-label">Names</label>
@@ -69,7 +67,7 @@
 
 
         
-            <div class="container">
+            <!-- <div class="container">
                 <div class="form-group row justify-content-center">
                 <lable for="courseId" class="col-sm-2 col-form-label">Course ID</lable>
                     <div class="col-sm-4">
@@ -78,21 +76,21 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
                 <div class="row justify-content-center">
                     <div class = form-group>
-                        <form action="/action_page.php">
+                        
                             <label for="img">Select image:</label>
                             <input type="file" id="img" name="img" accept="image/*">
-                          </form>
+                          
                     </div>
                 </div>
            
 
             <div class="row justify-content-center">
                 <div class="form-group">
-                    <button type="button" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
                     <button type="button" class="btn btn-warning">Cancel</button>
 
                 </div>

@@ -1,5 +1,6 @@
 import pymysql
 import datetime
+from PIL import Image
 
 class SearchingDB():
     def __init__(self):
@@ -10,6 +11,13 @@ class SearchingDB():
         self.password = "mypass123"
     def connect_db(self) :
         return pymysql.connect(host =self.host, user=self.user, port=self.port,passwd=self.password, db=self.dbname) 
+
+    def createThumbnail(self, filepath,destination, width = 240, height = 240):
+        image = Image.open(filepath)
+        MAX_SIZE = (width, height)
+        image.thumbnail(MAX_SIZE)
+        image.save(destination)
+    
 
 ###### retriving user info #############
 
@@ -206,6 +214,31 @@ class SearchingDB():
             lst.append(dPosting)
         return lst
 
+    def getPostingbyDate(self,searchData,category) :
+        conn = self.connect_db()
+        pycursor = conn.cursor()
+        if catergory == "All" :
+            searchQuery = f"SELECT * from Posting WHERE title LIKE '%{searchedData}%' ORDER BY date ASC "
+        else :
+            searchQuery = f"SELECT * from Posting WHERE category LIKE '{catergory}' AND title LIKE '%{searchedData}%' ORDER BY date ASC"
+        data = pycursor.execute(searchQuery)
+        item = pycursor.fetchall()
+        conn.close()
+        return item
+
+    def getPostingbyPrice(self, min, max, searchedData, category):
+        conn = self.connect_db()
+        pycursor = conn.cursor()
+        if category == "All" :
+            searchQuery = f"SELECT * from Posting WHERE title LIKE '%{searchedData}%' AND price > {min} AND price < {max} "
+        else :
+            searchQuery = f"SELECT * from Posting WHERE category LIKE '{category}' AND title LIKE '%{searchedData}%' AND price > {min} AND price < {max}"
+        data = pycursor.execute(searchQuery)
+        item = pycursor.fetchall()
+        conn.close()
+        item = self.getPostingOrganizedData(item)
+        return item
+
 ############# Favorites feature #################
 # Method : This function adding a post into a favorite table
 # Parameter : postid and useremail
@@ -241,7 +274,7 @@ class SearchingDB():
     def getCategories(self):
         conn = self.connect_db()
         pycursor = conn.cursor()
-        searchQuery = "SELECT * from Categories"
+        searchQuery = "SELECT * from Category"
         pycursor.execute(searchQuery)
         item = pycursor.fetchall()
         conn.close()
