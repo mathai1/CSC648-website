@@ -15,6 +15,6 @@ def searchpage():
         print(lst)
         # if 'loggedin' in session:
         #     return render_template("search/search.html", data = lst,user=session['firstname'])
-        return render_template("search/search.html", data = lst)
+        return render_template("search/search.html", data = lst, searchData = searchedData, category = category)
     return render_template("search/search.html")
 

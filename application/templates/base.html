@@ -51,13 +51,13 @@
                <div class="dropdown" id="searchNav">
                   <select class="nav-link dropdown-toggle" name="filter" href="#" id="navbarDropdown" data-toggle="dropdown">
                      Dropdown
-                     <option class="dropdown-item" value ="All" >All</option>
-                     <option class="dropdown-item" value ="book" >book</option>
-                     <option class="dropdown-item" value ="electronic">electronic</option>
+                     <option class="dropdown-item" value ="All" {%if category == "All"%}selected{%endif%}>All</option>
+                     <option class="dropdown-item" value ="book" {%if category == "book"%}selected{%endif%}>book</option>
+                     <option class="dropdown-item" value ="electronic" {%if category == "electronic"%}selected{%endif%}>electronic</option>
                      <option class="dropdown-item" value = "misc">misc</option>
                   </select>
                </div>
-               <input class="form-control mr-sm-2" type="search" style="width: 500px;"name="searchedData" placeholder="Search" aria-label="Search">
+               <input class="form-control mr-sm-2" type="search" style="width: 500px;"name="searchedData" placeholder="{{searchData}}" aria-label="Search">
                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
          </div>
