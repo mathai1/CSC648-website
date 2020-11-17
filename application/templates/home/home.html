@@ -22,11 +22,10 @@
         <div>
           <a  href="/posting/{{data['postid']}}">
           <div class="card">
-              <img class="img-fluid"  alt="100%x280" src={{url_for('static', filename=data["image"] )}} >
+              <img class="img-fluid card-img-top"  alt="100%x280" src={{url_for('static', filename=data["image"] )}} >
               <div class="card-body">
                   <h4 class="card-title">{{data["title"]}}</h4>
                   <p class="card-text">{{data["price"]}}</p>
-                  
               </div>
           </div>
         </a>
@@ -43,7 +42,7 @@
         <div>
           <a  href="/posting/{{d['postid']}}">
           <div class="card">
-              <img class="img-fluid" alt="100%x280" src={{url_for('static', filename=d["image"] ) }}>
+              <img class="img-fluid card-img-top" alt="100%x280" src={{url_for('static', filename=d["image"] ) }}>
               <div class="card-body">
                   <h4 class="card-title">{{d["title"]}}</h4>
                   <p class="card-text">{{d["price"]}}</p>
@@ -65,7 +64,7 @@
         <div>
           <a  href="/posting/{{d['postid']}}">
           <div class="card">
-              <img class="img-fluid"  alt="100%x280" src={{url_for('static', filename=d["image"] )}} >
+              <img class="img-fluid card-img-top"  alt="100%x280" src={{url_for('static', filename=d["image"] )}} >
               <div class="card-body">
                   <h4 class="card-title">{{d["title"]}}</h4>
                   <p class="card-text">{{d["price"]}}</p>
