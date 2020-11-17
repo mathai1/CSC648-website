@@ -2,6 +2,7 @@
 {% extends "base.html" %}
 {% block title%}test search{% endblock %}
 {% block content %}
+<div class="main">
 <div class="home-description">
   <h1>SFSU Exchange</h1>
   <h2>A marketplace for all SFSU students and staff.</h2>
@@ -15,17 +16,16 @@
     <!-- Row for top category -->
 
     <div class="slide-box">
-      <h3> Featured products </h3>
+      <h3> Most Recent </h3>
       <section class="home-slick-slider" >
-        {% for d in data %}
+        {% for data in recent %}
         <div>
-          <a  href="/posting/{{d['postid']}}">
+          <a  href="/posting/{{data['postid']}}">
           <div class="card">
-              <img class="img-fluid"  alt="100%x280" src={{url_for('static', filename=d["image"] )}} >
+              <img class="img-fluid card-img-top"  alt="100%x280" src={{url_for('static', filename=data["image"] )}} >
               <div class="card-body">
-                  <h4 class="card-title">{{d["title"]}}</h4>
-                  <p class="card-text">{{d["price"]}}</p>
-                  
+                  <h4 class="card-title">{{data["title"]}}</h4>
+                  <p class="card-text">{{data["price"]}}</p>
               </div>
           </div>
         </a>
@@ -34,14 +34,15 @@
       </section>
     </div>
 
+    {% if fav %}
     <div class="slide-box">
       <h3> Favorite products </h3>
       <section class="home-slick-slider" >
-        {% for d in data %}
+        {% for d in fav %}
         <div>
           <a  href="/posting/{{d['postid']}}">
           <div class="card">
-              <img class="img-fluid" alt="100%x280" src={{url_for('static', filename=d["image"] ) }}>
+              <img class="img-fluid card-img-top" alt="100%x280" src={{url_for('static', filename=d["image"] ) }}>
               <div class="card-body">
                   <h4 class="card-title">{{d["title"]}}</h4>
                   <p class="card-text">{{d["price"]}}</p>
@@ -53,7 +54,31 @@
         {% endfor %}
       </section>
     </div>
+    {% endif %}
 
+    <div class="slide-box">
+      <h3> Books </h3>
+      <section class="home-slick-slider" >
+        {% for d in data %}
+        {% if d['category'] == 'Books' %}
+        <div>
+          <a  href="/posting/{{d['postid']}}">
+          <div class="card">
+              <img class="img-fluid card-img-top"  alt="100%x280" src={{url_for('static', filename=d["image"] )}} >
+              <div class="card-body">
+                  <h4 class="card-title">{{d["title"]}}</h4>
+                  <p class="card-text">{{d["price"]}}</p>
+                  
+              </div>
+          </div>
+        </a>
+        </div>
+        {% endif %}
+        {% endfor %}
+      </section>
+    </div>
+
+  </div>
 
 <script src="static/slick/slick.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">

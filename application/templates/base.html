@@ -4,7 +4,6 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <!--************************************** IMPORTING STATIC SOURCES *********************************************-->
       <!-- Boostrap -->
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
       <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
       <!-- Local CSS file -->
@@ -17,8 +16,9 @@
       <!-- Jquery and socket js -->
       <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
       <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-      <script src="//code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-      <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+      <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
       <!--************************************** ENDING IMPORTING STATIC SOURCES *********************************************-->
       <!-- TITLE PAGE  -->
       <title>{% block title %}{% endblock %}</title>
@@ -26,14 +26,14 @@
    <body>
       <p class="h1">Software Engineering class SFSU, Fall 2020, Team 05 </p>
       <!--************************************** NAV BAR *********************************************-->
-      <nav class="navbar navbar-expand-lg navbar-light bg-light " >
+      <nav class="navbar navbar-expand-lg navbar-light bg-light" >
          <a class="navbar-brand" href="/">
             SFSU TRADE
          </a>
          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
          <span class="navbar-toggler-icon"></span>
          </button>
-         <div class="navbar-collapse  justify-content-start " >
+         <div class="navbar-collapse justify-content-start " id="collapsibleNavbar" >
             <ul class="navbar-nav mr-auto">
                <li class="nav-item active">
                   <a class="nav-link" href="/">Home</a>
@@ -89,7 +89,9 @@
          </div>
       </nav>
       <!--************************************** ENDING NAV BAR *********************************************-->
+      <div class="main-content">
       {%block content %}
       {% endblock %}
+      </div>
    </body>
 </html>
