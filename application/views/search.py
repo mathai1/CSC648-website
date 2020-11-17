@@ -31,8 +31,9 @@ def initSearch(db):
             if 'min' in request.args and 'max' in request.args :
                 min = request.args['min']
                 max = request.args['max']
-                postings = db.getPostingbyPrice(min, max, searchedData, category)
-                return render_template("search/search.html", data = postings, searchedData = searchedData, category = category, min = min , max =  max)
+                order = request.args['order']
+                postings = db.getPostingbyPrice(min, max, order, searchedData, category)
+                return render_template("search/search.html", data = postings, searchedData = searchedData, category = category, min = min , max =  max, order = order)
         return render_template("search/search.html")
 
     return search
