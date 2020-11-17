@@ -33,7 +33,6 @@
     });
 
 
-
     
   </script>
 
@@ -44,9 +43,11 @@
               <div class="search-filter">
                 <form action="/search" method="POST">
                 <label>Min</label>
-                <input type="number" class="form-control" name="min" id="min" value= {%if min %} {{min}} {% else %} 0 {% endif %}>
+                <input type="text" class="form-control" value={%if min %} {{min}} {% else %} 0 {% endif %} id="min" name="min" onkeypress="return isNumber(event)" />
+                <!-- <input type="number" class="form-control" name="min" id="min" value= {%if min %} {{min}} {% else %} 0 {% endif %}> -->
                 <label>Max</label>
-                <input type="number" class="form-control" name="max"  id="max" value={%if max %} {{max}} {% else %} {{high}} {% endif %}> 
+                <input type="text" class="form-control" value={%if max %} {{max}} {% else %} {{high}} {% endif %} id="max" name="max" onkeypress="return isNumber(event)" />
+                <!-- <input type="number" class="form-control" name="max"  id="max" value={%if max %} {{max}} {% else %} {{high}} {% endif %}>  -->
                 
                 <label>Sort By Date</label>
                 <select class="custom-select" name="order" id="order">
@@ -60,16 +61,21 @@
             </div>
         </div>
       </div>
-        <div class="col-9 offset-2" id="main">
+        <div class="col-9 offset-2" id="main"><!-- start of main area (right of filters)-->
 
           <!-- card-deck start -->
           <div class="card-deck" id="ss">
+
           {%if data %}
-          {% for d in data %}
           
-          <div class="col-xs-12 col-sm-8 col-md-6 col-lg-4">
-            <!-- space between cards -->
-            <div class="p-3 boder">
+          {% for d in data %}<!-- for: goes through data passed to page-->
+          
+          <div id="wrap"><!-- 'wrap' used for createing pages-->
+
+          <div class="col-xs-12 col-sm-8 col-md-8">
+            
+            <div class="p-2"><!-- space between cards -->
+
             <!-- individual card start-->
             <a  href="/posting/{{d['postid']}}">
             <div class="card bg-light text-center" style="width: 20rem;">
@@ -83,19 +89,106 @@
             </div> 
             </a>
             <!-- individual card end-->
-            </div>
-            <!-- card space end-->
+
+            </div><!-- card space end -->
+            
           </div> 
-                  
+
+        </div><!-- 'wrap' end -->  
           
           {% endfor %}
+          
           {% endif %}
 
+          
         </div><!--card-deck end -->
 
+        <div class="text-center"><!-- page buttons -->
+          <div class="p-3">
+          <div class="btn-group">
+          <div class="prev"><button type="button" class="btn btn-info">Prev</button></div>
+          <div class="next"><button type="button" class="btn btn-info">Next</button></div>
+          </div>
+          </div>
+          </div><!-- end of page buttons -->
+  
         </div><!--main area end-->
     </div>
 </div>
 
+
+<script>
+
+//******************************
+// Function is used to smoothly 
+// scroll to the top of the page
+// after clicking product page 
+// navigation
+//******************************
+const scrollToTop = () => {
+  const c = document.documentElement.scrollTop || document.body.scrollTop;
+  if (c > 0) {
+    window.requestAnimationFrame(scrollToTop);
+    window.scrollTo(0, c - c / 8);
+  }
+};
+
+//***************** **************
+//The following functions are used
+//to create individual pages and 
+//navigate through them
+//********************************
+var $el = $("#wrap > div");
+var pageSize = 8;
+
+$el.slice(0, pageSize).css({display: 'block'});
+$el.slice(pageSize, $el.length).css({display: 'none'});
+
+function addSlice(num){
+  return num + pageSize;
+}
+
+function subtractSlice(num){
+  return num - pageSize;
+}
+
+var slice = [0, pageSize];
+
+$('.next').click(function(){
+   if (slice[1] < $el.length ){ 
+     slice = slice.map(addSlice);   
+   }
+   scrollToTop();
+   showSlice(slice);
+});
+
+$('.prev').click(function(){
+  if (slice[0] > 0 ){ 
+    slice = slice.map(subtractSlice); 
+  }
+  scrollToTop();
+  showSlice(slice);
+});
+
+function showSlice(slice){
+  $el.css('display', 'none');
+  $el.slice(slice[0], slice[1]).css('display','block');
+}
+
+
+
+//************************************************
+//Used for input validation in filter 'min' & 'max'
+//************************************************
+function isNumber(evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+}
+
+</script>
 
 {% endblock %}
