@@ -60,12 +60,15 @@ def initHome(db):
             password = request.form['password']
             fname = request.form['fname']
             lname = request.form['lname']
-            #checking whether email is a sfsu email
+            #checking whether email is a sfsu email or a email in database
             if "sfsu.edu" in email:
                 user['email'] = email
             else:
                 message = "Not SFSU Email"
-            #checking if password is letter and numbers
+            #checking whether the email has been rgistered already
+            if db.getAUserbyEmail(email):
+                message = "The email has been already registered"
+            #checking if password contains at least 7 characters, 1 number, and 1 letter
             if len(password) < 7:
                 message = "Password must have at least 7 characters" 
             elif re.search('[0-9]',password) is None:
