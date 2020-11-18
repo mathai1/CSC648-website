@@ -1,54 +1,69 @@
-from flask import Flask, render_template, request
-import pymysql
-from search import SearchingDB
+#Using blue print to structure the file
+#Blueprint is the collection of views , static file and template
+#In this application, the structure is divided  by its function
+#The blueprint in views folder collections of views
+#The same static files will be used for the views in most of the blueprints
+# Most of the templates will extend a master template
+
+from flask import Flask
+from flask_thumbnails import Thumbnail
+from views.search import initSearch
+from views.home import initHome
+from views.posting import initPost
+from views.dashboard import initDashBoard
+from views.profile import profile
+from views.message import initChat
+
+from datetime import timedelta
+from db import SearchingDB
+from flask import send_from_directory
+
+from flask_socketio import SocketIO
+
+
+socket_io = SocketIO()
+
+#Initialize flask app
 app = Flask(__name__)
 
+
+# Setting app session
+app.permanent_session_lifetime=timedelta(days=1)
+
+#Initialize db
 db = SearchingDB()
 
 
-@app.route('/', methods=['GET'])
-def home():
-    postings = db.getAllPostings()
-    lst = getPostingOrganizedData(postings)
-    return render_template("home.html", data = lst)
+#db.createThumbnail("static/images/postings/empty.png" , "static/media/empty.png", 240 , 240)
+# Setting jinga global
+@app.context_processor
+def init():
+    cat = db.getCategories() # Getting categories from database and make it glbal for navbar
+    return dict(navlst = cat)
 
-@app.route('/search', methods= ['GET' , 'POST'])
-def search():
-    if request.method == 'POST':
-        category =request.form['filter']
-        searchedData =request.form['searchedData']
-        postings = db.searchAPosting(category,searchedData)
-        lst = getPostingOrganizedData(postings)
-        return render_template("search.html", data = lst)
-    return render_template("search.html")
-    
-@app.route('/about')
-def about():
-    return render_template("about.html")
+# Setting key for session
+app.secret_key="GATOR"
 
-@app.route('/about/<name>')
-def getPerson(name):
-    item = f"about/{name}.html"
-    return render_template(item, name = name)
+# Passing db to all the blueprints
+home = initHome(db)
+search = initSearch(db)
+posting = initPost(db)
+dashboard = initDashBoard(db)
+message =initChat(db, socket_io)
 
 
-def getUserOrganizedData(users) :
-    lst = []
-    dUsers = {}
-    for row in users:
-        dUsers = {"email": row[0], "password":row[1], "fname":row[2], "lname":row[3], "image" : row[4]}
-        lst.append(dUsers)
-    return lst
+########## All the blue print is inside the views application #######
+# Register blueprint
+app.register_blueprint(home)
+app.register_blueprint(search)
+app.register_blueprint(posting)
+app.register_blueprint(dashboard)
+app.register_blueprint(profile)
+app.register_blueprint(message)
 
-def getPostingOrganizedData(postings) :
-    lst = []
-    dPosting = {}
-    for row in postings:
-        email = row[1].replace("@sfsu.edu", "")
-        dPosting = {"email" : email , "title": row[2], "description":row[3], "date" : row[4], "price" : row[5], "image":row[7]}
-        lst.append(dPosting)
-    return lst
+socket_io.init_app(app)
 
 
 
-
+if __name__ == "__main__":
+    socket_io.run(app, debug=True)

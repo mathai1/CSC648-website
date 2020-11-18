@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title%}My Dashboard{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h2 class="d-flex justify-content-center">My Dashboard</h2>
+</div>
+
+<div class="container">
+    <button type="button" class="btn btn-primary btn-lg" onclick="setURL('/userPostings')">Postings</button>
+    <button type="button" class="btn btn-primary btn-lg" onclick="setURL('/messages')">Messages</button>
+</div>
+
+<div class = "container">
+    <div class="embed-responsive embed-responsive-4by3">
+        <iframe class="embed-responsive-item" src="/userPostings" id="userDashiFrame"></iframe>
+    </div>
+</div>
+
+<script>
+function setURL(url) {
+    document.getElementById('userDashiFrame').src = url;
+}
+</script>
+{% endblock %}
