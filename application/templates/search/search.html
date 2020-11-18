@@ -8,14 +8,13 @@
             <div class="nav flex-column flex-nowrap vh-100 overflow-auto text-white p-2" >
               <div class="search-filter">
                 <form action="/search" method="POST">
+                <h4> Sort by price </h4>
                 <label>Min</label>
                 <input type="text" class="form-control" value={%if min %} {{min}} {% else %} 0 {% endif %} id="min" name="min" onkeypress="return isNumber(event)" />
-                <!-- <input type="number" class="form-control" name="min" id="min" value= {%if min %} {{min}} {% else %} 0 {% endif %}> -->
                 <label>Max</label>
-                <input type="text" class="form-control" value={%if max %} {{max}} {% else %} {{high}} {% endif %} id="max" name="max" onkeypress="return isNumber(event)" />
-                <!-- <input type="number" class="form-control" name="max"  id="max" value={%if max %} {{max}} {% else %} {{high}} {% endif %}>  -->
+                <input type="text" class="form-control" value={% if message %} 0 {%else %}{%if max %} {{max}} {% else %} {{high}} {% endif %}{% endif %} id="max" name="max" onkeypress="return isNumber(event)" />
                 
-                <label>Sort By Date</label>
+                <h4>Sort by date</h4>
                 <select class="custom-select" name="order" id="order">
                   <option>-- select --</option>
                   <option value="newest">Newest</option>
@@ -28,6 +27,9 @@
         </div>
       </div>
         <div class="col-9 offset-2" id="main">
+          {% if message %}
+          <h3> {{message}}</h3>
+          {% else %}
           {% if data|length < 9 %}
           <h3 class="h3 p-3">Displaying Results 1 - {{data|length}} of {{data|length}}</h3>
           {% endif %}
@@ -48,8 +50,10 @@
             </div>
           </div>
           {% endif %}
+          {% endif %}
+
           <!-- card-deck start -->
-          <div class="card-deck" id="ss">
+          <div class="card-deck" id="refresh">
             
           {%if data %}
           
@@ -93,16 +97,33 @@
 
 <script>
   $(function() {
+
       $('.search-filter').keyup(function(){
-          var min = $('#min').val();
-          var max = $('#max').val();
+          var min = 0;
+          var max = {{high}};
+          if ($('#min').val() && $('#max').val() ) {
+          min = $('#min').val();
+          max = $('#max').val();
+          }
+    
           var order = $('#order').val();
-          console.log("working")
       $.ajax({
           type: 'POST',
               url: 'filter?searchedData={{searchedData}}&filter={{category}}&min='+min+'&max=' +max+'&order=' +order,
               success: function(response) {   
-                $("html").html(response);
+                item = $(response).find('#refresh')
+                $("#refresh").replaceWith(item);          }   
+         });
+      }).change( function(){
+          var min = $('#min').val();
+          var max = $('#max').val();
+          var order = $('#order').val();
+      $.ajax({
+          type: 'POST',
+              url: 'filter?searchedData={{searchedData}}&filter={{category}}&min='+min+'&max=' +max+'&order=' +order,
+              success: function(response) {   
+                item = $(response).find('#refresh')
+                $("#refresh").replaceWith(item);
           }   
          });
       });

@@ -31,8 +31,8 @@ def initSearch(db):
             if lst :
                 high = max([ l['price']for l in lst])
                 # Rendering all the data from the database from search
-                return render_template("search/search.html", data = lst, searchedData = searchedData, category = category, high = high)
-        return render_template("search/search.html")
+                return render_template("search/search.html", data = lst, searchedData = searchedData, category = category, high = high)                
+        return render_template("search/search.html" , message ="No search results")
 
     ######################################################################################
     # filter route

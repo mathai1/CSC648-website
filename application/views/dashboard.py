@@ -1,6 +1,6 @@
 # THIS IS dashboard BLUEPRINT for dashboard page
 # This is where user their dashboard for postings or messages
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request,session
 
 
 def initDashBoard(db):
@@ -42,12 +42,15 @@ def initDashBoard(db):
                 'lastMessage': 'This is an example of the last message that was sent in the conversation.'
             },
         ]
+        
         numMsgs = len(msgs)
         return render_template('dashboard/message.html', msgs=msgs, numMsgs=numMsgs)
 
     @dashboard.route('/userPostings')
     def userPostings():
-        allPosts = db.getAllPostings()
+        # allPosts = db.getAllPostings()
+        # posts = db.getPostingOrganizedData(allPosts)
+        allPosts = db.getAPosting("email", session['email'])
         posts = db.getPostingOrganizedData(allPosts)
         numPosts = len(posts)
         return render_template('dashboard/postings.html', posts=posts, numPosts=numPosts)

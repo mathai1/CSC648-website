@@ -1,80 +1,56 @@
+<head>
+  <link rel="stylesheet" type= "text/css" href="{{url_for('static', filename='css/styles/chat.css')}}">
+</head>
 {% extends "base.html" %}
 {% block title%}posting{% endblock %}
 {% block content %}
 
-<script src="//code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
-<script type="text/javascript" charset="utf-8">
-    $(document).ready(function() {
-        namespace = '/test';
-
-        var socket = io(namespace);
-        socket.emit('join', {room: "{{data}}"});
-
-        socket.on('my_response', function(msg, cb) {
-    
-
-          if (msg.user !== "{{session['name']}}" ) {
-            $('#log').append('<p>' + msg.user + ' </p> <div class = "cont"> <p>'  + + msg.data + ' </p> <span class="time-right">11:00</span> </div>');
-          }else {
-            $('#log').append('<p class="right">' + msg.user + ' </p> <div class = "cont darker"> <p>'   + msg.data + ' </p> <span class="time-left">11:00</span></div>');
-          }
-            if (cb)
-                cb();
-        });
-
-        $('form#send_room').submit(function(event) {
-            socket.emit('my_room_event', {room: "{{data}}", data: $('#room_data').val(), 'user': '{{user}}'   });
-            return false;
-
-        });
-
-    });
-</script>
-
+<!-- ################### CHAT BODY ##############################-->
 <div class = "chatbody" id="log">
-    <h2> Messenger</h2>
-    <div class = "message" id="log">
-    <!-- <div class="cont"  > -->
-  <!-- <img src="#" alt="Avatar" style="width:100%;"> -->
-    <!-- <div id="log"></div> -->
-  <!-- <span class="time-right">11:00</span> -->
+  <h2> Messenger</h2>
+  <div class = "message" id="log">
   </div>
 </div>
-<!-- <div class="cont darker">
-  <img src="#" alt="Avatar" class="right" style="width:100%;">
-  <p>Hey! I'm fine. Thanks for asking!</p>
-  <span class="time-left">11:01</span>
-</div> -->
-
 <form id="send_room" method="POST" action='#'  >
   <input type="text" name="room_data" id="room_data" placeholder="Message" style="width:90%" >
   <input type="submit" value="Send ">
 </form>
-<!-- <input type = text placeholder = "Message Here" style="width:70%;"></input> -->
 </div>
+<!-- ################### ENDING CHAT BODY ##############################-->
 
-<script>
-  var span = $('<span>').css('display','inline-block')
-.css('word-break','break-all').appendTo('body').css('visibility','hidden');
-function initSpan(textarea){
-span.text(textarea.text())
-    .width(textarea.width())      
-    .css('font',textarea.css('font'));
-}
-$('textarea').on({
-  input: function(){
-    var text = $(this).val();      
-    span.text(text);      
-    $(this).height(text ? span.height() : '1.1em');
-  },
-  focus: function(){
-   initSpan($(this));
-  },
-  keypress: function(e){
-      if(e.which == 13) e.preventDefault();
-  }
-});
+
+<!-- ################### SCRIPT FOR REAL TIME CHAT ##############################-->
+
+<script src="//code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function() {
+      namespace = '/test';
+  
+      var socket = io(namespace);
+      socket.emit('join', {room: "{{data}}"});
+  
+      socket.on('my_response', function(msg, cb) {
+  
+  
+        if (msg.user !== "{{session['name']}}" ) {
+          $('#log').append('<p>' + msg.user + ' </p> <div class = "cont"> <p>'  +  msg.data + ' </p> <span class="time-right">11:00</span> </div>');
+        }else {
+          $('#log').append('<p class="right">' + msg.user + ' </p> <div class = "cont darker"> <p>'   + msg.data + ' </p> <span class="time-left">11:00</span></div>');
+        }
+          if (cb)
+              cb();
+      });
+  
+      $('form#send_room').submit(function(event) {
+          socket.emit('my_room_event', {room: "{{data}}", data: $('#room_data').val(), 'user': '{{user}}'   });
+          return false;
+  
+      });
+  
+  });
 </script>
+
+<!-- ################### ENDING SCRIPT FOR REAL TIME CHAT ##############################-->
 
 {% endblock %}
