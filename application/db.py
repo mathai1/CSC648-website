@@ -129,6 +129,22 @@ class SearchingDB():
 
         return item
 
+# Method : Get Postings ordered by data
+# Parameter : optional ascending or descending order
+# Return : A list of tuple of tuple of posting
+
+    def getPostingbyOrderedDate(self, ascending=False):
+        conn = self.connect_db()
+        pycursor = conn.cursor()
+        if ascending:
+            searchQuery = "SELECT * from Posting order by date ASC"
+        searchQuery = "SELECT * from Posting order by date DESC"
+        pycursor.execute(searchQuery)
+        item = pycursor.fetchall()
+        conn.close()
+
+        return item
+
 # Method : Get A Posting with an exact match based on either "email" , "title", "description" , "date" , "price", "category"
 # Parameter : - First Parameter : ACtual String of either "email" , "title", "description" , "date" , "price", "category"
 #             - Second Parameter : A string that you want to search on post based on either "email" , "title", "description" , "date" , "price", "category"
@@ -227,13 +243,24 @@ class SearchingDB():
         conn.close()
         return item
 
-    def getPostingbyPrice(self, min, max, searchedData, category):
+
+# Method : Sorts by pricing AND date, defaults to newest to oldest
+# Parameter : parameters from search page filter: min price, max price, order selection, search bar text, search bar category
+# Return : A dict of postings
+
+    def getPostingbyPrice(self, min, max, order, searchedData, category):
         conn = self.connect_db()
         pycursor = conn.cursor()
         if category == "All" :
-            searchQuery = f"SELECT * from Posting WHERE title LIKE '%{searchedData}%' AND price > {min} AND price < {max} "
+            if order == "oldest" :
+                searchQuery = f"SELECT * from Posting WHERE title LIKE '%{searchedData}%' AND price > {min} AND price < {max} order by DATE(date) DESC"
+            else :
+                searchQuery = f"SELECT * from Posting WHERE title LIKE '%{searchedData}%' AND price > {min} AND price < {max} order by DATE(date) ASC"
         else :
-            searchQuery = f"SELECT * from Posting WHERE category LIKE '{category}' AND title LIKE '%{searchedData}%' AND price > {min} AND price < {max}"
+            if order == "oldest" :
+                searchQuery = f"SELECT * from Posting WHERE category LIKE '{category}' AND title LIKE '%{searchedData}%' AND price > {min} AND price < {max} order by DATE(date) DESC"
+            else:
+                searchQuery = f"SELECT * from Posting WHERE category LIKE '{category}' AND title LIKE '%{searchedData}%' AND price > {min} AND price < {max} order by DATE(date) ASC"
         data = pycursor.execute(searchQuery)
         item = pycursor.fetchall()
         conn.close()
@@ -265,6 +292,7 @@ class SearchingDB():
         pycursor.execute(searchQuery)
         item = pycursor.fetchall()
         conn.close()
+        return item
 
 ############# Categories feature ###############
 
@@ -355,7 +383,6 @@ class SearchingDB():
         item = pycursor.fetchall()
         conn.close()
         return item
-
 
 
 

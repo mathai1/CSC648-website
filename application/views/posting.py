@@ -41,12 +41,12 @@ def initPost(db) :
             if file.filename != '' :       
                 filename = secure_filename(file.filename) # Make sure file is sanitized from users
                 path1 = f'static/images/postings/{filename}'
-                path2 = f'/images/postings/{filename}'
+                path2 = f'images/postings/{filename}'
                 file.save(path1)
                 db.createThumbnail( path1,f'static/media/{filename}') #This method creating thumb nails and store it into media
                 posting['image'] = path2
             else :
-                posting['image'] = "/images/postings/empty.png"
+                posting['image'] = "images/postings/empty.png"
 
             # Send to the database
             db.insertAPosting(posting)

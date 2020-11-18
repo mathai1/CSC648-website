@@ -11,12 +11,17 @@ def initHome(db):
         # Getting posting info from the database
         postings = db.getAllPostings()
         lst = db.getPostingOrganizedData(postings)
-
-        # Getting thumbnails for home page
+        recent_posts = db.getPostingbyOrderedDate()
+        ordered_lst = db.getPostingOrganizedData(recent_posts)
         for l in lst:
             s = l['image'].split("/")[-1]
             l['image'] = "media/" + s 
-        return render_template('home/home.html', data = lst)
+        if 'name' in session:
+            user = db.getAUser("All",session['name'])
+            favorites = db.getfavoritePostings(session['email'])
+            fav_postings = db.getPostingOrganizedData(favorites)
+            return render_template('home/home.html', data = lst, recent = ordered_lst, fav = fav_postings, user=user)
+        return render_template('home/home.html', data = lst, recent = ordered_lst)
         
     @home.route('/about')
     def about():
@@ -41,9 +46,7 @@ def initHome(db):
                 session['email'] = request.form['email']
                 user = db.getUserOrganizedData(account)
                 session['name'] = user[0]['fname']
-                postings = db.getAllPostings()
-                postinglst = db.getPostingOrganizedData(postings)
-                return render_template("home/home.html", data = postinglst, user = user)
+                return redirect(url_for('home.homepage'))
             else :
                 return render_template("home/login.html", message = "email or password is incorrect")
         return render_template("home/login.html")
