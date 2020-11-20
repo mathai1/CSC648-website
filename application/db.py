@@ -223,7 +223,9 @@ class SearchingDB():
         lst = []
         dPosting = {}
         for row in postings:
-            email = row[1].replace("@sfsu.edu", "")
+            # email = row[1].replace("@sfsu.edu", "")
+            email = row[1]
+
             date = row[4]
             if (type(date) == datetime.datetime):
                 date = date.date()
@@ -363,7 +365,7 @@ class SearchingDB():
     def InsertMessage(self,message):
         conn = self.connect_db()
         pycursor = conn.cursor()
-        body = message['data']
+        body = message['body']
         mhid = message['room']
         sender = message['user']
         searchQuery = f"INSERT INTO Messages (Mhid, messagebody, sender, timestamp) VALUES ({mhid} , '{body}', '{sender}', NOW() ) "
@@ -381,8 +383,34 @@ class SearchingDB():
         searchQuery = f"SELECT * FROM Messages WHERE Mhid = {mhid}"
         pycursor.execute(searchQuery)
         item = pycursor.fetchall()
+
+        item = self.getMessageBodyOrganizedData(item)
         conn.close()
         return item
+
+    def getMessageBodyOrganizedData(self,message) :
+        lst = []
+        dMessage = {}
+        for row in message:
+            dMessage = {"mhid": row[1], "body":row[2] , "sender":row[3] }
+            lst.append(dMessage)
+        return lst
+
+    def getDashBoardMessage(self, message):
+        conn = self.connect_db()
+        pycursor = conn.cursor()
+        searchQuery = f"SELECT * FROM Messages WHERE Mhid = {mhid}"
+        pycursor.execute(searchQuery)
+        item = pycursor.fetchall()
+
+        item = self.getMessageBodyOrganizedData(item)
+        conn.close()
+        return item
+
+
+    
+
+
 
 
 
