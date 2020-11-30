@@ -11,31 +11,32 @@ def initChat(db, socketio):
 
     @message.route('/message', methods=['GET','POST'])
     def messageRoute():
-        # if 'author' in request.args and 'postID' in request.args:
-        #     inquiry = session['email']
-        #     author = request.args['author']
-        #     postID = request.args['postID']
-        #     data = db.generateMessageHandler(author, inquiry, postID)
-            return redirect(f'/message/1')
+        if 'author' in request.args and 'postID' in request.args:
+            inquiry = session['email']
+            author = request.args['author']
+            postID = int(request.args['postID'])
+            data = db.generateMessageHandler(author, inquiry, postID)
+            return redirect(f'/message/{data[0]}')
             
     @message.route('/message/<id>', methods= ['GET' , 'POST'])
     def Messagepage(id):
         user = session['name']
         message = db.getAllMessagesByMessageHandler(id)
-        return render_template('message/chat.html', async_mode=socketio.async_mode, data=id, user = user, messages = message)
+        print(message)
+        return render_template('message/message.html', id=id, user = user, messages = message)
             
 
-    @socketio.on('join', namespace='/test')
-    def join(message):
-        join_room(message['room'])
+    @message.route('/message/<id>/send', methods= ['GET' , 'POST'])
+    def send_room_message(id):
+        if request.method == "POST" :
+            messages ={}
+            messages['body'] = request.form['message']
+            messages['room'] = id 
+            messages['user'] = session['email']
+            db.InsertMessage(messages)
+        data = db.getAllMessagesByMessageHandler(id)
+        print(data)
+        return render_template('message/message.html', id=id, user =session['name'] , messages = data)
 
-
-    @socketio.on('my_room_event', namespace='/test')
-    def send_room_message(message):
-        print(message)
-        # db.InsertMessage(message)
-        emit('my_response',
-            {'data': message['data'], 'user': message['user']},
-            room=message['room'])
 
     return message
