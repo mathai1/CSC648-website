@@ -395,7 +395,7 @@ class SearchingDB():
             dMessage = {"mhid": row[1], "body":row[2] , "sender":row[3] }
             lst.append(dMessage)
         return lst
-
+"""
     def getDashBoardMessage(self, message):
         conn = self.connect_db()
         pycursor = conn.cursor()
@@ -409,7 +409,7 @@ Order by Messages.timestamp desc"
 
         item = self.getMessageBodyOrganizedData(item)
         conn.close()
-        return item
+        return item"""
 
 
     
