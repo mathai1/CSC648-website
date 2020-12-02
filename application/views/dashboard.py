@@ -43,7 +43,7 @@ def initDashBoard(db):
         #     },
         # ]
         user = session['email']
-        msgs = db.getAllMessageByUser(user)
+        msgs = db.message.getAllMessageByUser(user)
         numMsgs = len(msgs)
         return render_template('dashboard/message.html', msgs=msgs, numMsgs=numMsgs)
 
@@ -51,8 +51,8 @@ def initDashBoard(db):
     def userPostings():
         # allPosts = db.getAllPostings()
         # posts = db.getPostingOrganizedData(allPosts)
-        allPosts = db.getAPosting("email", session['email'])
-        posts = db.getPostingOrganizedData(allPosts)
+        allPosts = db.post.getAPosting("email", session['email'])
+        posts = db.post.getPostingOrganizedData(allPosts)
         numPosts = len(posts)
         return render_template('dashboard/postings.html', posts=posts, numPosts=numPosts)
         

@@ -44,7 +44,7 @@ def init():
 # Setting key for session
 app.secret_key="GATOR"
 
-# Passing db to all the blueprints
+# Passing db to all the blueprints & get blueprints
 home = initHome(db)
 search = initSearch(db)
 posting = initPost(db)

@@ -9,10 +9,10 @@ def initHome(db):
     @home.route('/', methods=['GET'])
     def homepage():
         # Getting posting info from the database
-        postings = db.getAllPostings()
-        lst = db.getPostingOrganizedData(postings)
-        recent_posts = db.getPostingbyOrderedDate()
-        ordered_lst = db.getPostingOrganizedData(recent_posts)
+        postings = db.post.getAllPostings()
+        lst = db.post.getPostingOrganizedData(postings)
+        recent_posts = db.post.getPostingbyOrderedDate()
+        ordered_lst = db.post.getPostingOrganizedData(recent_posts)
 
         #Geting thumbnail
         ordered_lst = getThumbnail(ordered_lst)
@@ -20,9 +20,9 @@ def initHome(db):
 
         # display favorite when user favorite something
         if 'name' in session:
-            user = db.getAUser("All",session['name'])
+            user = db.user.getAUser("All",session['name'])
             favorites = db.getfavoritePostings(session['email'])
-            fav_postings = db.getPostingOrganizedData(favorites)
+            fav_postings = db.post.getPostingOrganizedData(favorites)
             fav_postings = getThumbnail(fav_postings)
             return render_template('home/home.html', data = lst, recent = ordered_lst, fav = fav_postings, user=user)
         return render_template('home/home.html', data = lst, recent = ordered_lst)
@@ -45,10 +45,10 @@ def initHome(db):
         if request.method == 'POST':
             email =request.form['email']
             password =request.form['pwd']
-            account = db.checkAUser(email,password)
+            account = db.user.checkAUser(email,password)
             if account :
                 session['email'] = request.form['email']
-                user = db.getUserOrganizedData(account)
+                user = db.user.getUserOrganizedData(account)
                 session['name'] = user[0]['fname']
                 return redirect(url_for('home.homepage'))
             else :
@@ -70,7 +70,7 @@ def initHome(db):
             else:
                 message = "Not SFSU Email"
             #checking whether the email has been rgistered already
-            if db.getAUserbyEmail(email):
+            if db.user.getAUserbyEmail(email):
                 message = "The email has been already registered"
             #checking if password contains at least 7 characters, 1 number, and 1 letter
             if len(password) < 7:
@@ -90,7 +90,7 @@ def initHome(db):
             #if there is no errors or messages on signup page
             #then insert user to database
             if not message:
-                db.insertAUser(user)
+                db.user.insertAUser(user)
                 return render_template("home/login.html" , msg = "Account is created")
             else:
                 return render_template("home/signup.html", message = message)

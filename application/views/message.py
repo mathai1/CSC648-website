@@ -15,13 +15,13 @@ def initChat(db, socketio):
             inquiry = session['email']
             author = request.args['author']
             postID = int(request.args['postID'])
-            data = db.generateMessageHandler(author, inquiry, postID)
+            data = db.message.generateMessageHandler(author, inquiry, postID)
             return redirect(f'/message/{data[0]}')
             
     @message.route('/message/<id>', methods= ['GET' , 'POST'])
     def Messagepage(id):
         user = session['name']
-        message = db.getAllMessagesByMessageHandler(id)
+        message = db.message.getAllMessagesByMessageHandler(id)
         print(message)
         return render_template('message/message.html', id=id, user = user, messages = message)
             
@@ -33,9 +33,8 @@ def initChat(db, socketio):
             messages['body'] = request.form['message']
             messages['room'] = id 
             messages['user'] = session['email']
-            db.InsertMessage(messages)
-        data = db.getAllMessagesByMessageHandler(id)
-        print(data)
+            db.message.InsertMessage(messages)
+        data = db.message.getAllMessagesByMessageHandler(id)
         return render_template('message/message.html', id=id, user =session['name'] , messages = data)
 
 

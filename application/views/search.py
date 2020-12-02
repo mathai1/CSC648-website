@@ -20,8 +20,8 @@ def initSearch(db):
             searchedData = request.form['searchedData']
 
             # Perform the search through the database
-            postings = db.searchAPosting(category,searchedData)     
-            lst = db.getPostingOrganizedData(postings)
+            postings = db.post.searchAPosting(category,searchedData)     
+            lst = db.post.getPostingOrganizedData(postings)
 
             # Make sure to display thumbnail instead of original image
             for l in lst:
@@ -50,7 +50,7 @@ def initSearch(db):
                 min = request.args['min']
                 max = request.args['max']
                 order = request.args['order']
-                postings = db.getPostingbyPrice(min, max, order, searchedData, category)
+                postings = db.post.getPostingbyPrice(min, max, order, searchedData, category)
                 return render_template("search/search.html", data = postings, searchedData = searchedData, category = category, min = min , max =  max, order = order)
         return render_template("search/search.html")
 

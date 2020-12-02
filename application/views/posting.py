@@ -16,8 +16,8 @@ def initPost(db) :
     ######################################################################################
     @posting.route('/posting/<postid>')
     def getPost(postid):
-        post = db.getAPosting("postID", postid)
-        posts = db.getPostingOrganizedData(post)
+        post = db.post.getAPosting("postID", postid)
+        posts = db.post.getPostingOrganizedData(post)
         return render_template("posting/posting.html", posting = posts[0] )
 
     ######################################################################################
@@ -49,7 +49,7 @@ def initPost(db) :
                 posting['image'] = "images/postings/empty.png"
 
             # Send to the database
-            db.insertAPosting(posting)
+            db.post.insertAPosting(posting)
             return redirect("/")
     
         return render_template("posting/create.html")
