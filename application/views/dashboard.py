@@ -42,8 +42,8 @@ def initDashBoard(db):
         #         'lastMessage': 'This is an example of the last message that was sent in the conversation.'
         #     },
         # ]
-        user = session['email']
-        msgs = db.message.getAllMessageByUser(user)
+        msgs = db.message.getDashBoardMessage()
+        print(msgs)
         numMsgs = len(msgs)
         return render_template('dashboard/message.html', msgs=msgs, numMsgs=numMsgs)
 

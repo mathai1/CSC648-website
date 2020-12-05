@@ -38,7 +38,7 @@
                     <td>{{ p['title'] }}</td>
                     <td>No Status in DB</td>
                     <td>{{ p['date'] }}</td>
-                    <td><button type="button" class="btn btn-secondary">View/Edit Post</button></td>
+                    <td> <a href="/posting/{{p['postid']}}" target="_blank" ><button type="button" class="btn btn-secondary">View/Edit Post</button>  </a></td>
                     <td><button type="button" class="btn btn-secondary">Delete post</button></td>
                 </tr>
                 {% endfor %}

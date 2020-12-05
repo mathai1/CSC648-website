@@ -10,7 +10,7 @@ def initChat(db, socketio):
     message = Blueprint('message', __name__)
 
     @message.route('/message', methods=['GET','POST'])
-    def messageRoute():
+    def CreateMessageRoute():
         if 'author' in request.args and 'postID' in request.args:
             inquiry = session['email']
             author = request.args['author']
@@ -24,6 +24,13 @@ def initChat(db, socketio):
         message = db.message.getAllMessagesByMessageHandler(id)
         print(message)
         return render_template('message/message.html', id=id, user = user, messages = message)
+
+    # @message.route('/messages', methods= ['GET' , 'POST'])
+    # def MessagebyUserpage(id):
+    #     user = session['name']
+    #     message = db.message.getDashBoardMessage()
+    #     print(message)
+    #     return render_template('message/message.html', id=id, user = user, messages = message)
             
 
     @message.route('/message/<id>/send', methods= ['GET' , 'POST'])

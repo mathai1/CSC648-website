@@ -94,17 +94,18 @@ class Message():
             lst.append(dMessage)
         return lst
 
-#     def getDashBoardMessage(self, message):
-#         conn = self.connect_db()
-#         pycursor = conn.cursor()
-#         searchQuery = f"SELECT Posting.postID, Posting.email as Post_owner, Posting.title, Message_Handler.mhid, Message_Handler.inquiry, Messages.messagebody, Messages.timestamp FROM Posting JOIN Message_Handler on Message_Handler.postID = Posting.postID
-# Join Messages on Message_Handler.mhid = Messages.mhid
-# WHERE Posting.email = "b@sfsu.edu" or Message_Handler.inquiry = "b@sfsu.edu"
-# GROUP BY(Message_Handler.mhid)
-# Order by Messages.timestamp desc"
-#         pycursor.execute(searchQuery)
-#         item = pycursor.fetchall()
+    def getDashBoardMessage(self ):
+        conn = self.connect_db()
+        pycursor = conn.cursor()
+        email = session['email']
+        searchQuery = f"Call getLastMessage('{email}')"
+        pycursor.execute(searchQuery)
+        item = pycursor.fetchall()
 
-#         item = self.getMessageBodyOrganizedData(item)
-#         conn.close()
-#         return item
+        lst = []
+        dMessage = {}
+        for row in item:
+            dMessage =  { "mhid" : row[1] , "body":row[2] , "sender":row[3], "timestamp": row[4], "postId": row[7], "postOwner" : row[8], "postTitle" : row[9] }
+            lst.append(dMessage)        
+        conn.close()
+        return lst

@@ -24,7 +24,7 @@
         <table class="table table-striped border bg-white">
             <thead>
                 <tr>
-                    <th scope="col">User</th>
+                    <th scope="col">Sender</th>
                     <th scope="col">Posting</th>
                     <th scope="col">Message</th>
                     <th scope="col">Last Sent/Received</th>
@@ -35,11 +35,11 @@
                 {% if msgs %}
                 {% for m in msgs %}
                 <tr>
-                    <td>{{ m['otherUser'] }}</td>
+                    <td>{{ m['sender'] }}</td>
                     <td>{{ m['postTitle'] }}</td>
-                    <td>{{ m['lastMessage'] }}</td>
+                    <td>{{ m['body'] }}</td>
                     <td>{{ m['timestamp'] }}</td>
-                    <td><button type="button" class="btn btn-secondary">Open Conversation</button></td>
+                    <td><a href="message/{{m['mhid']}}" target="_blank"><button type="button" class="btn btn-secondary">Open Conversation</button> </a></td>
                 </tr>
                 {% endfor %}
                 {% endif %}
