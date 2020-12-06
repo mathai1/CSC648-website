@@ -1,6 +1,6 @@
 # THIS IS HOME BLUEPRINT for home, about, login and signup
 from flask import Blueprint, render_template, request, session, redirect, url_for
-import re
+import re , bcrypt
 
 def initHome(db):
     # create a blue print
@@ -49,10 +49,14 @@ def initHome(db):
             if account :
                 session['email'] = request.form['email']
                 user = db.user.getUserOrganizedData(account)
-                session['name'] = user[0]['fname']
-                return redirect(url_for('home.homepage'))
-            else :
-                return render_template("home/login.html", message = "email or password is incorrect")
+                hashed  = user[0]["password"].encode("utf-8")  
+                # verify password 
+                password = str.encode(password)
+                if bcrypt.checkpw(password, hashed):
+                    session['name'] = user[0]['fname']
+                    return redirect(url_for('home.homepage'))
+                else :
+                    return render_template("home/login.html", msg = "email or password is incorrect")
         return render_template("home/login.html")
 
     @home.route('/signup', methods=['GET', 'POST'])
@@ -80,7 +84,10 @@ def initHome(db):
             elif re.search('[a-z]',password) is None:
                 message ="Password must include a letter"
             else:
-                user['password']=password     
+                # encrypt password
+                password_byte = str.encode(password)
+                hashed = bcrypt.hashpw(password_byte, bcrypt.gensalt())
+                user['password']= hashed.decode("utf-8")   
             #checking if name is only letters
             if fname.isalpha() & lname.isalpha():
                 user['fname'] = fname

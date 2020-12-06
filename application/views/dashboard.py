@@ -12,36 +12,6 @@ def initDashBoard(db):
 
     @dashboard.route('/messages')
     def messages():
-        # msgs = [
-        #     {
-        #         'postTitle': 'Book1',
-        #         'postPrice': 70.00,
-        #         'timestamp': 'Dec 12 2020 14:43:04',
-        #         'otherUser': 'John Appleseed',
-        #         'lastMessage': 'This is an example of the last message that was sent in the conversation.'
-        #     },
-        #     {
-        #         'postTitle': 'Book2',
-        #         'postPrice': 12.00,
-        #         'timestamp': 'Feb 01 2020 15:28:12',
-        #         'otherUser': 'John Doe',
-        #         'lastMessage': 'This is an example of the last message that was sent in the conversation.'
-        #     },
-        #     {
-        #         'postTitle': 'Book3',
-        #         'postPrice': 4.00,
-        #         'timestamp': 'Dec 12 2020 02:32:39',
-        #         'otherUser': 'Jane Doe',
-        #         'lastMessage': 'This is an example of the last message that was sent in the conversation.'
-        #     },
-        #     {
-        #         'postTitle': 'Book4',
-        #         'postPrice': 23.00,
-        #         'timestamp': 'Dec 12 2020 18:14:59',
-        #         'otherUser': 'Joe Momma',
-        #         'lastMessage': 'This is an example of the last message that was sent in the conversation.'
-        #     },
-        # ]
         msgs = db.message.getDashBoardMessage()
         print(msgs)
         numMsgs = len(msgs)

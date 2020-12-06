@@ -1,5 +1,5 @@
 import pymysql
-import datetime
+import datetime, bcrypt
 from PIL import Image
 from flask import session
 class User():
@@ -36,7 +36,7 @@ class User():
     def checkAUser(self, email , password):
         conn = self.connect_db()
         pycursor = conn.cursor()
-        searchQuery = f"SELECT * from User WHERE email LIKE '{email}' AND password LIKE '{password}' "
+        searchQuery = f"SELECT * from User WHERE email LIKE '{email}' "
         pycursor.execute(searchQuery)
         item = pycursor.fetchall()
         conn.close()
@@ -85,7 +85,7 @@ class User():
         print(users)
         for row in users:
             # dUsers = {"email": row[0],  "fname":row[2], "lname":row[3], "image" : row[4]}
-            dUsers = {"email": row[0],  "fname":row[2], "lname":row[3]}
+            dUsers = {"email": row[0],"password" : row[1] , "fname":row[2], "lname":row[3]}
             lst.append(dUsers)
         return lst
 
@@ -100,6 +100,7 @@ class User():
         password = user['password']
         fname = user['fname']
         lname = user['lname']
+        print(password)
         searchQuery = f"INSERT INTO User (email , password, firstName , lastName ) VALUES ('{email}' , '{password}' , '{fname}' ,  '{lname}'  )"
         data = pycursor.execute(searchQuery)
         conn.commit()
