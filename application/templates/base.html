@@ -20,23 +20,38 @@
       <title>{% block title %}{% endblock %}</title>
    </head>
    <body>
+
+      <!--********************************** CLASS HEADER ****************************************-->
+      <div class="container-fluid">
+         <h2 class="d-flex justify-content-center">
+            SFSU Software Engineering Project CSC 648-848, Fall 2020 - For Demonstration Only
+         </h2>
+      </div>
       
       <!--************************************** NAV BAR *********************************************-->
-      <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top" >
-         <a class="navbar-brand" href="/">
-            SFSU TRADE
-         </a>
+      <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top" >
+         <div class="conainer">
+            <a class="navbar-brand" href="/">
+               <img src="../static/images/about/sfsu.jpg" height="50px"/>
+            </a>
+         </div>
+      
          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
          <span class="navbar-toggler-icon"></span>
          </button>
          <div class="navbar-collapse justify-content-start " id="collapsibleNavbar" >
             <ul class="navbar-nav mr-auto">
-               <li class="nav-item active">
-                  <a class="nav-link" href="/">Home</a>
-               </li>
+               <!-- <li class="nav-item active">
+                  <a class="nav-link" href="/posting">Home</a>
+               </li> -->
                {%if session['name'] %}
                <li class="nav-item active">
-                  <a class="nav-link" href="/posting">Post</a>
+                  <a class="nav-link" href="/posting">Create Post</a>
+               </li>
+               {% else %}
+               <!-- If user not logged in, link to login page -->
+               <li class="nav-item active">
+                  <a class="nav-link" href="/login">Create Post</a>
                </li>
                {% endif %}
             </ul>
