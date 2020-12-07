@@ -23,7 +23,7 @@
       <section class="home-slick-slider" >
          {% for data in recent %}
          <div>
-            <a  href="/posting/{{data['postid']}}">
+            <a href="/posting/{{data['postid']}}" target="_blank">
                <div class="card">
                   <img class="img-fluid card-img-top"  alt="100%x280" src={{url_for('static', filename=data["image"] )}} >
                   <div class="card-body">
@@ -42,7 +42,7 @@
       <section class="home-slick-slider" >
          {% for d in fav %}
          <div>
-            <a  href="/posting/{{d['postid']}}">
+            <a  href="/posting/{{d['postid']}}" target="_blank">
                <div class="card">
                   <img class="img-fluid card-img-top" alt="100%x280" src={{url_for('static', filename=d["image"] ) }}>
                   <div class="card-body">
@@ -62,7 +62,7 @@
          {% for d in data %}
          {% if d['category'] == 'Books' %}
          <div>
-            <a  href="/posting/{{d['postid']}}">
+            <a  href="/posting/{{d['postid']}}" target="_blank">
                <div class="card">
                   <img class="img-fluid card-img-top"  alt="100%x280" src={{url_for('static', filename=d["image"] )}} >
                   <div class="card-body">
