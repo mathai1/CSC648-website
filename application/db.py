@@ -199,6 +199,11 @@ class SearchingDB():
         conn.commit()
         conn.close()
 
+
+# Method: this function deletes a post from a logged in user
+# Parameter: post id
+# Return: nothing
+
     def deleteAPosting(self, postId):
         conn = self.connect_db()
         pycursor = conn.cursor()
