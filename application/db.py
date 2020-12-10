@@ -199,6 +199,18 @@ class SearchingDB():
         conn.commit()
         conn.close()
 
+# Made for testing but should add the right SQL QUERY
+    def deleteAPosting(self, posting):
+        conn = self.connect_db()
+        pycursor = conn.cursor()
+        #deleteQuery = "TRUNCATE Posting"
+        getQuery = "SELECT * from Posting"
+
+        data = pycursor.execute(getQuery)
+        conn.commit()
+        conn.close()
+
+
 # Method : This function is A user based on Posting ID
 # Parameter : posting id
 # Return : A tuple of tuple of tuples of posting
@@ -395,6 +407,7 @@ class SearchingDB():
             dMessage = {"mhid": row[1], "body":row[2] , "sender":row[3] }
             lst.append(dMessage)
         return lst
+
 
 
     #def getDashBoardMessage(self, message):
