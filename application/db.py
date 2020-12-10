@@ -199,6 +199,15 @@ class SearchingDB():
         conn.commit()
         conn.close()
 
+    def deleteAPosting(self, postId):
+        conn = self.connect_db()
+        pycursor = conn.cursor()
+        deleteQuery = f"DELETE from Posting WHERE postID={postId}"
+        pycursor.execute(deleteQuery)
+        conn.commit()
+        conn.close()
+        
+
 # Method : This function is A user based on Posting ID
 # Parameter : posting id
 # Return : A tuple of tuple of tuples of posting
@@ -395,6 +404,8 @@ class SearchingDB():
             dMessage = {"mhid": row[1], "body":row[2] , "sender":row[3] }
             lst.append(dMessage)
         return lst
+
+
 
  
 

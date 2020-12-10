@@ -55,5 +55,17 @@ def initDashBoard(db):
         posts = db.getPostingOrganizedData(allPosts)
         numPosts = len(posts)
         return render_template('dashboard/postings.html', posts=posts, numPosts=numPosts)
+
+    @dashboard.route('/dashboard/delete/<postid>', methods= ['GET' , 'POST'])
+    def deletePost(postid):
+        print(postid)
+        db.deleteAPosting(postid)
+
+        #getting all the remaining posts in current account
+        allPosts = db.getAPosting("email", session['email'])
+        posts = db.getPostingOrganizedData(allPosts)
+        numPosts = len(posts)
+
+        return render_template('dashboard/postings.html', posts=posts, numPosts=numPosts)
         
     return dashboard
