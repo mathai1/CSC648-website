@@ -38,14 +38,19 @@
                     <td>{{ p['title'] }}</td>
                     <td>No Status in DB</td>
                     <td>{{ p['date'] }}</td>
-                    <td><a class="btn btn-secondary" href='/posting/{{p.postid}}' target="_blank" role="button">View</a></td>
-                    <!-- <td><button type="button" class="btn btn-secondary">View/Edit Post</button></td> -->
-                    <!-- <td><a href='/dashboard/delete/{{p.postid}}'>Delete</a></td> -->
-                    <td><a class="btn btn-danger" href='/dashboard/delete/{{p.postid}}' role="button">Delete</a></td>
+                    <td><a href="/posting/{{p['postid']}}" class="btn btn-secondary">View Post</a></td>
+                    <!-- <td><button type="button" class="btn btn-secondary">Delete post</button></td> -->
+                    <td><form method="POST" action='/posting/{{postid}}/delete' >
+                        <input class ="btn btn-secondary" type="submit" name="delete" value="Delete">
+                    </form></td>
                 </tr>
-                {% endfor %}
+
+                {% endfor %}           
                 {% endif %}
+             
+
             </tbody>
+
         </table>
     </div>
 
