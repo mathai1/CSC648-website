@@ -80,16 +80,6 @@
          {% if d['category'] == 'Books' %}
          <div>
             <a  href="/posting/{{d['postid']}}" target="_blank">
-<<<<<<< HEAD
-               <div class="card">
-                  <img class="img-fluid card-img-top"  alt="100%x280" src={{url_for('static', filename=d["image"] )}} >
-                  <div class="card-body">
-                     <h4 class="card-title">{{d["title"]}}</h4>
-                     <p class="card-text">${{d["price"]}}</p>
-                  </div>
-               </div>
-            </a>
-=======
                <div class="card bg-light text-center" style="width: 21rem;">
                  <img class="card-img-top" src={{url_for('static', filename=d["image"] ) }} alt="Card image cap">
                  <div class="card-header">
@@ -102,7 +92,6 @@
                  </div>
                </div> 
                </a>   
->>>>>>> origin/Manuel-Search/Home
          </div>
          {% endif %}
          {% endfor %}
