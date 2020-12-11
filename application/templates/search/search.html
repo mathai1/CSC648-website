@@ -3,20 +3,22 @@
 {% block title%}test search{% endblock %}
 {% block content %}  
   <div class="container-fluid">
-    <div class="row">
-        <div class="col-2 px-1 bg-dark position-fixed" id="sticky-sidebar">
+    
+    <div class="row"><!-- start of sidebar-->
+        <div class="col-2 px-1 position-fixed" id="sticky-sidebar">
+
             <div class="nav flex-column flex-nowrap vh-100 overflow-auto text-white p-2" >
               <div class="search-filter">
                 <form action="/search" method="POST">
-                <h4> Sort by price </h4>
-                <label>Min</label>
-                <input type="text" class="form-control" value={%if min %} {{min}} {% else %} 0 {% endif %} id="min" name="min" onkeypress="return isNumber(event)" />
-                <label>Max</label>
-                <input type="text" class="form-control" value={% if message %} 0 {%else %}{%if max %} {{max}} {% else %} {{high}} {% endif %}{% endif %} id="max" name="max" onkeypress="return isNumber(event)" />
+                <!-- <h4> Sort by price </h4> -->
+                <!-- <label>Min</label> -->
+                <input type="hidden" class="form-control" value={%if min %} {{min}} {% else %} 0 {% endif %} id="min" name="min" onkeypress="return isNumber(event)" />
+                <!-- <label>Max</label> -->
+                <input type="hidden" class="form-control" value={% if message %} 0 {%else %}{%if max %} {{max}} {% else %} {{high}} {% endif %}{% endif %} id="max" name="max" onkeypress="return isNumber(event)" />
                 
-                <h4>Sort by date</h4>
+                <!-- <h4>Sort by date</h4> -->
                 <select class="custom-select" name="order" id="order">
-                  <option>-- select --</option>
+                  <option>Sort by date:</option>
                   <option value="newest">Newest</option>
                   <option value="oldest">Oldest</option>
                 </select>
@@ -25,8 +27,9 @@
               </div>
             </div>
         </div>
-      </div>
+      </div><!-- end of sidebar-->
         <div class="col-9 offset-2" id="main">
+
           {% if message %}
           <h3> {{message}}</h3>
           {% else %}
@@ -39,14 +42,6 @@
               <h3 class="h3 p-3" id="display-results">Displaying Results 1-9 of {{data|length}}</h3>
             </div>
             <div class="col">
-              <div class="text-center d-flex justify-content-end"><!-- page buttons -->
-                <div class="p-3">
-                  <div class="btn-group">
-                    <div class="prev"><button type="button" class="btn btn-info">Prev</button></div>
-                    <div class="next"><button type="button" class="btn btn-info">Next</button></div>
-                  </div>
-                </div>
-              </div><!-- end of page buttons -->
             </div>
           </div>
           {% endif %}
@@ -65,14 +60,16 @@
             
 
             <!-- individual card start-->
-            <a  href="/posting/{{d['postid']}}">
+            <a  href="/posting/{{d['postid']}}" target="_blank">
             <div class="card bg-light text-center" style="width: 18rem;">
               <img class="card-img-top" src={{url_for('static', filename=d["image"] ) }} alt="Card image cap">
-              <div class="card-header">{{d["title"]}}</div>
+              <div class="card-header">
+                {{d["title"]}}
+              </div>
               <div class="card-body">
-                <h5 class="card-title text-success">${{d["price"]}}</h5>
+                <h4 class="card-title text-success">${{d["price"]}}</h4>
                 <a href="#" class="btn btn-primary">Contact</a>                
-                <p class="card-text"><small class="text-muted">Date Posted: {{d["date"]}}</small></p>
+                <p class="card-text"><small class="text-muted">Posted: {{d["date"]}}</small></p>
               </div>
             </div> 
             </a>
@@ -88,6 +85,16 @@
 
           
         </div><!--card-deck end -->
+
+        <div class="text-center d-flex justify-content-end"><!-- page buttons -->
+          <div class="p-3">
+            <div class="btn-group">
+              <div class="prev"><button type="button" class="btn btn-info">Prev</button></div>
+              <div class="next"><button type="button" class="btn btn-info">Next</button></div>
+            </div>
+          </div>
+        </div><!-- end of page buttons -->
+
   
         </div><!--main area end-->
     </div>
@@ -164,7 +171,7 @@ $('.next').click(function(){
       document.getElementById("display-results").innerHTML = "Displaying Results " + (slice[0]+1) + "-" + slice[1] + " of " + $el.length
      }
    }
-  //  scrollToTop()
+  scrollToTop()
    showSlice(slice);
 });
 
@@ -173,7 +180,7 @@ $('.prev').click(function(){
     slice = slice.map(subtractSlice); 
     document.getElementById("display-results").innerHTML = "Displaying Results " + (slice[0] + 1) + "-" + slice[1] + " of " + $el.length
   }
-  // scrollToTop()
+  scrollToTop()
   showSlice(slice);
 });
 
@@ -191,13 +198,11 @@ function showSlice(slice){
 // after clicking product page 
 // navigation
 //******************************
-const scrollToTop = () => {
-  const c = document.documentElement.scrollTop || document.body.scrollTop;
-  if (c > 0) {
-    window.requestAnimationFrame(scrollToTop);
-    window.scrollTo(0, c - c / 8);
-  }
-};
+function scrollToTop() {
+
+window.scrollTo({top: 0, behavior: 'smooth'});
+
+}
 
 
 //************************************************
