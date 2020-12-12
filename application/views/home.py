@@ -17,6 +17,9 @@ def initHome(db):
         #Geting thumbnail
         ordered_lst = getThumbnail(ordered_lst)
         lst = getThumbnail(lst)
+        numberOfPostings = int(len(ordered_lst))
+        
+        print(numberOfPostings)
 
         # display favorite when user favorite something
         if 'name' in session:
@@ -24,8 +27,8 @@ def initHome(db):
             favorites = db.getfavoritePostings(session['email'])
             fav_postings = db.getPostingOrganizedData(favorites)
             fav_postings = getThumbnail(fav_postings)
-            return render_template('home/home.html', data = lst, recent = ordered_lst, fav = fav_postings, user=user)
-        return render_template('home/home.html', data = lst, recent = ordered_lst)
+            return render_template('home/home.html', data = lst, recent = ordered_lst, fav = fav_postings, user=user, numberOfPostings=numberOfPostings)
+        return render_template('home/home.html', data = lst, recent = ordered_lst, numberOfPostings=numberOfPostings)
         
     @home.route('/about')
     def about():
