@@ -145,6 +145,20 @@ class SearchingDB():
 
         return item
 
+# Method : Get books from all postings
+# Parameter : N/A
+# Return : a list of books
+
+    def getBookPostings(self):
+        conn = self.connect_db()
+        pycursor = conn.cursor()
+        searchQuery = "select * from Posting where category = 'Books'"
+        pycursor.execute(searchQuery)
+        item = pycursor.fetchall()        
+        conn.close()
+
+        return item
+
 # Method : Get A Posting with an exact match based on either "email" , "title", "description" , "date" , "price", "category"
 # Parameter : - First Parameter : ACtual String of either "email" , "title", "description" , "date" , "price", "category"
 #             - Second Parameter : A string that you want to search on post based on either "email" , "title", "description" , "date" , "price", "category"
