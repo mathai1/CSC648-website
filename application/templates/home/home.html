@@ -40,7 +40,7 @@
                                 <div class="card text-center">
                                     <img class="card-img-top" alt="100%x280" src={{url_for('static', filename=data["image"] ) }}>
                                     <div class="card-body">
-                                        <h4 class="card-title">{{data["title"]}}</h4>
+                                        <h4 class="card-title" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{data["title"]}}</h4>
                                         <p class="card-text">${{data["price"]}}</p>
                                          <button type="button" class="btn btn-primary">Contact</button>
                                     </div>
@@ -55,6 +55,7 @@
                         </div>
                     </div><!-- group of 3 end-->
                     
+
                   {% for x in range(0, numberOfPostings, 3) %}
                     <div class="carousel-item">
                      <div class="row">
@@ -68,7 +69,7 @@
                                <img class="card-img-top" alt="100%x280" src={{url_for('static', filename=data["image"] ) }}>
                                </a>
                                <div class="card-body">
-                                   <h4 class="card-title">{{data["title"]}}</h4>
+                                   <h4 class="card-title" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{data["title"]}}</h4>
                                    <p class="card-text">${{data["price"]}}</p>
                                     <button type="button" class="btn btn-primary">Contact</button>
                                </div>
@@ -82,6 +83,7 @@
                      </div>
                  </div>
                  {% endfor %}
+
 
                 </div><!-- individual carousel end-->
             </div>
@@ -119,7 +121,7 @@
                                <div class="card text-center">
                                    <img class="card-img-top" alt="100%x280" src={{url_for('static', filename=data["image"] ) }}>
                                    <div class="card-body">
-                                       <h4 class="card-title">{{data["title"]}}</h4>
+                                       <h4 class="card-title" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{data["title"]}}</h4>
                                        <p class="card-text">${{data["price"]}}</p>
                                         <button type="button" class="btn btn-primary">Contact</button>
                                    </div>
@@ -147,7 +149,7 @@
                               <img class="card-img-top" alt="100%x280" src={{url_for('static', filename=data["image"] ) }}>
                               </a>
                               <div class="card-body">
-                                  <h4 class="card-title">{{data["title"]}}</h4>
+                                  <h4 class="card-title" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{data["title"]}}</h4>
                                   <p class="card-text">${{data["price"]}}</p>
                                    <button type="button" class="btn btn-primary">Contact</button>
                               </div>
@@ -169,7 +171,7 @@
 </div><!-- carousel end -->
 
 
-<div class="col-xs-12" style="height:50px;"></div>
+<div class="col-xs-12" style="height:50px;"></div><!-- space between carousel -->
 
 
 {% if fav %}

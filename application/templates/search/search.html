@@ -2,108 +2,152 @@
 {% extends "base.html" %}
 {% block title%}test search{% endblock %}
 {% block content %}  
-  <div class="container-fluid">
-    
-    <div class="row"><!-- start of sidebar-->
-        <div class="col-2 px-1 position-fixed" id="sticky-sidebar">
 
-            <div class="nav flex-column flex-nowrap vh-100 overflow-auto text-white p-2" >
-              <div class="search-filter">
-                <form action="/search" method="POST">
-                <!-- <h4> Sort by price </h4> -->
-                <!-- <label>Min</label> -->
-                <input type="hidden" class="form-control" value={%if min %} {{min}} {% else %} 0 {% endif %} id="min" name="min" onkeypress="return isNumber(event)" />
-                <!-- <label>Max</label> -->
-                <input type="hidden" class="form-control" value={% if message %} 0 {%else %}{%if max %} {{max}} {% else %} {{high}} {% endif %}{% endif %} id="max" name="max" onkeypress="return isNumber(event)" />
-                
-                <!-- <h4>Sort by date</h4> -->
-                <select class="custom-select" name="order" id="order">
-                  <option>Sort by date:</option>
-                  <option value="newest">Newest</option>
-                  <option value="oldest">Oldest</option>
-                </select>
+<style>
+  .card-img-top {
+    width: 100%;
+    height: 18vw;
+    object-fit: cover;
+}
+</style>
 
-              </form>
-              </div>
-            </div>
+<div class="container" id="main" style="max-width: 100%">
+
+  <div class="col-xs-12" style="height:50px;"></div><!--space from top nav-->
+ 
+  {% if message %}
+  <h3> {{message}}</h3>
+  {% else %}
+  {% if data|length < 9 %}
+  <h3 class="h3 p-3">Displaying Results 1 - {{data|length}} of {{data|length}}</h3>
+  {% endif %}
+  {% if data|length > 9 %}
+  <div class="row">
+    <div class="col">
+      <h3 class="h3" id="display-results">Displaying Results 1-9 of {{data|length}}</h3>
+    </div>
+    <div class="col"><!-- column -->
+
+      <div class="float-right"><!-- page buttons -->
+        <div class="btn-group">
+          <div class="prev"><button type="button" class="btn btn-info">Prev</button></div>
+          <div class="next"><button type="button" class="btn btn-info">Next</button></div>
         </div>
-      </div><!-- end of sidebar-->
-        <div class="col-9 offset-2" id="main">
+    </div><!-- end of page buttons -->
 
-          {% if message %}
-          <h3> {{message}}</h3>
-          {% else %}
-          {% if data|length < 9 %}
-          <h3 class="h3 p-3">Displaying Results 1 - {{data|length}} of {{data|length}}</h3>
-          {% endif %}
-          {% if data|length > 9 %}
-          <div class="row">
-            <div class="col">
-              <h3 class="h3 p-3" id="display-results">Displaying Results 1-9 of {{data|length}}</h3>
-            </div>
-            <div class="col">
-            </div>
-          </div>
-          {% endif %}
-          {% endif %}
 
-          <!-- card-deck start -->
-          <div class="card-deck" id="refresh">
-            
-          {%if data %}
-          
-          {% for d in data %}<!-- for: goes through data passed to page-->
-          
-          <div id="wrap"><!-- 'wrap' used for createing pages-->
+    <!-- <div class="search-filter">
+      <form action="/search" method="POST">
+      <input type="text" class="form-control" value={%if min %} {{min}} {% else %} 0 {% endif %} id="min" name="min" onkeypress="return isNumber(event)" />
+      
+      <input type="text" class="form-control" value={% if message %} 0 {%else %}{%if max %} {{max}} {% else %} {{high}} {% endif %}{% endif %} id="max" name="max" onkeypress="return isNumber(event)" />
+     
+      <select class="custom-select" name="order" id="order">
+        <option>Sort by date:</option>
+        <option value="newest">Newest</option>
+        <option value="oldest">Oldest</option>
+      </select>
 
-          <div class="col-xs-12 col-sm-8 col-md-8">
-            
+    </form>
+    </div> -->
 
-            <!-- individual card start-->
-            <a  href="/posting/{{d['postid']}}" target="_blank">
-            <div class="card bg-light text-center" style="width: 18rem;">
-              <img class="card-img-top" src={{url_for('static', filename=d["image"] ) }} alt="Card image cap">
-              <div class="card-header">
-                {{d["title"]}}
-              </div>
-              <div class="card-body">
-                <h4 class="card-title text-success">${{d["price"]}}</h4>
-                <a href="#" class="btn btn-primary">Contact</a>                
-                <p class="card-text"><small class="text-muted">Posted: {{d["date"]}}</small></p>
-              </div>
-            </div> 
-            </a>
-            <!-- individual card end-->
-            
-          </div> 
+      
+      <div class="dropdown float-right">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Sort By:
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href='/search/dateFilter?searchedData={{searchedData}}&filter={{category}}&order=newest'>Newest</a>
+          <a class="dropdown-item" href='/search/dateFilter?searchedData={{searchedData}}&filter={{category}}&order=oldest'>Oldest</a>
+        </div>
+      </div>
+      
+      
 
-        </div><!-- 'wrap' end -->  
-          
-          {% endfor %}
-          
-          {% endif %}
 
-          
-        </div><!--card-deck end -->
 
-        <div class="text-center d-flex justify-content-end"><!-- page buttons -->
-          <div class="p-3">
-            <div class="btn-group">
-              <div class="prev"><button type="button" class="btn btn-info">Prev</button></div>
-              <div class="next"><button type="button" class="btn btn-info">Next</button></div>
-            </div>
-          </div>
-        </div><!-- end of page buttons -->
+    </div><!-- column end-->
+  </div>
+  {% endif %}
+  {% endif %}
 
   
-        </div><!--main area end-->
+
+  {%if data %}
+
+
+  <div class="row justify-content-center">
+    {% for d in data %}<!-- for: goes through data passed to page-->    
+      <div id="wrap"> <!--wrap used for creating pages-->   
+
+    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-xs-12 mb-3">
+
+    <!-- individual card start-->    
+      <div class="card text-center" style="width: 18rem;">
+          <img class="card-img-top" alt="100%x280" src={{url_for('static', filename=d["image"] ) }}>
+          <div class="card-body">
+              <h4 class="card-title" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{d["title"]}}</h4>
+              <p class="card-text">${{d["price"]}}</p>
+               <button type="button" class="btn btn-primary">Contact</button>
+          </div>
+          <div class="card-footer">
+             <small class="text-muted">Posted: {{d["date"]}}</small>
+          </div> 
+
+      </div><!-- individual card end-->
+
+    
+    </div><!-- sizing for screens end-->
+    <!-- individual card end-->
+ 
+
     </div>
+    <!-- </div>wrap end -->
+    {% endfor %}
+
+  </div><!--row end-->
+ 
+
+  {% endif %}
+
+ 
+
+
+<div class="text-center d-flex justify-content-end"><!-- page buttons -->
+  <div class="p-3">
+    <div class="btn-group">
+      <div class="prev"><button type="button" class="btn btn-info">Prev</button></div>
+      <div class="next"><button type="button" class="btn btn-info">Next</button></div>
+    </div>
+  </div>
+</div><!-- end of page buttons -->
+
+
+
+</div><!--main area end-->
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 
 <script>
   $(function() {
+
+
+    $('.filter').change(function(){ 
+
+  var postOrder = $('#order').val();
+  $.ajax({
+    type: 'POST',
+    url: 'dateFilter?searchedData={{searchedData}}&filter={{category}}&postOrder='+postOrder,
+    success: function(response){
+      item = $(response).find('#refresh')
+      $("#refresh").replaceWith(item);
+    }
+  })
+}); 
+
+
 
       $('.search-filter').keyup(function(){
           var min = 0;

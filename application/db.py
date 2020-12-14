@@ -144,6 +144,7 @@ class SearchingDB():
         conn.close()
 
         return item
+        
 
 # Method : Get books from all postings
 # Parameter : N/A
@@ -272,6 +273,30 @@ class SearchingDB():
         item = pycursor.fetchall()
         conn.close()
         return item
+
+# Method : Sorts by pricing AND date AND category
+# Parameter : parameters from search page filter: order selection, search bar text, search bar category
+# Return : A dict of postings
+
+    def getPostingbyDateAndFilter(self, order, searchData, category) :
+        conn = self.connect_db()
+        pycursor = conn.cursor()
+        if category == "All" :
+            if order == "newest":
+                searchQuery = f"SELECT * from Posting WHERE title LIKE '%{searchData}%' ORDER BY date DESC"
+            else:
+                searchQuery = f"SELECT * from Posting WHERE title LIKE '%{searchData}%' ORDER BY date ASC"
+        else :
+            if order == "newest":
+                searchQuery = f"SELECT * from Posting WHERE category LIKE '{category}' AND title LIKE '%{searchData}%' ORDER BY date DESC"
+            else:
+                searchQuery = f"SELECT * from Posting WHERE category LIKE '{category}' AND title LIKE '%{searchData}%' ORDER BY date ASC"
+
+        data = pycursor.execute(searchQuery)
+        item = pycursor.fetchall()
+        conn.close()
+        return item
+
 
 
 # Method : Sorts by pricing AND date, defaults to newest to oldest
