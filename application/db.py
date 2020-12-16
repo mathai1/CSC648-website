@@ -123,10 +123,10 @@ class SearchingDB():
         conn = self.connect_db()
         pycursor = conn.cursor()
         searchQuery = "SELECT * from Posting WHERE approval = 1"
-        print(searchQuery)
+        #print(searchQuery)
         pycursor.execute(searchQuery)
         item = pycursor.fetchall()
-        print(item)
+        #print(item)
         conn.close()
 
         return item
@@ -255,12 +255,12 @@ class SearchingDB():
         dPosting = {}
         for row in postings:
             # email = row[1].replace("@sfsu.edu", "")
-            email = row[1]
+            email = row[1]            
 
             date = row[4]
             if (type(date) == datetime.datetime):
                 date = date.date()
-            dPosting = {"postid" : row[0],"email" : email , "title": row[2], "description":row[3], "date" : date, "price" : row[5], "category": row[6], "image":row[7]}
+            dPosting = {"postid" : row[0],"email" : email , "title": row[2], "description":row[3], "date" : date, "price" : row[5], "category": row[6], "image":row[7], "approval":row[8]}
             lst.append(dPosting)
         return lst
 

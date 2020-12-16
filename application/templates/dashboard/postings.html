@@ -36,7 +36,7 @@
                 {% for p in posts %}
                 <tr>
                     <td>{{ p['title'] }}</td>
-                    <td>{% if p['approval'] == 1 %}Approved{% else %}Pending{% endif %}</td>
+                    <td>{% if p.approval == 1 %}Approved{% else %}Pending{% endif %}</td>
                     <td>{{ p['date'] }}</td>
                     <td><a class="btn btn-secondary" href='/posting/{{p.postid}}' target="_blank" role="button">View</a></td>
                     <!-- <td><button type="button" class="btn btn-secondary">View/Edit Post</button></td> -->

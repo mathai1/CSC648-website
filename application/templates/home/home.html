@@ -10,7 +10,6 @@
      height: 18vw;
      object-fit: cover;
  } 
- 
  </style>
  
 <section class="pt-5 pb-5">
@@ -37,19 +36,21 @@
                     
                            {% for data in recent[0:3] %}
 
-                            <div class="col-md-4 mb-3"><!-- individual card-->
-                                <div class="card bg-light text-center">
-                                    <img class="card-img-top" alt="100%x280" src={{url_for('static', filename=data["image"] ) }}>
-                                    <div class="card-body">
-                                        <h4 class="card-title" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{data["title"]}}</h4>
-                                        <p class="card-text">${{data["price"]}}</p>
-                                         <button type="button" class="btn btn-primary">Contact</button>
-                                    </div>
-                                    <div class="card-footer">
-                                       <small class="text-muted">Posted: {{data["date"]}}</small>
-                                    </div>     
-                                </div>
-                            </div><!-- individual card end-->
+                           <div class="col-md-4 mb-3"><!-- individual card-->
+                           
+                              <div class="card bg-light text-center"><!-- individual card-->                             
+                                 <a target="_blank" href="/posting/{{data['postid']}}"><img class="card-img-top" alt="100%x280" src={{url_for('static', filename=data["image"] ) }}></a>                              
+                                 <a target="_blank" href="/posting/{{data['postid']}}"><div class="card-header" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">{{data["title"]}}</div></a>
+                                 
+                                  <div class="card-body">
+                                      <!-- <h4 class="card-title" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{data["title"]}}</h4> -->
+                                      <p class="card-text text-success">${{data["price"]}}</p>
+                                       <button type="button" class="btn btn-primary">Contact</button>
+                                       <p class="card-text"><small class="text-muted">Date Posted: {{data["date"]}}</small></p>
+                                  </div>
+   
+                              </div><!-- individual card end-->
+                           </div>
                               
                             {% endfor %}
                                                              
@@ -67,9 +68,9 @@
                         {%for data in recent[i:j]%}                        
                         <div class="col-md-4 mb-3"><!-- individual card-->
                            
-                           <div class="card bg-light text-center">                              
-                               <img class="card-img-top" alt="100%x280" src={{url_for('static', filename=data["image"] ) }}>                               
-                               <div class="card-header" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">{{data["title"]}}</div>
+                           <div class="card bg-light text-center"><!-- individual card-->                             
+                              <a target="_blank" href="/posting/{{data['postid']}}"><img class="card-img-top" alt="100%x280" src={{url_for('static', filename=data["image"] ) }}></a>                              
+                              <a target="_blank" href="/posting/{{data['postid']}}"><div class="card-header" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">{{data["title"]}}</div></a>
                               
                                <div class="card-body">
                                    <!-- <h4 class="card-title" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{data["title"]}}</h4> -->
@@ -78,11 +79,9 @@
                                     <p class="card-text"><small class="text-muted">Date Posted: {{data["date"]}}</small></p>
                                </div>
 
-                           </div>
-
-                        </div><!-- individual card end-->
+                           </div><!-- individual card end-->
+                        </div>
                         {%endfor%}  
-
                      </div>
                  </div>
                  {% endfor %}
@@ -94,7 +93,7 @@
     </div>
 </div><!-- carousel end -->
 
-<div class="col-xs-12" style="height:100px;"></div>
+<div class="col-xs-12" style="height:50px;"></div><!-- space between carousels-->
 
 
 <div class="container">
@@ -121,17 +120,18 @@
                           {% for data in bookData[0:3] %}
 
                            <div class="col-md-4 mb-3"><!-- individual card-->
-                               <div class="card text-center">
-                                   <img class="card-img-top" alt="100%x280" src={{url_for('static', filename=data["image"] ) }}>
-                                   <div class="card-body">
-                                       <h4 class="card-title" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{data["title"]}}</h4>
-                                       <p class="card-text">${{data["price"]}}</p>
-                                        <button type="button" class="btn btn-primary">Contact</button>
-                                   </div>
-                                   <div class="card-footer">
-                                      <small class="text-muted">Posted: {{data["date"]}}</small>
-                                   </div>     
-                               </div>
+                              <div class="card bg-light text-center"><!-- individual card-->                             
+                                 <a target="_blank" href="/posting/{{data['postid']}}"><img class="card-img-top" alt="100%x280" src={{url_for('static', filename=data["image"] ) }}></a>                              
+                                 <a target="_blank" href="/posting/{{data['postid']}}"><div class="card-header" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">{{data["title"]}}</div></a>
+                                 
+                                  <div class="card-body">
+                                      <!-- <h4 class="card-title" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{data["title"]}}</h4> -->
+                                      <p class="card-text text-success">${{data["price"]}}</p>
+                                       <button type="button" class="btn btn-primary">Contact</button>
+                                       <p class="card-text"><small class="text-muted">Date Posted: {{data["date"]}}</small></p>
+                                  </div>
+   
+                              </div><!-- individual card end-->
                            </div><!-- individual card end-->
                              
                            {% endfor %}
@@ -147,19 +147,18 @@
                        
                        {%for data in bookData[i:j]%}                        
                        <div class="col-md-4 mb-3"><!-- individual card-->
-                          <div class="card text-center">
-                             <a  href="/posting/{{data['postid']}}" target="_blank">
-                              <img class="card-img-top" alt="100%x280" src={{url_for('static', filename=data["image"] ) }}>
-                              </a>
-                              <div class="card-body">
-                                  <h4 class="card-title" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{data["title"]}}</h4>
-                                  <p class="card-text">${{data["price"]}}</p>
-                                   <button type="button" class="btn btn-primary">Contact</button>
-                              </div>
-                              <div class="card-footer">
-                                 <small class="text-muted">Posted: {{data["date"]}}</small>
-                              </div>
-                          </div>
+                        <div class="card bg-light text-center"><!-- individual card-->                             
+                           <a target="_blank" href="/posting/{{data['postid']}}"><img class="card-img-top" alt="100%x280" src={{url_for('static', filename=data["image"] ) }}></a>                              
+                           <a target="_blank" href="/posting/{{data['postid']}}"><div class="card-header" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">{{data["title"]}}</div></a>
+                           
+                            <div class="card-body">
+                                <!-- <h4 class="card-title" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{data["title"]}}</h4> -->
+                                <p class="card-text text-success">${{data["price"]}}</p>
+                                 <button type="button" class="btn btn-primary">Contact</button>
+                                 <p class="card-text"><small class="text-muted">Date Posted: {{data["date"]}}</small></p>
+                            </div>
+
+                        </div><!-- individual card end-->
                        </div><!-- individual card end-->
                        {%endfor%}  
 
@@ -184,15 +183,15 @@
            <h3 class="mb-3">Favorite Products</h3>
        </div>
        <div class="col-6 text-right">
-           <a class="btn btn-dark mb-3 mr-1" href="#carouselExampleIndicators2" role="button" data-slide="prev">
+           <a class="btn btn-dark mb-3 mr-1" href="#carouselExampleIndicators" role="button" data-slide="prev">
                prev
            </a>
-           <a class="btn btn-dark mb-3 " href="#carouselExampleIndicators2" role="button" data-slide="next">               
+           <a class="btn btn-dark mb-3 " href="#carouselExampleIndicators" role="button" data-slide="next">               
                next
            </a>
        </div>
        <div class="col-12">
-           <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
+           <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                <div class="carousel-inner"><!-- individual carousel -->
 
                    <div class="carousel-item active"><!-- group of 3 -->
@@ -201,17 +200,17 @@
                           {% for data in fav[0:3] %}
 
                            <div class="col-md-4 mb-3"><!-- individual card-->
-                               <div class="card text-center">
-                                   <img class="card-img-top" alt="100%x280" src={{url_for('static', filename=data["image"] ) }}>
-                                   <div class="card-body">
-                                       <h4 class="card-title">{{data["title"]}}</h4>
-                                       <p class="card-text">${{data["price"]}}</p>
-                                        <button type="button" class="btn btn-primary">Contact</button>
-                                   </div>
-                                   <div class="card-footer">
-                                      <small class="text-muted">Posted: {{data["date"]}}</small>
-                                   </div>     
-                               </div>
+                              <div class="card bg-light text-center"><!-- individual card-->                             
+                                 <a target="_blank" href="/posting/{{data['postid']}}"><img class="card-img-top" alt="100%x280" src={{url_for('static', filename=data["image"] ) }}></a>                              
+                                 <a target="_blank" href="/posting/{{data['postid']}}"><div class="card-header" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">{{data["title"]}}</div></a>
+                                 
+                                  <div class="card-body">
+                                      <!-- <h4 class="card-title" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{data["title"]}}</h4> -->
+                                      <p class="card-text text-success">${{data["price"]}}</p>
+                                       <button type="button" class="btn btn-primary">Contact</button>
+                                       <p class="card-text"><small class="text-muted">Date Posted: {{data["date"]}}</small></p>
+                                  </div>
+                              </div><!-- individual card end-->
                            </div><!-- individual card end-->                             
 
                            {% endfor %}
@@ -227,19 +226,17 @@
                        
                        {%for data in fav[i:j]%}                        
                        <div class="col-md-4 mb-3"><!-- individual card-->
-                          <div class="card text-center">
-                             <a  href="/posting/{{data['postid']}}" target="_blank">
-                              <img class="card-img-top" alt="100%x280" src={{url_for('static', filename=data["image"] ) }}>
-                              </a>
-                              <div class="card-body">
-                                  <h4 class="card-title">{{data["title"]}}</h4>
-                                  <p class="card-text">${{data["price"]}}</p>
-                                   <button type="button" class="btn btn-primary">Contact</button>
-                              </div>
-                              <div class="card-footer">
-                                 <small class="text-muted">Posted: {{data["date"]}}</small>
-                              </div>
-                          </div>
+                        <div class="card bg-light text-center"><!-- individual card-->                             
+                           <a target="_blank" href="/posting/{{data['postid']}}"><img class="card-img-top" alt="100%x280" src={{url_for('static', filename=data["image"] ) }}></a>                              
+                           <a target="_blank" href="/posting/{{data['postid']}}"><div class="card-header" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">{{data["title"]}}</div></a>
+                           
+                            <div class="card-body">
+                                <!-- <h4 class="card-title" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{data["title"]}}</h4> -->
+                                <p class="card-text text-success">${{data["price"]}}</p>
+                                 <button type="button" class="btn btn-primary">Contact</button>
+                                 <p class="card-text"><small class="text-muted">Date Posted: {{data["date"]}}</small></p>
+                            </div>
+                        </div><!-- individual card end-->
                        </div><!-- individual card end-->
                        {%endfor%}  
 
