@@ -61,11 +61,11 @@ def initSearch(db):
     ######################################################################################
     @search.route('/search/dateFilter', methods= ['GET', 'POST'])    
     def dateFilter():
-        searchData = request.args['searchedData']
+        searchedData = request.args['searchedData']
         category = request.args['filter']
         order = request.args['order']
 
-        postings = db.getPostingbyDateAndFilter(order, searchData, category)
+        postings = db.getPostingbyDateAndFilter(order, searchedData, category)
         lst = db.getPostingOrganizedData(postings)
 
         #Displaying thumbnail instead of original image
@@ -74,7 +74,7 @@ def initSearch(db):
             l['image'] = "media/" + s 
 
 
-        return render_template("search/search.html", data = lst, searchData = searchData, category = category, order = order)
+        return render_template("search/search.html", data = lst, searchedData = searchedData, category = category, order = order)
 
 
     return search

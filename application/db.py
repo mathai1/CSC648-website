@@ -122,9 +122,11 @@ class SearchingDB():
     def getAllPostings(self):
         conn = self.connect_db()
         pycursor = conn.cursor()
-        searchQuery = "SELECT * from Posting"
+        searchQuery = "SELECT * from Posting WHERE approval = 1"
+        print(searchQuery)
         pycursor.execute(searchQuery)
         item = pycursor.fetchall()
+        print(item)
         conn.close()
 
         return item
@@ -137,8 +139,8 @@ class SearchingDB():
         conn = self.connect_db()
         pycursor = conn.cursor()
         if ascending:
-            searchQuery = "SELECT * from Posting order by date ASC"
-        searchQuery = "SELECT * from Posting order by date DESC"
+            searchQuery = "SELECT * from Posting WHERE approval = 1 ORDER BY date ASC"
+        searchQuery = "SELECT * from Posting WHERE approval = 1 ORDER BY date DESC"
         pycursor.execute(searchQuery)
         item = pycursor.fetchall()
         conn.close()
@@ -153,7 +155,7 @@ class SearchingDB():
     def getBookPostings(self):
         conn = self.connect_db()
         pycursor = conn.cursor()
-        searchQuery = "select * from Posting where category = 'Books'"
+        searchQuery = "select * from Posting where category = 'Books' AND approval = 1"
         pycursor.execute(searchQuery)
         item = pycursor.fetchall()        
         conn.close()
@@ -169,7 +171,7 @@ class SearchingDB():
     def getAPosting(self, category , posting):
         conn = self.connect_db()
         pycursor = conn.cursor()
-        searchQuery = f"SELECT * from Posting WHERE {category} LIKE '{posting}' "
+        searchQuery = f"SELECT * from Posting WHERE {category} LIKE '{posting}'"
         pycursor.execute(searchQuery)
         item = pycursor.fetchall()
         conn.close()
@@ -186,9 +188,9 @@ class SearchingDB():
         conn = self.connect_db()
         pycursor = conn.cursor()
         if catergory == "All" :
-            searchQuery = f"SELECT * from Posting WHERE title LIKE '%{searchedData}%' "
+            searchQuery = f"SELECT * from Posting WHERE title LIKE '%{searchedData}%' AND approval = 1"
         else :
-            searchQuery = f"SELECT * from Posting WHERE category LIKE '{catergory}' AND title LIKE '%{searchedData}%'"
+            searchQuery = f"SELECT * from Posting WHERE category LIKE '{catergory}' AND title LIKE '%{searchedData}%' AND approval = 1"
         data = pycursor.execute(searchQuery)
         item = pycursor.fetchall()
         conn.close()
@@ -266,7 +268,7 @@ class SearchingDB():
         conn = self.connect_db()
         pycursor = conn.cursor()
         if category == "All" :
-            searchQuery = f"SELECT * from Posting WHERE title LIKE '%{searchData}%' ORDER BY date ASC "
+            searchQuery = f"SELECT * from Posting WHERE title LIKE '%{searchData}%' AND approval = 1 ORDER BY date ASC "
         else :
             searchQuery = f"SELECT * from Posting WHERE category LIKE '{category}' AND title LIKE '%{searchData}%' ORDER BY date ASC"
         data = pycursor.execute(searchQuery)
@@ -283,14 +285,14 @@ class SearchingDB():
         pycursor = conn.cursor()
         if category == "All" :
             if order == "newest":
-                searchQuery = f"SELECT * from Posting WHERE title LIKE '%{searchData}%' ORDER BY date DESC"
+                searchQuery = f"SELECT * from Posting WHERE title LIKE '%{searchData}%' AND approval = 1 ORDER BY date DESC"
             else:
-                searchQuery = f"SELECT * from Posting WHERE title LIKE '%{searchData}%' ORDER BY date ASC"
+                searchQuery = f"SELECT * from Posting WHERE title LIKE '%{searchData}%' AND approval = 1 ORDER BY date ASC"
         else :
             if order == "newest":
-                searchQuery = f"SELECT * from Posting WHERE category LIKE '{category}' AND title LIKE '%{searchData}%' ORDER BY date DESC"
+                searchQuery = f"SELECT * from Posting WHERE category LIKE '{category}' AND title LIKE '%{searchData}%' AND approval = 1 ORDER BY date DESC"
             else:
-                searchQuery = f"SELECT * from Posting WHERE category LIKE '{category}' AND title LIKE '%{searchData}%' ORDER BY date ASC"
+                searchQuery = f"SELECT * from Posting WHERE category LIKE '{category}' AND title LIKE '%{searchData}%' AND approval = 1 ORDER BY date ASC"
 
         data = pycursor.execute(searchQuery)
         item = pycursor.fetchall()
@@ -343,7 +345,7 @@ class SearchingDB():
     def getfavoritePostings(self,user):
         conn = self.connect_db()
         pycursor = conn.cursor()
-        searchQuery = f"SELECT Posting.* FROM favorites Join Posting on favorites.postID=Posting.postID WHERE favorites.email = '{user}'"
+        searchQuery = f"SELECT Posting.* FROM favorites Join Posting on favorites.postID=Posting.postID WHERE favorites.email = '{user}' AND approval = 1"
         pycursor.execute(searchQuery)
         item = pycursor.fetchall()
         conn.close()

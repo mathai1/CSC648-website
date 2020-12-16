@@ -54,7 +54,5 @@ def initPost(db) :
     
         return render_template("posting/create.html")
 
-    
-
         
     return posting
