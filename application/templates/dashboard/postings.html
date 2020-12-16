@@ -41,7 +41,13 @@
                     <td><a class="btn btn-secondary" href='/posting/{{p.postid}}' target="_blank" role="button">View</a></td>
                     <!-- <td><button type="button" class="btn btn-secondary">View/Edit Post</button></td> -->
                     <!-- <td><a href='/dashboard/delete/{{p.postid}}'>Delete</a></td> -->
-                    <td><a class="btn btn-danger" href='/dashboard/delete/{{p.postid}}' role="button">Delete</a></td>
+
+                    <!-- <td><a class="btn btn-danger" href='/dashboard/delete/{{p.postid}}' role="button">Delete</a></td> -->
+                    <!-- <td><button type="button" class="btn btn-danger" onclick="confirmFunction()">Danger</button></td> -->
+
+                    <td><a class="btn btn-danger" href='/dashboard/delete/{{p.postid}}' onclick="return confirm('Delete {{p.title}}?');"
+                        role="button">Delete</a></td>
+
                     <!-- <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">
                         Delete
                       </button>
@@ -67,10 +73,16 @@
             </tbody>
         </table>
     </div>
-
-
-
     
 </body>
 
 </html>
+
+<script>
+    function confirmFunction(){
+        var result = confirm("Are you sure?");
+        if(result){
+
+        }
+    }
+</script>
