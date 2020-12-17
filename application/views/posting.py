@@ -54,13 +54,5 @@ def initPost(db) :
     
         return render_template("posting/create.html")
 
-        @posting.route('/posting/<postid>/delete', methods=['GET', 'POST'])
-        def deletePost(postid):
-            deletePost = db.deleteAPosting(postid)
-            getPosting = db.getAPosting(postid)
-           
-
-        return render_template("dashboard/postings.html", deletePost = deletePost, getPosting = getAPosting)
-        
         
     return posting

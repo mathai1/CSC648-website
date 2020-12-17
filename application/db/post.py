@@ -118,7 +118,7 @@ class Post():
 # Parameter : tuple of posting
 # Return : A dict of posting
 
-    def getPostingOrganizedData(self,postings) :
+    def getPostingOrganizedData(self,postings,approve=1) :
         lst = []
         dPosting = {}
         for row in postings:
@@ -128,8 +128,13 @@ class Post():
             date = row[4]
             if (type(date) == datetime.datetime):
                 date = date.date()
-            dPosting = {"postid" : row[0],"email" : email , "title": row[2], "description":row[3], "date" : date, "price" : row[5], "category": row[6], "image":row[7]}
-            lst.append(dPosting)
+            if approve == row[8] :
+                dPosting = {"postid" : row[0],"email" : email , "title": row[2], "description":row[3], "date" : date, "price" : row[5], "category": row[6], "image":row[7], "approve" : row[8]}
+                lst.append(dPosting)
+            elif approve == 2 :
+                dPosting = {"postid" : row[0],"email" : email , "title": row[2], "description":row[3], "date" : date, "price" : row[5], "category": row[6], "image":row[7], "approve" : row[8]}
+                lst.append(dPosting)
+
         return lst
 
     def getPostingbyDate(self,searchData,category) :
@@ -167,3 +172,74 @@ class Post():
         conn.close()
         item = self.getPostingOrganizedData(item)
         return item
+
+
+    def getBookPostings(self):
+        conn = self.connect_db()
+        pycursor = conn.cursor()
+        searchQuery = "select * from Posting where category = 'Books' AND approval = 1"
+        pycursor.execute(searchQuery)
+        item = pycursor.fetchall()        
+        conn.close()
+
+        return item
+
+# Method : Sorts by pricing AND date AND category
+# Parameter : parameters from search page filter: order selection, search bar text, search bar category
+# Return : A dict of postings
+
+    def getPostingbyDateAndFilter(self, order, searchData, category) :
+        conn = self.connect_db()
+        pycursor = conn.cursor()
+        if category == "All" :
+            if order == "newest":
+                searchQuery = f"SELECT * from Posting WHERE title LIKE '%{searchData}%' AND approval = 1 ORDER BY date DESC"
+            else:
+                searchQuery = f"SELECT * from Posting WHERE title LIKE '%{searchData}%' AND approval = 1 ORDER BY date ASC"
+        else :
+            if order == "newest":
+                searchQuery = f"SELECT * from Posting WHERE category LIKE '{category}' AND title LIKE '%{searchData}%' AND approval = 1 ORDER BY date DESC"
+            else:
+                searchQuery = f"SELECT * from Posting WHERE category LIKE '{category}' AND title LIKE '%{searchData}%' AND approval = 1 ORDER BY date ASC"
+
+        data = pycursor.execute(searchQuery)
+        item = pycursor.fetchall()
+        conn.close()
+        return item
+
+
+
+# Method : Sorts by pricing AND date, defaults to newest to oldest
+# Parameter : parameters from search page filter: min price, max price, order selection, search bar text, search bar category
+# Return : A dict of postings
+
+    def getPostingbyPrice(self, min, max, order, searchedData, category):
+        conn = self.connect_db()
+        pycursor = conn.cursor()
+        if category == "All" :
+            if order == "oldest" :
+                searchQuery = f"SELECT * from Posting WHERE title LIKE '%{searchedData}%' AND price >= {min} AND price <= {max} order by DATE(date) DESC"
+            else :
+                searchQuery = f"SELECT * from Posting WHERE title LIKE '%{searchedData}%' AND price >= {min} AND price <= {max} order by DATE(date) ASC"
+        else :
+            if order == "oldest" :
+                searchQuery = f"SELECT * from Posting WHERE category LIKE '{category}' AND title LIKE '%{searchedData}%' AND price >= {min} AND price <= {max} order by DATE(date) DESC"
+            else:
+                searchQuery = f"SELECT * from Posting WHERE category LIKE '{category}' AND title LIKE '%{searchedData}%' AND price >= {min} AND price <= {max} order by DATE(date) ASC"
+        data = pycursor.execute(searchQuery)
+        item = pycursor.fetchall()
+        conn.close()
+        item = self.getPostingOrganizedData(item)
+        return item
+
+# Method: this function deletes a post from a logged in user
+# Parameter: post id
+# Return: nothing
+
+    def deleteAPosting(self, postId):
+        conn = self.connect_db()
+        pycursor = conn.cursor()
+        deleteQuery = f"DELETE from Posting WHERE postID={postId}"
+        pycursor.execute(deleteQuery)
+        conn.commit()
+        conn.close()

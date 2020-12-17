@@ -42,7 +42,8 @@ def initChat(db, socketio):
             messages['user'] = session['email']
             db.message.InsertMessage(messages)
         data = db.message.getAllMessagesByMessageHandler(id)
-        return render_template('message/message.html', id=id, user =session['name'] , messages = data)
+        # return render_template('message/message.html', id=id, user =session['name'] , messages = data)
+        return redirect(f"/message/{id}")
 
 
     return message

@@ -1,222 +1,149 @@
-
 {% extends "base.html" %}
 {% block title%}test search{% endblock %}
-{% block content %}  
-  <div class="container-fluid">
+{% block content %} 
+ 
+<style>
+ .card-img-top {
+   width: 100%;
+   height: 18vw;
+   object-fit: cover;
+}
+</style>
+ 
+<div class="container mt-3 width:100%">
+ <div class="col">
+   <div class="row d-flex">
+     <div class="mr-auto p-2">
+       <h3>Displaying Results <span id="display-results"></span> of {{ data|length }}</h3>
+     </div>
+     <div class="p-2">
+      
+         <div class="search-filter">
+           <form action="/search" method="POST">
+
+           <!-- <h4>Sort by date</h4> -->
+           <select class="custom-select" name="order" id="order">
+             <option>Sort by date:</option>
+             <option value="/search/dateFilter?searchedData={{searchedData}}&filter={{category}}&order=newest" {% if order == 'newest'%} selected {% endif %}>Newest</option>
+             <option value="/search/dateFilter?searchedData={{searchedData}}&filter={{category}}&order=oldest" {% if order == 'oldest'%} selected {% endif %}>Oldest</option>
+           </select>
+ 
+           </form>
+         </div>
     
-    <div class="row"><!-- start of sidebar-->
-        <div class="col-2 px-1 position-fixed" id="sticky-sidebar">
-
-            <div class="nav flex-column flex-nowrap vh-100 overflow-auto text-white p-2" >
-              <div class="search-filter">
-                <form action="/search" method="POST">
-                <!-- <h4> Sort by price </h4> -->
-                <!-- <label>Min</label> -->
-                <input type="hidden" class="form-control" value={%if min %} {{min}} {% else %} 0 {% endif %} id="min" name="min" onkeypress="return isNumber(event)" />
-                <!-- <label>Max</label> -->
-                <input type="hidden" class="form-control" value={% if message %} 0 {%else %}{%if max %} {{max}} {% else %} {{high}} {% endif %}{% endif %} id="max" name="max" onkeypress="return isNumber(event)" />
-                
-                <!-- <h4>Sort by date</h4> -->
-                <select class="custom-select" name="order" id="order">
-                  <option>Sort by date:</option>
-                  <option value="newest">Newest</option>
-                  <option value="oldest">Oldest</option>
-                </select>
-
-              </form>
-              </div>
-            </div>
-        </div>
-      </div><!-- end of sidebar-->
-        <div class="col-9 offset-2" id="main">
-
-          {% if message %}
-          <h3> {{message}}</h3>
-          {% else %}
-          {% if data|length < 9 %}
-          <h3 class="h3 p-3">Displaying Results 1 - {{data|length}} of {{data|length}}</h3>
-          {% endif %}
-          {% if data|length > 9 %}
-          <div class="row">
-            <div class="col">
-              <h3 class="h3 p-3" id="display-results">Displaying Results 1-9 of {{data|length}}</h3>
-            </div>
-            <div class="col">
-            </div>
-          </div>
-          {% endif %}
-          {% endif %}
-
-          <!-- card-deck start -->
-          <div class="card-deck" id="refresh">
-            
-          {%if data %}
+     </div>
+     <div class="p-2">
+       <input class="btn btn-primary" type="button" id="previous" value="previous"/>
+       <input class="btn btn-primary" type="button" id="next" value="next"/>
+     </div>
+   </div>
+ 
+   <div class="row">
+     {% for d in data %}<!-- for: goes through data passed to page-->
+         <div class="col-12 col-md-6 col-lg-4">
           
-          {% for d in data %}<!-- for: goes through data passed to page-->
+ 
+           <!-- individual card start-->
+           <a target="_blank" href="/posting/{{d['postid']}}">
+           <div id="product-{{ loop.index }}" class="card bg-light text-center products" style="display:none; margin-bottom: 1rem;" >
+             <img class="card-img-top" src={{url_for('static', filename=d["image"] ) }} alt="Card image cap" style="height:15rem">
+             <div class="card-header" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">{{d["title"]}}</div>
+             <div class="card-body">
+               <h5 class="card-title text-success">${{d["price"]}}</h5>
+               <a href="#" class="btn btn-primary">Contact</a>               
+               <p class="card-text"><small class="text-muted">Date Posted: {{d["date"]}}</small></p>
+             </div>
+           </div>
+           </a>
+           <!-- individual card end-->
+           <!--overflow: hidden; white-space: nowrap; text-overflow: ellipsis-->
           
-          <div id="wrap"><!-- 'wrap' used for createing pages-->
-
-          <div class="col-xs-12 col-sm-8 col-md-8">
-            
-
-            <!-- individual card start-->
-            <a  href="/posting/{{d['postid']}}" target="_blank">
-            <div class="card bg-light text-center" style="width: 18rem;">
-              <img class="card-img-top" src={{url_for('static', filename=d["image"] ) }} alt="Card image cap">
-              <div class="card-header">
-                {{d["title"]}}
-              </div>
-              <div class="card-body">
-                <h4 class="card-title text-success">${{d["price"]}}</h4>
-                <a href="#" class="btn btn-primary">Contact</a>                
-                <p class="card-text"><small class="text-muted">Posted: {{d["date"]}}</small></p>
-              </div>
-            </div> 
-            </a>
-            <!-- individual card end-->
-            
-          </div> 
-
-        </div><!-- 'wrap' end -->  
-          
-          {% endfor %}
-          
-          {% endif %}
-
-          
-        </div><!--card-deck end -->
-
-        <div class="text-center d-flex justify-content-end"><!-- page buttons -->
-          <div class="p-3">
-            <div class="btn-group">
-              <div class="prev"><button type="button" class="btn btn-info">Prev</button></div>
-              <div class="next"><button type="button" class="btn btn-info">Next</button></div>
-            </div>
-          </div>
-        </div><!-- end of page buttons -->
-
-  
-        </div><!--main area end-->
-    </div>
-
+         </div>
+     {% endfor %}
+   </div>
+ </div>
+</div><!--main area end -->
+ 
+ 
+ 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
-
+ 
+ 
 <script>
-  $(function() {
-
-      $('.search-filter').keyup(function(){
-          var min = 0;
-          var max = {{high}};
-          if ($('#min').val() && $('#max').val() ) {
-          min = $('#min').val();
-          max = $('#max').val();
-          }
-    
-          var order = $('#order').val();
-      $.ajax({
-          type: 'POST',
-              url: 'filter?searchedData={{searchedData}}&filter={{category}}&min='+min+'&max=' +max+'&order=' +order,
-              success: function(response) {   
-                item = $(response).find('#refresh')
-                $("#refresh").replaceWith(item);          }   
-         });
-      }).change( function(){
-          var min = $('#min').val();
-          var max = $('#max').val();
-          var order = $('#order').val();
-      $.ajax({
-          type: 'POST',
-              url: 'filter?searchedData={{searchedData}}&filter={{category}}&min='+min+'&max=' +max+'&order=' +order,
-              success: function(response) {   
-                item = $(response).find('#refresh')
-                $("#refresh").replaceWith(item);
-          }   
-         });
-      });
-  });  
-</script>
-
-
-<!-- //*******************************
-//The following functions are used
-//to create individual pages and 
-//navigate through them
-//******************************** -->
-
-<script>
-var $el = $("#wrap > div");
-var pageSize = 9;
-
-$el.slice(0, pageSize).css({display: 'block'});
-$el.slice(pageSize, $el.length).css({display: 'none'});
-
-
-function addSlice(num){
-  return num + pageSize;
-}
-
-function subtractSlice(num){
-  return num - pageSize;
-}
-
-var slice = [0, pageSize];
-
-$('.next').click(function(){
-   if (slice[1] < $el.length ){ 
-     slice = slice.map(addSlice);
-     if (slice[1] > $el.length) {
-      document.getElementById("display-results").innerHTML = "Displaying Results " + (slice[0]+1) + "-" + $el.length + " of " + $el.length
-     }  else {
-      document.getElementById("display-results").innerHTML = "Displaying Results " + (slice[0]+1) + "-" + slice[1] + " of " + $el.length
-     }
+ var page = 0;
+ var pageSize = 9;
+ var dataLength = $(".products").length;
+ var pages = Math.floor(dataLength/pageSize);
+ var remainder = dataLength % pageSize;
+ if(dataLength < pageSize) {
+   pageSize = dataLength;
+ }
+ 
+ 
+ 
+ $(document).ready(function () {
+ 
+   if(page == pages) {
+     document.getElementById("display-results").innerHTML = ((page * pageSize) + 1) + "-" + ((page) * pageSize + remainder)
+   } else {
+     document.getElementById("display-results").innerHTML = ((page * pageSize) + 1) + "-" + ((page) * pageSize + pageSize)
    }
-  scrollToTop()
-   showSlice(slice);
-});
+ 
+   togglePage(page); 
+  
+   $("#next").click(function () {
+     if(page == pages) {
+       return;
+     }
+       togglePage(page);
+       page++;
+       if(page == pages) {
+         document.getElementById("display-results").innerHTML = ((page * pageSize) + 1) + "-" + ((page) * pageSize + remainder)
+       } else {
+         document.getElementById("display-results").innerHTML = ((page * pageSize) + 1) + "-" + ((page) * pageSize + pageSize)
+       }
+       togglePage(page);
+   });
+   $("#previous").click(function () {
+      
+       if( page > 0)
+       {
+       togglePage(page);
+       page--;
+       if(page == pages) {
+         document.getElementById("display-results").innerHTML = ((page * pageSize) + 1) + "-" + ((page) * pageSize + remainder)
+       } else {
+         document.getElementById("display-results").innerHTML = ((page * pageSize) + 1) + "-" + ((page) * pageSize + pageSize)
+       }
+       togglePage(page);}
+      
+       }
+      
+       );
+                         
+ });
+ 
+ function togglePage(page)
+ {
+     for (var i = 1 ; i < pageSize  + 1; i++)
+     {
+         //alert("#product-" + ((page * pageSize) + i));
+         $("#product-" + ((page * pageSize) + i)).toggle();
+        
+     }
+    
+    
+ }
 
-$('.prev').click(function(){
-  if (slice[0] > 0 ){ 
-    slice = slice.map(subtractSlice); 
-    document.getElementById("display-results").innerHTML = "Displaying Results " + (slice[0] + 1) + "-" + slice[1] + " of " + $el.length
-  }
-  scrollToTop()
-  showSlice(slice);
-});
-
-function showSlice(slice){
-  $el.css('display', 'none');
-  $el.slice(slice[0], slice[1]).css('display','block');
-}
-</script>
-
-<script>
-
-//******************************
-// Function is used to smoothly 
-// scroll to the top of the page
-// after clicking product page 
-// navigation
-//******************************
-function scrollToTop() {
-
-window.scrollTo({top: 0, behavior: 'smooth'});
-
-}
-
-
-//************************************************
-//Used for input validation in filter 'min' & 'max'
-//************************************************
-function isNumber(evt) {
-    evt = (evt) ? evt : window.event;
-    var charCode = (evt.which) ? evt.which : evt.keyCode;
-    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-        return false;
-    }
-    return true;
-}
-
-</script>
-
-{% endblock %}
+//Function used to reload page with order filter
+ $(function(){      
+      $('#order').on('change', function () {
+          var url = $(this).val();
+          if (url) {
+              window.location = url;
+          }
+          return false;
+      });
+    });
+ </script>
+ {% endblock %}

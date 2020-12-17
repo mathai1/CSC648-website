@@ -11,12 +11,25 @@ def initHome(db):
         # Getting posting info from the database
         postings = db.post.getAllPostings()
         lst = db.post.getPostingOrganizedData(postings)
+
+        # Getiing recent post
         recent_posts = db.post.getPostingbyOrderedDate()
         ordered_lst = db.post.getPostingOrganizedData(recent_posts)
+        numberOfPostings = int(len(ordered_lst))
 
         #Geting thumbnail
+   
+
         ordered_lst = getThumbnail(ordered_lst)
         lst = getThumbnail(lst)
+        #Getting book posting info
+        books = db.post.getBookPostings()
+        book_postings = db.post.getPostingOrganizedData(books)
+        book_postings = getThumbnail(book_postings)
+        bookCount = int(len(book_postings))
+
+            
+        #print(books)
 
         # display favorite when user favorite something
         if 'name' in session:
@@ -24,8 +37,11 @@ def initHome(db):
             favorites = db.getfavoritePostings(session['email'])
             fav_postings = db.post.getPostingOrganizedData(favorites)
             fav_postings = getThumbnail(fav_postings)
-            return render_template('home/home.html', data = lst, recent = ordered_lst, fav = fav_postings, user=user)
-        return render_template('home/home.html', data = lst, recent = ordered_lst)
+            # print (ordered_lst)
+            return render_template('home/home.html', data = lst, bookData=book_postings, recent = ordered_lst, fav = fav_postings,
+             user=user, numberOfPostings=numberOfPostings, bookCount=bookCount)
+
+        return render_template('home/home.html', data = lst, bookData=book_postings, recent = ordered_lst, numberOfPostings=numberOfPostings, bookCount=bookCount)
         
     @home.route('/about')
     def about():
@@ -110,6 +126,7 @@ def initHome(db):
         return redirect(url_for("home.homepage"))
 
     def getThumbnail(lst) :
+        print(lst)
         for l in lst:
             s = l['image'].split("/")[-1]
             l['image'] = "media/" + s 

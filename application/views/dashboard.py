@@ -22,18 +22,18 @@ def initDashBoard(db):
         # allPosts = db.getAllPostings()
         # posts = db.getPostingOrganizedData(allPosts)
         allPosts = db.post.getAPosting("email", session['email'])
-        posts = db.post.getPostingOrganizedData(allPosts)
+        posts = db.post.getPostingOrganizedData(allPosts,2)
         numPosts = len(posts)
         return render_template('dashboard/postings.html', posts=posts, numPosts=numPosts)
 
     @dashboard.route('/dashboard/delete/<postid>', methods= ['GET' , 'POST'])
     def deletePost(postid):
         print(postid)
-        db.deleteAPosting(postid)
+        db.post.deleteAPosting(postid)
 
         #getting all the remaining posts in current account
-        allPosts = db.getAPosting("email", session['email'])
-        posts = db.getPostingOrganizedData(allPosts)
+        allPosts = db.post.getAPosting("email", session['email'])
+        posts = db.post.getPostingOrganizedData(allPosts)
         numPosts = len(posts)
 
         return render_template('dashboard/postings.html', posts=posts, numPosts=numPosts)

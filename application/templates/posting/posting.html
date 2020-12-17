@@ -23,9 +23,14 @@
             <h5 class="h5">Date Posted:</h5>
             <p>{{posting['date']}}</p>
             <hr>
+            {% if session['email'] %}
             {% if session['email'] != posting['email']%}
             <a href="/message?author={{posting['email']}}&postID={{posting['postid']}}" class="btn btn-primary">Contact Seller</a>
             {% endif %}
+            {% else %}
+            <a href="/login" class="btn btn-primary">Contact Seller</a>
+            {% endif %}
+
         </div>
         <!-- ################### End Information Column ##############################-->
 

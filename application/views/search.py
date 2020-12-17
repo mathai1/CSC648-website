@@ -54,5 +54,32 @@ def initSearch(db):
                 return render_template("search/search.html", data = postings, searchedData = searchedData, category = category, min = min , max =  max, order = order)
         return render_template("search/search.html")
 
+
+    ######################################################################################
+    # Date filter
+    # Getting the searched data, category, and order to filter display items
+    ######################################################################################
+    @search.route('/search/dateFilter', methods= ['GET', 'POST'])    
+    def dateFilter():
+        searchedData = request.args['searchedData']
+        category = request.args['filter']
+        order = request.args['order']
+
+        postings = db.post.getPostingbyDateAndFilter(order, searchedData, category)
+        lst = db.post.getPostingOrganizedData(postings)
+
+        #Displaying thumbnail instead of original image
+        for l in lst:
+            s = l['image'].split("/")[-1]
+            l['image'] = "media/" + s 
+
+
+        return render_template("search/search.html", data = lst, searchedData = searchedData, category = category, order = order)
+
+
     return search
+
+
+
+
 
