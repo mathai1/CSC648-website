@@ -27,8 +27,8 @@
                     <th scope="col">Title</th>
                     <th scope="col">Status</th>
                     <th scope="col">Post Date</th>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
+                    <th scope="col">View</th>
+                    <th scope="col">Delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -38,7 +38,12 @@
                     <td>{{ p['title'] }}</td>
                     <td>{% if p['approve'] == 1 %}Approved{% else %}Pending{% endif %}</td>
                     <td>{{ p['date'] }}</td>
+                    
+                    {% if p['approve'] == 1 %}
                     <td><a class="btn btn-secondary" href='/posting/{{p.postid}}' target="_blank" role="button">View</a></td>
+                    {% else %}
+                    <td><a class="btn btn-info" target="_blank" role="button">Cannot View (Pending Approval)</a></td>
+                    {% endif %}
                     <!-- <td><button type="button" class="btn btn-secondary">View/Edit Post</button></td> -->
                     <!-- <td><a href='/dashboard/delete/{{p.postid}}'>Delete</a></td> -->
 
