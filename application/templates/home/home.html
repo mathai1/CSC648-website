@@ -85,7 +85,15 @@
                                <div class="card-body">
                                    <!-- <h4 class="card-title" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{data["title"]}}</h4> -->
                                    <p class="card-text text-success">${{data["price"]}}</p>
-                                    <button type="button" class="btn btn-primary">Contact</button>
+                                   {% if session['email'] %}
+                                    {% if session['email'] != d['email']%}
+                                        <a href="/message?author={{d['email']}}&postID={{d['postid']}}" class="btn btn-primary">
+                                           <button type="button" class="btn btn-primary">Contact</button>
+                                        </a>
+                                        {% endif %}
+                                    {% else %}
+                                     <a href="/login" class="btn btn-primary"><button type="button" class="btn btn-primary">Contact</button></a>
+                                    {% endif %}
                                     <p class="card-text"><small class="text-muted">Date Posted: {{data["date"]}}</small></p>
                                </div>
 
@@ -139,7 +147,15 @@
                                   <div class="card-body">
                                       <!-- <h4 class="card-title" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{data["title"]}}</h4> -->
                                       <p class="card-text text-success">${{data["price"]}}</p>
-                                       <button type="button" class="btn btn-primary">Contact</button>
+                                      {% if session['email'] %}
+                                        {% if session['email'] != d['email']%}
+                                          <a href="/message?author={{d['email']}}&postID={{d['postid']}}" class="btn btn-primary">
+                                              <button type="button" class="btn btn-primary">Contact</button>
+                                          </a>
+                                        {% endif %}
+                                        {% else %}
+                                        <a href="/login" class="btn btn-primary"><button type="button" class="btn btn-primary">Contact</button></a>
+                                        {% endif %}
                                        <p class="card-text"><small class="text-muted">Date Posted: {{data["date"]}}</small></p>
                                   </div>
    
@@ -166,7 +182,15 @@
                             <div class="card-body">
                                 <!-- <h4 class="card-title" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{data["title"]}}</h4> -->
                                 <p class="card-text text-success">${{data["price"]}}</p>
-                                 <button type="button" class="btn btn-primary">Contact</button>
+                                {% if session['email'] %}
+                                    {% if session['email'] != d['email']%}
+                                        <a href="/message?author={{d['email']}}&postID={{d['postid']}}" class="btn btn-primary">
+                                            <button type="button" class="btn btn-primary">Contact</button>
+                                        </a>
+                                    {% endif %}
+                                {% else %}
+                                <a href="/login" class="btn btn-primary"><button type="button" class="btn btn-primary">Contact</button></a>
+                                {% endif %}
                                  <p class="card-text"><small class="text-muted">Date Posted: {{data["date"]}}</small></p>
                             </div>
 
@@ -219,7 +243,15 @@
                                   <div class="card-body">
                                       <!-- <h4 class="card-title" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{data["title"]}}</h4> -->
                                       <p class="card-text text-success">${{data["price"]}}</p>
-                                       <button type="button" class="btn btn-primary">Contact</button>
+                                      {% if session['email'] %}
+                                        {% if session['email'] != d['email']%}
+                                          <a href="/message?author={{d['email']}}&postID={{d['postid']}}" class="btn btn-primary">
+                                              <button type="button" class="btn btn-primary">Contact</button>
+                                          </a>
+                                         {% endif %}
+                                       {% else %}
+                                        <a href="/login" class="btn btn-primary"><button type="button" class="btn btn-primary">Contact</button></a>
+                                        {% endif %}
                                        <p class="card-text"><small class="text-muted">Date Posted: {{data["date"]}}</small></p>
                                   </div>
                               </div><!-- individual card end-->
@@ -245,7 +277,15 @@
                             <div class="card-body">
                                 <!-- <h4 class="card-title" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{data["title"]}}</h4> -->
                                 <p class="card-text text-success">${{data["price"]}}</p>
-                                 <button type="button" class="btn btn-primary">Contact</button>
+                                {% if session['email'] %}
+                                    {% if session['email'] != d['email']%}
+                                        <a href="/message?author={{d['email']}}&postID={{d['postid']}}" class="btn btn-primary">
+                                            <button type="button" class="btn btn-primary">Contact</button>
+                                        </a>
+                                    {% endif %}
+                                {% else %}
+                                <a href="/login" class="btn btn-primary"><button type="button" class="btn btn-primary">Contact</button></a>
+                                {% endif %}
                                  <p class="card-text"><small class="text-muted">Date Posted: {{data["date"]}}</small></p>
                             </div>
                         </div><!-- individual card end-->
