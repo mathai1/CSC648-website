@@ -10,6 +10,14 @@
      object-fit: cover;
  } 
  </style>
+
+<div class="home-description">
+    <h1>SFSU Exchange</h1>
+    <h2>A marketplace for all SFSU students and staff.</h2>
+    {% if user %}
+    <h3>Welcome {{session['name']}} </h3>
+    {% endif %}
+ </div>
  
 <section class="pt-5 pb-5">
   <div class="container"><!-- carousel start -->
@@ -51,7 +59,7 @@
                                                 </a>
 
                                             {% elif session['email'] == d['email'] %}
-                                                <a href="/posting/{{d['postid']}}" class="btn btn-primary">
+                                                <a target="_blank" href="/posting/{{d['postid']}}" class="btn btn-primary">
                                                     <button type="button" class="btn btn-primary">View</button>
                                                 </a>
                                             {% endif %}
@@ -97,7 +105,7 @@
                                         </a>
 
                                     {% elif session['email'] == data['email'] %}
-                                            <a href="/posting/{{data['postid']}}" class="btn btn-primary">
+                                            <a target="_blank" href="/posting/{{data['postid']}}" class="btn btn-primary">
                                                 <button type="button" class="btn btn-primary">View</button>
                                             </a>
                                     
@@ -164,7 +172,7 @@
                                               <button type="button" class="btn btn-primary">Contact</button>
                                           </a>
                                           {% elif session['email'] == data['email'] %}
-                                            <a href="/posting/{{data['postid']}}" class="btn btn-primary">
+                                            <a target="_blank" href="/posting/{{data['postid']}}" class="btn btn-primary">
                                                 <button type="button" class="btn btn-primary">View</button>
                                             </a>
                                 
@@ -205,7 +213,7 @@
                                         </a>
 
                                         {% elif session['email'] == data['email'] %}
-                                        <a href="/posting/{{data['postid']}}" class="btn btn-primary">
+                                        <a target="_blank" href="/posting/{{data['postid']}}" class="btn btn-primary">
                                             <button type="button" class="btn btn-primary">View</button>
                                         </a>
                                     {% endif %}
