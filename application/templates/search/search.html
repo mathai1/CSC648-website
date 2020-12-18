@@ -23,7 +23,7 @@
 
            <!-- <h4>Sort by date</h4> -->
            <select class="custom-select" name="order" id="order">
-             <option>Sort by date:</option>
+             <option value="#">Sort by date:</option>
              <option value="/search/dateFilter?searchedData={{searchedData}}&filter={{category}}&order=newest" {% if order == 'newest'%} selected {% endif %}>Newest</option>
              <option value="/search/dateFilter?searchedData={{searchedData}}&filter={{category}}&order=oldest" {% if order == 'oldest'%} selected {% endif %}>Oldest</option>
            </select>
