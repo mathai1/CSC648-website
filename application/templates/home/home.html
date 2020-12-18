@@ -49,6 +49,11 @@
                                                 <a href="/message?author={{d['email']}}&postID={{d['postid']}}" class="btn btn-primary">
                                                     <button type="button" class="btn btn-primary">Contact</button>
                                                 </a>
+
+                                            {% elif session['email'] == d['email'] %}
+                                                <a href="/posting/{{d['postid']}}" class="btn btn-primary">
+                                                    <button type="button" class="btn btn-primary">View</button>
+                                                </a>
                                             {% endif %}
                                       {% else %}
                                       <a href="/login" class="btn btn-primary"><button type="button" class="btn btn-primary">Contact</button></a>
@@ -90,6 +95,12 @@
                                         <a href="/message?author={{data['email']}}&postID={{data['postid']}}" class="btn btn-primary">
                                            <button type="button" class="btn btn-primary">Contact</button>
                                         </a>
+
+                                    {% elif session['email'] == data['email'] %}
+                                            <a href="/posting/{{data['postid']}}" class="btn btn-primary">
+                                                <button type="button" class="btn btn-primary">View</button>
+                                            </a>
+                                    
                                         {% endif %}
                                     {% else %}
                                      <a href="/login" class="btn btn-primary"><button type="button" class="btn btn-primary">Contact</button></a>
@@ -152,6 +163,11 @@
                                           <a href="/message?author={{data['email']}}&postID={{data['postid']}}" class="btn btn-primary">
                                               <button type="button" class="btn btn-primary">Contact</button>
                                           </a>
+                                          {% elif session['email'] == data['email'] %}
+                                            <a href="/posting/{{data['postid']}}" class="btn btn-primary">
+                                                <button type="button" class="btn btn-primary">View</button>
+                                            </a>
+                                
                                         {% endif %}
                                         {% else %}
                                         <a href="/login" class="btn btn-primary"><button type="button" class="btn btn-primary">Contact</button></a>
@@ -186,6 +202,11 @@
                                     {% if session['email'] != data['email']%}
                                         <a href="/message?author={{data['email']}}&postID={{data['postid']}}" class="btn btn-primary">
                                             <button type="button" class="btn btn-primary">Contact</button>
+                                        </a>
+
+                                        {% elif session['email'] == data['email'] %}
+                                        <a href="/posting/{{data['postid']}}" class="btn btn-primary">
+                                            <button type="button" class="btn btn-primary">View</button>
                                         </a>
                                     {% endif %}
                                 {% else %}
