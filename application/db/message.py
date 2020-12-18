@@ -64,6 +64,7 @@ class Message():
         conn = self.connect_db()
         pycursor = conn.cursor()
         body = message['body']
+        body = body.replace("'" ,"\\'")
         mhid = message['room']
         sender = message['user']
         searchQuery = f"INSERT INTO Messages (Mhid, messagebody, sender, timestamp) VALUES ({mhid} , '{body}', '{sender}', NOW() ) "
