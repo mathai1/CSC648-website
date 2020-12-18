@@ -86,7 +86,9 @@ class Post():
         pycursor = conn.cursor()
         email = session['email']
         title = posting['title']
+        title = title.replace("'" ,"\\'")
         description = posting['description']
+        description = description.replace("'" ,"\\'")
         price = posting['price']
         category = posting['category']
         image = posting['image']

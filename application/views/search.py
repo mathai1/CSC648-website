@@ -18,6 +18,7 @@ def initSearch(db):
             # Getting data from search     
             category = request.form['filter']
             searchedData = request.form['searchedData']
+            searchedData = searchedData.replace("'" ,"\\'")
 
             # Perform the search through the database
             postings = db.post.searchAPosting(category,searchedData)     

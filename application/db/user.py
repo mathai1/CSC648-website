@@ -97,10 +97,13 @@ class User():
         conn = self.connect_db()
         pycursor = conn.cursor()
         email = user['email']
+        email = email.replace("'" ,"\\'")
         password = user['password']
+        password = password.replace("'" ,"\\'")
         fname = user['fname']
+        fname = fname.replace("'" ,"\\'")
         lname = user['lname']
-        print(password)
+        lname = lname.replace("'" ,"\\'")
         searchQuery = f"INSERT INTO User (email , password, firstName , lastName ) VALUES ('{email}' , '{password}' , '{fname}' ,  '{lname}'  )"
         data = pycursor.execute(searchQuery)
         conn.commit()
