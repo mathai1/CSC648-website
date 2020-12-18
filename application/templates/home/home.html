@@ -1,91 +1,339 @@
 <!DOCTYPE html>
-<head>
-   <link rel="stylesheet" type= "text/css" href="{{url_for('static', filename='css/styles/navbar.css')}}">
-   <link rel="stylesheet" type= "text/css" href="{{url_for('static', filename='css/styles/carousel.css')}}">
-   <link rel="stylesheet" type="text/css" href=" {{url_for('static', filename='slick/slick.css')}}">
-   <link rel="stylesheet" type="text/css" href=" {{url_for('static', filename='slick/slick-theme.css')}}">
-</head>
+ 
 {% extends "base.html" %}
-{% block title%}SFSU Exchange{% endblock %}
 {% block content %}
-<div class="main">
+
+<style>
+   .card-img-top {
+     width: 100%;
+     height: 18vw;
+     object-fit: cover;
+ } 
+ </style>
+
 <div class="home-description">
-   <h1>SFSU Exchange</h1>
-   <h2>A marketplace for all SFSU students and staff.</h2>
-   {% if user %}
-   <h3>Welcome {{session['name']}} </h3>
-   {% endif %}
-</div>
+    <h1>SFSU Exchange</h1>
+    <h2>A marketplace for all SFSU students and staff.</h2>
+    {% if user %}
+    <h3>Welcome {{session['name']}} </h3>
+    {% endif %}
+ </div>
+ 
+<section class="pt-5 pb-5">
+  <div class="container"><!-- carousel start -->
+    <div class="row">
+        <div class="col-6">
+            <h3 class="mb-3">Recently Posted</h3>
+        </div>
+        <div class="col-6 text-right">
+            <a class="btn btn-dark mb-3 mr-1" href="#carouselExampleIndicators2" role="button" data-slide="prev">
+                prev<!-- <i class="fa fa-arrow-left"></i> -->
+            </a>
+            <a class="btn btn-dark mb-3 " href="#carouselExampleIndicators2" role="button" data-slide="next">
+                <!-- <i class="fa fa-arrow-right"></i> -->
+                next
+            </a>
+        </div>
+        <div class="col-sm-12">
+            <div id="carouselExampleIndicators2" class="carousel slide" data-interval="false">
+                <div class="carousel-inner"><!-- individual carousel -->
+
+                    <div class="carousel-item active"><!-- group of 3 -->
+                        <div class="row"><!-- group of 3 -->
+                    
+                           {% for d in recent[0:3] %}
+                                {% if d["approve"] == 1 %}
+                           <div class="col-md-4 mb-3"><!-- individual card-->
+                           
+                              <div class="card bg-light text-center"><!-- individual card-->                             
+                                 <a target="_blank" href="/posting/{{d['postid']}}"><img class="card-img-top" alt="100%x280" src={{url_for('static', filename=d["image"] ) }}></a>                              
+                                 <a target="_blank" href="/posting/{{d['postid']}}"><div class="card-header" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">{{d["title"]}}</div></a>
+                                 
+                                  <div class="card-body">
+                                      <!-- <h4 class="card-title" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{data["title"]}}</h4> -->
+                                      <p class="card-text text-success">${{d["price"]}}</p>
+                                      {% if session['email'] %}
+                                            {% if session['email'] != d['email']%}
+                                                <a href="/message?author={{d['email']}}&postID={{d['postid']}}" class="btn btn-primary">
+                                                    <button type="button" class="btn btn-primary">Contact</button>
+                                                </a>
+
+                                            {% elif session['email'] == d['email'] %}
+                                                <a target="_blank" href="/posting/{{d['postid']}}" class="btn btn-primary">
+                                                    <button type="button" class="btn btn-primary">View</button>
+                                                </a>
+                                            {% endif %}
+                                      {% else %}
+                                      <a href="/login" class="btn btn-primary"><button type="button" class="btn btn-primary">Contact</button></a>
+                                      {% endif %}
+                                       <p class="card-text"><small class="text-muted">Date Posted: {{d["date"]}}</small></p>
+                                  </div>
+   
+                              </div><!-- individual card end-->
+                           </div>
+                                 {% endif %}
+                              
+                            {% endfor %}
+                                                             
+                        </div>
+                    </div><!-- group of 3 end-->
+                    
+
+                  {% for x in range(3, numberOfPostings, 3) %}
+
+                    <div class="carousel-item">
+                     <div class="row">
+
+                        {% set i = x %}
+                        {% set j = x + 3 %}
+                        
+                        {%for data in recent[i:j]%}    
+                        {% if data["approve"] == 1 %}                    
+                        <div class="col-md-4 mb-3"><!-- individual card-->
+                           
+                           <div class="card bg-light text-center"><!-- individual card-->                             
+                              <a target="_blank" href="/posting/{{data['postid']}}"><img class="card-img-top" alt="100%x280" src={{url_for('static', filename=data["image"] ) }}></a>                              
+                              <a target="_blank" href="/posting/{{data['postid']}}"><div class="card-header" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">{{data["title"]}}</div></a>
+                              
+                               <div class="card-body">
+                                   <!-- <h4 class="card-title" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{data["title"]}}</h4> -->
+                                   <p class="card-text text-success">${{data["price"]}}</p>
+                                   {% if session['email'] %}
+                                    {% if session['email'] != data['email']%}
+                                        <a href="/message?author={{data['email']}}&postID={{data['postid']}}" class="btn btn-primary">
+                                           <button type="button" class="btn btn-primary">Contact</button>
+                                        </a>
+
+                                    {% elif session['email'] == data['email'] %}
+                                            <a target="_blank" href="/posting/{{data['postid']}}" class="btn btn-primary">
+                                                <button type="button" class="btn btn-primary">View</button>
+                                            </a>
+                                    
+                                        {% endif %}
+                                    {% else %}
+                                     <a href="/login" class="btn btn-primary"><button type="button" class="btn btn-primary">Contact</button></a>
+                                    {% endif %}
+                                    <p class="card-text"><small class="text-muted">Date Posted: {{data["date"]}}</small></p>
+                               </div>
+
+                           </div><!-- individual card end-->
+                        </div>
+                        {% endif %}
+                        {%endfor%}  
+                     </div>
+                 </div>
+
+                 {% endfor %}
+
+
+                </div><!-- individual carousel end-->
+            </div>
+        </div>
+    </div>
+</div><!-- carousel end -->
+
+<div class="col-xs-12" style="height:50px;"></div><!-- space between carousels-->
+
+
 <div class="container">
-   <!-- Row for top category -->
-   <div class="slide-box">
-      <h3> Most Recent </h3>
-      <section class="home-slick-slider" >
-         {% for data in recent %}
-         <div>
-            <a  href="/posting/{{data['postid']}}">
-               <div class="card">
-                  <img class="img-fluid card-img-top"  alt="100%x280" src={{url_for('static', filename=data["image"] )}} >
-                  <div class="card-body">
-                     <h4 class="card-title">{{data["title"]}}</h4>
-                     <p class="card-text">${{data["price"]}}</p>
-                  </div>
-               </div>
-            </a>
-         </div>
-         {% endfor %}
-      </section>
+   <div class="row">
+       <div class="col-6">
+           <h3 class="mb-3">Books</h3>
+       </div>
+       <div class="col-6 text-right">
+           <a class="btn btn-dark mb-3 mr-1" href="#carouselExampleIndicators3" role="button" data-slide="prev">
+               prev<!-- <i class="fa fa-arrow-left"></i> -->
+           </a>
+           <a class="btn btn-dark mb-3 " href="#carouselExampleIndicators3" role="button" data-slide="next">
+               <!-- <i class="fa fa-arrow-right"></i> -->
+               next
+           </a>
+       </div>
+       <div class="col-12">
+           <div id="carouselExampleIndicators3" class="carousel slide" data-interval="false">
+               <div class="carousel-inner"><!-- individual carousel -->
+
+                   <div class="carousel-item active"><!-- group of 3 -->
+                       <div class="row"><!-- group of 3 -->
+                   
+                          {% for data in bookData[0:3] %}
+
+                           <div class="col-md-4 mb-3"><!-- individual card-->
+                              <div class="card bg-light text-center"><!-- individual card-->                             
+                                 <a target="_blank" href="/posting/{{data['postid']}}"><img class="card-img-top" alt="100%x280" src={{url_for('static', filename=data["image"] ) }}></a>                              
+                                 <a target="_blank" href="/posting/{{data['postid']}}"><div class="card-header" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">{{data["title"]}}</div></a>
+                                 
+                                  <div class="card-body">
+                                      <!-- <h4 class="card-title" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{data["title"]}}</h4> -->
+                                      <p class="card-text text-success">${{data["price"]}}</p>
+                                      {% if session['email'] %}
+                                        {% if session['email'] != data['email']%}
+                                          <a href="/message?author={{data['email']}}&postID={{data['postid']}}" class="btn btn-primary">
+                                              <button type="button" class="btn btn-primary">Contact</button>
+                                          </a>
+                                          {% elif session['email'] == data['email'] %}
+                                            <a target="_blank" href="/posting/{{data['postid']}}" class="btn btn-primary">
+                                                <button type="button" class="btn btn-primary">View</button>
+                                            </a>
+                                
+                                        {% endif %}
+                                        {% else %}
+                                        <a href="/login" class="btn btn-primary"><button type="button" class="btn btn-primary">Contact</button></a>
+                                        {% endif %}
+                                       <p class="card-text"><small class="text-muted">Date Posted: {{data["date"]}}</small></p>
+                                  </div>
+   
+                              </div><!-- individual card end-->
+                           </div><!-- individual card end-->
+                             
+                           {% endfor %}
+                                                            
+                       </div>
+                   </div><!-- group of 3 end-->
+                   
+                 {% for x in range(0, bookCount, 3) %}
+                   <div class="carousel-item">
+                    <div class="row">
+                       {% set i = x %}
+                       {% set j = x + 3 %}
+                       
+                       {%for data in bookData[i:j]%}                        
+                       <div class="col-md-4 mb-3"><!-- individual card-->
+                        <div class="card bg-light text-center"><!-- individual card-->                             
+                           <a target="_blank" href="/posting/{{data['postid']}}"><img class="card-img-top" alt="100%x280" src={{url_for('static', filename=data["image"] ) }}></a>                              
+                           <a target="_blank" href="/posting/{{data['postid']}}"><div class="card-header" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">{{data["title"]}}</div></a>
+                           
+                            <div class="card-body">
+                                <!-- <h4 class="card-title" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{data["title"]}}</h4> -->
+                                <p class="card-text text-success">${{data["price"]}}</p>
+                                {% if session['email'] %}
+                                    {% if session['email'] != data['email']%}
+                                        <a href="/message?author={{data['email']}}&postID={{data['postid']}}" class="btn btn-primary">
+                                            <button type="button" class="btn btn-primary">Contact</button>
+                                        </a>
+
+                                        {% elif session['email'] == data['email'] %}
+                                        <a target="_blank" href="/posting/{{data['postid']}}" class="btn btn-primary">
+                                            <button type="button" class="btn btn-primary">View</button>
+                                        </a>
+                                    {% endif %}
+                                {% else %}
+                                <a href="/login" class="btn btn-primary"><button type="button" class="btn btn-primary">Contact</button></a>
+                                {% endif %}
+                                 <p class="card-text"><small class="text-muted">Date Posted: {{data["date"]}}</small></p>
+                            </div>
+
+                        </div><!-- individual card end-->
+                       </div><!-- individual card end-->
+                       {%endfor%}  
+
+                    </div>
+                </div>
+                {% endfor %}
+
+               </div><!-- individual carousel end-->
+           </div>
+       </div>
    </div>
-   {% if fav %}
-   <div class="slide-box">
-      <h3> Favorite products </h3>
-      <section class="home-slick-slider" >
-         {% for d in fav %}
-         <div>
-            <a  href="/posting/{{d['postid']}}">
-               <div class="card">
-                  <img class="img-fluid card-img-top" alt="100%x280" src={{url_for('static', filename=d["image"] ) }}>
-                  <div class="card-body">
-                     <h4 class="card-title">{{d["title"]}}</h4>
-                     <p class="card-text">${{d["price"]}}</p>
-                  </div>
-               </div>
-            </a>
-         </div>
-         {% endfor %}
-      </section>
-   </div>
-   {% endif %}
-   <div class="slide-box">
-      <h3> Books </h3>
-      <section class="home-slick-slider" >
-         {% for d in data %}
-         {% if d['category'] == 'Books' %}
-         <div>
-            <a  href="/posting/{{d['postid']}}">
-               <div class="card">
-                  <img class="img-fluid card-img-top"  alt="100%x280" src={{url_for('static', filename=d["image"] )}} >
-                  <div class="card-body">
-                     <h4 class="card-title">{{d["title"]}}</h4>
-                     <p class="card-text">${{d["price"]}}</p>
-                  </div>
-               </div>
-            </a>
-         </div>
-         {% endif %}
-         {% endfor %}
-      </section>
+</div><!-- carousel end -->
+
+
+<div class="col-xs-12" style="height:50px;"></div><!-- space between carousel -->
+
+
+{% if fav %}
+<div class="container">
+   <div class="row">
+       <div class="col-6">
+           <h3 class="mb-3">Favorite Products</h3>
+       </div>
+       <div class="col-6 text-right">
+           <a class="btn btn-dark mb-3 mr-1" href="#carouselExampleIndicators" role="button" data-slide="prev">
+               prev
+           </a>
+           <a class="btn btn-dark mb-3 " href="#carouselExampleIndicators" role="button" data-slide="next">               
+               next
+           </a>
+       </div>
+       <div class="col-12">
+           <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+               <div class="carousel-inner"><!-- individual carousel -->
+
+                   <div class="carousel-item active"><!-- group of 3 -->
+                       <div class="row"><!-- group of 3 -->
+                          
+                          {% for data in fav[0:3] %}
+
+                           <div class="col-md-4 mb-3"><!-- individual card-->
+                              <div class="card bg-light text-center"><!-- individual card-->                             
+                                 <a target="_blank" href="/posting/{{data['postid']}}"><img class="card-img-top" alt="100%x280" src={{url_for('static', filename=data["image"] ) }}></a>                              
+                                 <a target="_blank" href="/posting/{{data['postid']}}"><div class="card-header" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">{{data["title"]}}</div></a>
+                                 
+                                  <div class="card-body">
+                                      <!-- <h4 class="card-title" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{data["title"]}}</h4> -->
+                                      <p class="card-text text-success">${{data["price"]}}</p>
+                                      {% if session['email'] %}
+                                        {% if session['email'] != data['email']%}
+                                          <a href="/message?author={{data['email']}}&postID={{data['postid']}}" class="btn btn-primary">
+                                              <button type="button" class="btn btn-primary">Contact</button>
+                                          </a>
+                                         {% endif %}
+                                       {% else %}
+                                        <a href="/login" class="btn btn-primary"><button type="button" class="btn btn-primary">Contact</button></a>
+                                        {% endif %}
+                                       <p class="card-text"><small class="text-muted">Date Posted: {{data["date"]}}</small></p>
+                                  </div>
+                              </div><!-- individual card end-->
+                           </div><!-- individual card end-->                             
+
+                           {% endfor %}
+                                                            
+                        </div>
+                   </div><!-- group of 3 end-->
+                   
+                 {% for x in range(0, numberOfPostings, 3) %}
+                   <div class="carousel-item">
+                    <div class="row">
+                       {% set i = x %}
+                       {% set j = x + 3 %}
+                       
+                       {%for data in fav[i:j]%}                        
+                       <div class="col-md-4 mb-3"><!-- individual card-->
+                        <div class="card bg-light text-center"><!-- individual card-->                             
+                           <a target="_blank" href="/posting/{{data['postid']}}"><img class="card-img-top" alt="100%x280" src={{url_for('static', filename=data["image"] ) }}></a>                              
+                           <a target="_blank" href="/posting/{{data['postid']}}"><div class="card-header" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">{{data["title"]}}</div></a>
+                           
+                            <div class="card-body">
+                                <!-- <h4 class="card-title" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{data["title"]}}</h4> -->
+                                <p class="card-text text-success">${{data["price"]}}</p>
+                                {% if session['email'] %}
+                                    {% if session['email'] != data['email']%}
+                                        <a href="/message?author={{data['email']}}&postID={{data['postid']}}" class="btn btn-primary">
+                                            <button type="button" class="btn btn-primary">Contact</button>
+                                        </a>
+                                    {% endif %}
+                                {% else %}
+                                <a href="/login" class="btn btn-primary"><button type="button" class="btn btn-primary">Contact</button></a>
+                                {% endif %}
+                                 <p class="card-text"><small class="text-muted">Date Posted: {{data["date"]}}</small></p>
+                            </div>
+                        </div><!-- individual card end-->
+                       </div><!-- individual card end-->
+                       {%endfor%}  
+
+                    </div>
+                </div>
+                {% endfor %}
+
+               </div><!-- individual carousel end-->
+           </div>
+       </div>
    </div>
 </div>
-<script src="static/slick/slick.js" type="text/javascript" charset="utf-8"></script>
-<script type="text/javascript" src="static/js/carousel.js"  > </script>
-<!-- SCript for each item box -->
-<script>
-   $(document).ready(function() {
-       $('img.thumbnail').click(function() {
-           window.location.href = "itemPage.html?poid=" + this.id + '.html';
-       });
-   });
-</script>
+{% endif %}
+
+
+
 </section>
+
 {% endblock %}

@@ -2,35 +2,38 @@
 {% block title%}Login{% endblock %}
 {% block content %}  
 
-<p class="h2" style="text-align:center;"><b>Login</b></p>
-  <div class="container p-4 my-3"  style="border: 1px solid black; width: 500px" >
+<p class="h2" style="text-align:center;">Login</p>
+  <div class="container p-4 my-3"  style="border: 1px solid #0000003d; width: 500px; max-width: 70%;" >
     <form action="/login" method="POST"> 
 
-      <!-- Placeholder for logo (if we have one)-->
-      <div class="container my-2" style="border: 1px solid black; width: 200px; height: 200px;">
-        <label for="Logo" ><b>Logo Goes Here If Applicable</b></label>
-      </div>
 
       <!-- Email -->
-      <div class="p-1"> 
+      <div class="p-1 py-3"> 
         <label for="email"><b>Email</b></label>
         <input type="email" class="form-control" placeholder="Enter email" id="email" name="email" >
       </div>
       <!-- Password -->
-      <div class="p-1">
+      <div class="p-1 ">
         <label for="password"><b>Password</b></label>
         <input type="password" class="form-control" placeholder="Enter password" id="pwd" name="pwd" >
       </div>
       <!-- Display Message if wrong Email/password-->
       <div class ="msg text-danger" >{{ msg }}</div>
+      
       <!-- Remember Me -->
       <label class="p-1">
         <input type="checkbox" name="remember"> Remember Me
       </label>
 
-      <!-- Forgot Password Button-->
-      <div class="col text-center p-1 "  >
-          <button type="button" class="btn btn-link btn-sm"  >Forgot Email/Password</button>
+      <div class="row py-3">
+        <!-- Forgot Password Button-->
+        <div class="col float-left"  >
+          <a href="/signup" class="btn btn-link btn-sm float-left">No Account? Register Here</a>
+        </div>
+        <!-- Forgot Password Button-->
+        <div class="col float-right "  >
+          <a href="" class="btn btn-link btn-sm float-right"  >Forgot Email/Password</a>
+        </div>
       </div>
 
       <!-- Submit Button -->

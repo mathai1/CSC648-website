@@ -1,42 +1,92 @@
 <head>
-  <link rel="stylesheet" type= "text/css" href="{{url_for('static', filename='css/styles/signup.css')}}">
-</head>
-{% extends "base.html" %}
-{% block content %} 
-<span class="border border-light">
-<div class="signup-main">
-  <center>
-     <h1> Sign up </h1>
-  </center>
-  <br>
-  <div class="signup-container">
-     <div class ="card">
-        <div class =" card-body">
-           <form action="/signup" method="POST">
-              <div class="col-xs-4">
-                 <label for="email">Email address:</label>
-                 <input type="email" class="form-control" placeholder="Enter email" id="email" name="email">
-              </div>
-              <div class="col-xs-4">
-                 <label for="pwd">Password:</label>
-                 <input type="password" class="form-control" placeholder="Enter password" id="password" name="password">
-              </div>
-              <div class="col-xs-4">
-                 <label for="firstName">First name:</label>
-                 <input type="firstname" class="form-control" placeholder="Enter first name" id="fname" name="fname">
-              </div>
-              <div class="col-xs-4">
-                 <label for="lastName">Last name:</label>
-                 <input type="firstname" class="form-control" placeholder="Enter last name" id="lname" name="lname">
-              </div>
-              <br>
-              <div class ="msg text-danger" >{{ message }}</div>
-              <div class="col text-center">
-                 <button type="submit" class="btn btn-primary ">Submit</button>
-              </div>
-           </form>
+   <link rel="stylesheet" type= "text/css" href="{{url_for('static', filename='css/styles/signup.css')}}">
+ </head>
+ {% extends "base.html" %}
+ {% block content %} 
+ <p class="h2" style="text-align:center;">Sign Up</p>
+   <div class="container p-4 my-3"  style="border: 1px solid #0000003d; width: 65%" >
+     <form action="/signup" method="POST"> 
+ 
+ 
+       <!-- Email -->
+       <div class="p-1 py-3"> 
+          <label for="email">Email address:</label>
+          <input type="email" class="form-control" placeholder="Enter email" id="email" name="email">
+       </div>
+       <!-- Password -->
+       <div class="p-1 ">
+          <label for="pwd">Password:</label>
+          <input type="password" class="form-control" placeholder="Enter password" id="password" name="password">
+       </div>
+       <!-- first name -->
+       <div class="p-1 ">
+          <label for="firstName">First name:</label>
+          <input type="firstname" class="form-control" placeholder="Enter first name" id="fname" name="fname">
+       </div>
+       <!-- last name -->
+       <div class="p-1 ">
+          <label for="lastName">Last name:</label>
+          <input type="firstname" class="form-control" placeholder="Enter last name" id="lname" name="lname">
+       </div>
+ 
+       <!-- Display Message if wrong Email-->
+       <div class ="msg text-danger" >{{ message }}</div>
+       
+       <!-- Remember Me -->
+       <label class="p-1">
+         <input type="checkbox" name="remember"> Remember Me
+       </label>
+ 
+       <div class="col text-center p-1"  >
+          <a href="/login" class="btn btn-link btn-sm">Already Have An Account? Click here to log in</a>
         </div>
-     </div>
-  </div>
-</div>
-{% endblock %}
+ 
+       <!-- Submit Button -->
+       <div class="col text-center p-1">
+           <button type="submit" class="btn btn-primary px-5">Submit</button>
+       </div>
+ 
+       <!-- Cancel -->
+       <div class="col text-center p-1">
+           <a href="/" class="btn btn-danger btn-sm" role="button">Cancel</a>
+       </div> 
+ 
+     </form>
+   </div>
+ <!-- <span class="border border-light">
+ <div class="signup-main">
+   <center>
+      <h1> Sign up </h1>
+   </center>
+   <br>
+   <div class="signup-container">
+      <div class ="card">
+         <div class =" card-body">
+            <form action="/signup" method="POST">
+               <div class="col-xs-4">
+                  <label for="email">Email address:</label>
+                  <input type="email" class="form-control" placeholder="Enter email" id="email" name="email">
+               </div>
+               <div class="col-xs-4">
+                  <label for="pwd">Password:</label>
+                  <input type="password" class="form-control" placeholder="Enter password" id="password" name="password">
+               </div>
+               <div class="col-xs-4">
+                  <label for="firstName">First name:</label>
+                  <input type="firstname" class="form-control" placeholder="Enter first name" id="fname" name="fname">
+               </div>
+               <div class="col-xs-4">
+                  <label for="lastName">Last name:</label>
+                  <input type="firstname" class="form-control" placeholder="Enter last name" id="lname" name="lname">
+               </div>
+               <br>
+               <div class ="msg text-danger" >{{ message }}</div>
+               <div class="col text-center">
+                  <button type="submit" class="btn btn-primary ">Submit</button>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+ </div> -->
+ {% endblock %}

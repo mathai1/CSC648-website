@@ -6,24 +6,31 @@
 <h2 class="form-group row justify-content-center">Creating A Post</h2>
 <form action="/posting" method="POST" enctype=multipart/form-data>
 
+<!-- Dropdown menue for choose a category -->
+<div class="container">
 <div class="form-group row justify-content-center">
-        <div class="col-md-12 productList-dropdown text-center">
-            <div class="dropdown btn-group">
-                <span><label style ="font-size: 18px; margin-top: 5px; margin-right: 180px;">Choose a category</label></span>
-                <select class="nav-link dropdown-toggle" name="filter"   data-toggle="dropdown">
-                    {%if navlst%}
-                    {% for n in navlst %}
-                    <option class="dropdown-item" value ="{{n[0]}}" {%if category == n[0] %}selected{%endif%} >{{n[0]}} </option>
-  
-                    {% endfor %}
-                    {% endif %}
-                 </select>
-         
-            </div>
-        </div>
+        <!-- <div class="col-sm-2 productList-dropdown text-center"> -->
+            <!-- <div class="dropdown btn-group"> -->
+                <label class="col-sm-2 col-form-label">Choose a category</label>
+                <div class="col-sm-4">
+                    <div class="form-check"></div>
+                        <select class="form-control" name="filter"   data-toggle="dropdown">
+                            {%if navlst%}
+                            {% for n in navlst %}
+                            <option class="dropdown-item" value ="{{n[0]}}" {%if category == n[0] %}selected{%endif%} >{{n[0]}} </option>
+        
+                            {% endfor %}
+                            {% endif %}
+                        </select>
+                    </div>
+                </div>
+            <!-- </div> -->
+        <!-- </div> -->
         
 </div>
+</div>
 
+<!-- Creating a post features -->
             <div class="container">
                 <div class="form-group row justify-content-center">
                  <label for="name" class="col-sm-2 col-form-label">Title</label>
@@ -87,14 +94,24 @@
                     </div>
                 </div>
            
-
-            <div class="row justify-content-center">
+            <!-- <div class="container">
+            <div class="row justify-content-around">
+                <div class="form-group">                    
+                    <button type="button" class="btn btn-danger">Cancel</button>
+                </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Submit</button>
-                    <button type="button" class="btn btn-warning">Cancel</button>
-
                 </div>
             </div>
+            </div> -->
+            <div class="col text-center p-1">
+                <button type="submit" class="btn btn-primary px-5">Submit</button>
+            </div>
+      
+            <!-- Cancel -->
+            <div class="col text-center p-1">
+                <a href="/" class="btn btn-danger btn-sm" role="button">Cancel</a>
+            </div> 
 </form>
     
 

@@ -1,6 +1,6 @@
 # THIS IS HOME BLUEPRINT for home, about, login and signup
 from flask import Blueprint, render_template, request, session, redirect, url_for
-import re
+import re , bcrypt
 
 def initHome(db):
     # create a blue print
@@ -9,23 +9,39 @@ def initHome(db):
     @home.route('/', methods=['GET'])
     def homepage():
         # Getting posting info from the database
-        postings = db.getAllPostings()
-        lst = db.getPostingOrganizedData(postings)
-        recent_posts = db.getPostingbyOrderedDate()
-        ordered_lst = db.getPostingOrganizedData(recent_posts)
+        postings = db.post.getAllPostings()
+        lst = db.post.getPostingOrganizedData(postings)
+
+        # Getiing recent post
+        recent_posts = db.post.getPostingbyOrderedDate()
+        ordered_lst = db.post.getPostingOrganizedData(recent_posts)
+        numberOfPostings = int(len(ordered_lst))
 
         #Geting thumbnail
+   
+
         ordered_lst = getThumbnail(ordered_lst)
         lst = getThumbnail(lst)
+        #Getting book posting info
+        books = db.post.getBookPostings()
+        book_postings = db.post.getPostingOrganizedData(books)
+        book_postings = getThumbnail(book_postings)
+        bookCount = int(len(book_postings))
+
+            
+        #print(books)
 
         # display favorite when user favorite something
         if 'name' in session:
-            user = db.getAUser("All",session['name'])
+            user = db.user.getAUser("All",session['name'])
             favorites = db.getfavoritePostings(session['email'])
-            fav_postings = db.getPostingOrganizedData(favorites)
+            fav_postings = db.post.getPostingOrganizedData(favorites)
             fav_postings = getThumbnail(fav_postings)
-            return render_template('home/home.html', data = lst, recent = ordered_lst, fav = fav_postings, user=user)
-        return render_template('home/home.html', data = lst, recent = ordered_lst)
+            # print (ordered_lst)
+            return render_template('home/home.html', data = lst, bookData=book_postings, recent = ordered_lst, fav = fav_postings,
+             user=user, numberOfPostings=numberOfPostings, bookCount=bookCount)
+
+        return render_template('home/home.html', data = lst, bookData=book_postings, recent = ordered_lst, numberOfPostings=numberOfPostings, bookCount=bookCount)
         
     @home.route('/about')
     def about():
@@ -45,14 +61,18 @@ def initHome(db):
         if request.method == 'POST':
             email =request.form['email']
             password =request.form['pwd']
-            account = db.checkAUser(email,password)
+            account = db.user.checkAUser(email,password)
             if account :
                 session['email'] = request.form['email']
-                user = db.getUserOrganizedData(account)
-                session['name'] = user[0]['fname']
-                return redirect(url_for('home.homepage'))
-            else :
-                return render_template("home/login.html", message = "email or password is incorrect")
+                user = db.user.getUserOrganizedData(account)
+                hashed  = user[0]["password"].encode("utf-8")  
+                # verify password 
+                password = str.encode(password)
+                if bcrypt.checkpw(password, hashed):
+                    session['name'] = user[0]['fname']
+                    return redirect(url_for('home.homepage'))
+                else :
+                    return render_template("home/login.html", msg = "email or password is incorrect")
         return render_template("home/login.html")
 
     @home.route('/signup', methods=['GET', 'POST'])
@@ -70,7 +90,7 @@ def initHome(db):
             else:
                 message = "Not SFSU Email"
             #checking whether the email has been rgistered already
-            if db.getAUserbyEmail(email):
+            if db.user.getAUserbyEmail(email):
                 message = "The email has been already registered"
             #checking if password contains at least 7 characters, 1 number, and 1 letter
             if len(password) < 7:
@@ -80,7 +100,10 @@ def initHome(db):
             elif re.search('[a-z]',password) is None:
                 message ="Password must include a letter"
             else:
-                user['password']=password     
+                # encrypt password
+                password_byte = str.encode(password)
+                hashed = bcrypt.hashpw(password_byte, bcrypt.gensalt())
+                user['password']= hashed.decode("utf-8")   
             #checking if name is only letters
             if fname.isalpha() & lname.isalpha():
                 user['fname'] = fname
@@ -90,7 +113,7 @@ def initHome(db):
             #if there is no errors or messages on signup page
             #then insert user to database
             if not message:
-                db.insertAUser(user)
+                db.user.insertAUser(user)
                 return render_template("home/login.html" , msg = "Account is created")
             else:
                 return render_template("home/signup.html", message = message)
@@ -103,6 +126,7 @@ def initHome(db):
         return redirect(url_for("home.homepage"))
 
     def getThumbnail(lst) :
+        print(lst)
         for l in lst:
             s = l['image'].split("/")[-1]
             l['image'] = "media/" + s 

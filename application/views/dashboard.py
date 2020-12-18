@@ -12,38 +12,8 @@ def initDashBoard(db):
 
     @dashboard.route('/messages')
     def messages():
-        # msgs = [
-        #     {
-        #         'postTitle': 'Book1',
-        #         'postPrice': 70.00,
-        #         'timestamp': 'Dec 12 2020 14:43:04',
-        #         'otherUser': 'John Appleseed',
-        #         'lastMessage': 'This is an example of the last message that was sent in the conversation.'
-        #     },
-        #     {
-        #         'postTitle': 'Book2',
-        #         'postPrice': 12.00,
-        #         'timestamp': 'Feb 01 2020 15:28:12',
-        #         'otherUser': 'John Doe',
-        #         'lastMessage': 'This is an example of the last message that was sent in the conversation.'
-        #     },
-        #     {
-        #         'postTitle': 'Book3',
-        #         'postPrice': 4.00,
-        #         'timestamp': 'Dec 12 2020 02:32:39',
-        #         'otherUser': 'Jane Doe',
-        #         'lastMessage': 'This is an example of the last message that was sent in the conversation.'
-        #     },
-        #     {
-        #         'postTitle': 'Book4',
-        #         'postPrice': 23.00,
-        #         'timestamp': 'Dec 12 2020 18:14:59',
-        #         'otherUser': 'Joe Momma',
-        #         'lastMessage': 'This is an example of the last message that was sent in the conversation.'
-        #     },
-        # ]
-        user = session['email']
-        msgs = db.getAllMessageByUser(user)
+        msgs = db.message.getDashBoardMessage()
+        print(msgs)
         numMsgs = len(msgs)
         return render_template('dashboard/message.html', msgs=msgs, numMsgs=numMsgs)
 
@@ -51,9 +21,21 @@ def initDashBoard(db):
     def userPostings():
         # allPosts = db.getAllPostings()
         # posts = db.getPostingOrganizedData(allPosts)
-        allPosts = db.getAPosting("email", session['email'])
-        posts = db.getPostingOrganizedData(allPosts)
+        allPosts = db.post.getAPosting("email", session['email'])
+        posts = db.post.getPostingOrganizedData(allPosts,2)
         numPosts = len(posts)
+        return render_template('dashboard/postings.html', posts=posts, numPosts=numPosts)
+
+    @dashboard.route('/dashboard/delete/<postid>', methods= ['GET' , 'POST'])
+    def deletePost(postid):
+        print(postid)
+        db.post.deleteAPosting(postid)
+
+        #getting all the remaining posts in current account
+        allPosts = db.post.getAPosting("email", session['email'])
+        posts = db.post.getPostingOrganizedData(allPosts)
+        numPosts = len(posts)
+
         return render_template('dashboard/postings.html', posts=posts, numPosts=numPosts)
         
     return dashboard
