@@ -1,7 +1,6 @@
 <!DOCTYPE html>
  
 {% extends "base.html" %}
- 
 {% block content %}
 
 <style>
@@ -39,8 +38,8 @@
                            <div class="col-md-4 mb-3"><!-- individual card-->
                            
                               <div class="card bg-light text-center"><!-- individual card-->                             
-                                 <a target="_blank" href="/posting/{{data['postid']}}"><img class="card-img-top" alt="100%x280" src={{url_for('static', filename=d["image"] ) }}></a>                              
-                                 <a target="_blank" href="/posting/{{data['postid']}}"><div class="card-header" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">{{d["title"]}}</div></a>
+                                 <a target="_blank" href="/posting/{{d['postid']}}"><img class="card-img-top" alt="100%x280" src={{url_for('static', filename=d["image"] ) }}></a>                              
+                                 <a target="_blank" href="/posting/{{d['postid']}}"><div class="card-header" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis">{{d["title"]}}</div></a>
                                  
                                   <div class="card-body">
                                       <!-- <h4 class="card-title" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{data["title"]}}</h4> -->
